@@ -38,3 +38,8 @@ Route::get('/operator/manajemen_user', [UserController::class, 'manajemen_user']
 Route::post('/operator/add_mahasiswa', [UserController::class, 'add_mahasiswa'])->middleware('auth', 'operator')->name('add_mahasiswa');
 Route::post('/operator/update_mahasiswa', [UserController::class, 'update_mahasiswa'])->middleware('auth', 'operator')->name('update_mahasiswa');
 Route::post('/operator/delete_mahasiswa', [UserController::class, 'delete_mahasiswa'])->middleware('auth', 'operator')->name('delete_mahasiswa');
+
+// Operator: CRUD Dosen
+Route::post('/operator/add_dosen', [UserController::class, 'add_dosen'])->middleware('auth', 'operator')->name('add_dosen');
+Route::post('/operator/update_dosen', [UserController::class, 'update_dosen'])->middleware('auth', 'operator')->name('update_dosen');
+Route::post('/operator/delete_dosen', [UserController::class, 'delete_dosen'])->middleware('auth', 'operator')->name('delete_dosen');

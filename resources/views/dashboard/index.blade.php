@@ -13,11 +13,11 @@
                 @if (Auth::user()->role == 'operator')
                 @include('operator.dashboard')
                 @elseif (Auth::user()->role == 'mahasiswa')
-                @include('operator.dashboard')
+                @include('mahasiswa.dashboard')
                 @elseif (Auth::user()->role == 'dosen')
                 @include('dosen.dashboard')
                 @else
-                @include('depaertemen.dashboard')
+                @include('depaertement.dashboard')
                 @endif
             </div> <!-- Row END -->
         </div>

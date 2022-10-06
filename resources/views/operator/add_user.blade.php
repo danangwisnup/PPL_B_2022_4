@@ -36,8 +36,6 @@
                             <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
                                 <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#tab-1"> Mahasiswa </a> </li>
                                 <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-2"> Dosen </a> </li>
-                                <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-3"> Departemen </a> </li>
-                                <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-4"> Operator </a> </li>
                             </ul>
 
                             <div class="tab-content mb-0 pb-0">
@@ -87,27 +85,22 @@
 
                                 <!-- Tab Dosen -->
                                 <div class="tab-pane fade" id="tab-2">
-                                    <div class="row g-3">
-                                        //Input
-                                    </div>
+                                    <form class="row g-3" action="{{ route('add_dosen') }}" method="POST">
+                                        @csrf
+                                        <div class="col-6">
+                                            <label class="form-label text-dark">NIP</label>
+                                            <input type="number" class="form-control" id="nip" name="nip" placeholder="NIP" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label text-dark">Nama Dosen</label>
+                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" required>
+                                        </div>
+                                        <div class="col-12 text-end">
+                                            <button type="submit" class="btn btn-sm btn-primary mb-0">Generate</button>
+                                        </div>
+                                    </form>
                                 </div>
                                 <!-- Tab Dosen END -->
-
-                                <!-- Tab Departemen -->
-                                <div class="tab-pane fade" id="tab-3">
-                                    <div class="row g-3">
-                                        //Input
-                                    </div>
-                                </div>
-                                <!-- Tab Departemen END -->
-
-                                <!-- Tab Operator -->
-                                <div class="tab-pane fade" id="tab-4">
-                                    <div class="row g-3">
-                                        //Input
-                                    </div>
-                                </div>
-                                <!-- Tab Operator END -->
 
                             </div>
                         </div>

@@ -12,11 +12,12 @@ class AuthController extends Controller
         // user logged in, route to dashboard
         if (Auth::check()) {
             return redirect()->route('dashboard');
+        } else {
+            // user not logged in, route to login page
+            return view('login.index', [
+                'title' => 'Login'
+            ]);
         }
-        // user not logged in, route to login page
-        return view('login.index', [
-            'title' => 'Login'
-        ]);
     }
 
     // Authenticate user
@@ -27,12 +28,11 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        // Check if the credentials is email or nim
         if (filter_var($credentials['identifier'], FILTER_VALIDATE_EMAIL)) {
             $credentials['email'] = $credentials['identifier'];
             unset($credentials['identifier']);
         } else {
-            $credentials['nim/nip'] = $credentials['identifier'];
+            $credentials['nim_nip'] = $credentials['identifier'];
             unset($credentials['identifier']);
         }
 

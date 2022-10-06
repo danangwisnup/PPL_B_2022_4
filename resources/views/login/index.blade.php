@@ -31,14 +31,6 @@
                                 </span>
                             </div>
                         </div>
-                        <!-- Remember me -->
-                        <div class="mb-3 d-sm-flex justify-content-between">
-                            <div>
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label" for="rememberCheck">Remember me?</label>
-                            </div>
-                            <a href="javascript:;">Forgot password?</a>
-                        </div>
                         <!-- Button -->
                         <div class="d-grid">
                             <button type="submit" class="btn btn-lg btn-primary">Login</button>

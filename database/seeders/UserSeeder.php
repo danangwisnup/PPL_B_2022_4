@@ -18,10 +18,10 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'nim/nip' => '1234567890',
+            'nim_nip' => '123',
             'nama' => 'Operator IF',
             'email' => 'op@if.com',
-            'password' => Hash::make('admin'),
+            'password' => Hash::make('123'),
             'role' => 'operator',
             'created_at' => now(),
             'updated_at' => now(),

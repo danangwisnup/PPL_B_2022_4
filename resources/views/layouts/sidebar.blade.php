@@ -42,6 +42,7 @@
                         <hr>
 
                         <!-- Side Nav START -->
+                        @if (Auth::user()->role == 'operator')
                         <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-0 border-0">
                             <li>
                                 <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
@@ -59,6 +60,32 @@
                                 </a>
                             </li>
                         </ul>
+                        @elseif (Auth::user()->role == 'mahasiswa')
+                        <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-0 border-0">
+                            <li>
+                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
+                                    <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
+                                </a>
+                            </li>
+                        </ul>
+                        @elseif (Auth::user()->role == 'dosen')
+                        <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-0 border-0">
+                            <li>
+                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
+                                    <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
+                                </a>
+                            </li>
+                        </ul>
+                        @else
+                        <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-0 border-0">
+                            <li>
+                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
+                                    <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
+                                </a>
+                            </li>
+                        </ul>
+                        @endif
+
                         <!-- Side Nav END -->
                     </div>
                     <!-- Card body END -->
