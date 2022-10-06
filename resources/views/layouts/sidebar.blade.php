@@ -75,6 +75,16 @@
                                     <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
                                 </a>
                             </li>
+                            <li>
+                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
+                                    <i class="bi bi-people-fill"></i><span> Progress Studi Mahasiswa</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
+                                    <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
+                                </a>
+                            </li>
                         </ul>
                         @else
                         <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-0 border-0">
