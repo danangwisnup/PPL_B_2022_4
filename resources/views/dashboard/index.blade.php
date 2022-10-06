@@ -17,7 +17,7 @@
                 @elseif (Auth::user()->role == 'dosen')
                 @include('dosen.dashboard')
                 @else
-                @include('depaertement.dashboard')
+                @include('department.dashboard')
                 @endif
             </div> <!-- Row END -->
         </div>
