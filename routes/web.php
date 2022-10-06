@@ -43,3 +43,9 @@ Route::post('/operator/delete_mahasiswa', [UserController::class, 'delete_mahasi
 Route::post('/operator/add_dosen', [UserController::class, 'add_dosen'])->middleware('auth', 'operator')->name('add_dosen');
 Route::post('/operator/update_dosen', [UserController::class, 'update_dosen'])->middleware('auth', 'operator')->name('update_dosen');
 Route::post('/operator/delete_dosen', [UserController::class, 'delete_dosen'])->middleware('auth', 'operator')->name('delete_dosen');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboad.index', [
+//         'title' => 'Dosen',
+//     ]);
+// });

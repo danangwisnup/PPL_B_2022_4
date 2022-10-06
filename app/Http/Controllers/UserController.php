@@ -74,7 +74,7 @@ class UserController extends Controller
 
         // Insert to table dosen
         M_Dosen::insert($data);
-        
+
         return redirect()->route('user_manajemen')->with('success', 'Dosen berhasil ditambahkan!');
     }
 }
