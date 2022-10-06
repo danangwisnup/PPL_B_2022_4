@@ -126,40 +126,74 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Data Topup</h5>
+                <h5 class="modal-title">Edit Data Mahasiswa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
-                        <div class="col-10">
-                            <label for="recipient-name" class="col-form-label">Email </label>
-                            <input type="text" class="form-control" id="topup_email" name="topup_email" readonly>
+                        <div class="col-12">
+                            <label for="recipient-name" class="col-form-label">NIM </label>
+                            <input type="text" class="form-control" id="nim_" name="nim_" readonly>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Deskripsi </label>
-                        <h6 id="topup_deskripsi" name="topup_deskripsi"></h6>
                     </div>
                     <div class="form-group row">
-                        <div class="col">
-                            <label for="recipient-name" class="col-form-label">Nominal </label>
-                            <input type="number" class="form-control" id="topup_nominal" name="topup_nominal" readonly>
+                        <div class="col-12">
+                            <label for="recipient-name" class="col-form-label">Nama </label>
+                            <input type="text" class="form-control" id="nama_" name="nama_">
                         </div>
-                        <div class="col">
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="recipient-name" class="col-form-label">Password </label>
+                            <input type="text" class="form-control" id="password_" name="password_">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="recipient-name" class="col-form-label">Angkatan</label>
+                            <select class="form-select" id="angkatan_" name="angkatan_" required>
+                                <option value="">Pilih Angkatan</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="recipient-name" class="col-form-label">Jenis Masuk</label>
+                            <select class="form-select" id="jalur_masuk_" name="jalur_masuk_" required>
+                                <option value="">Pilih Jenis Masuk</option>
+                                <option value="SNMPTN">SNMPTN</option>
+                                <option value="SBMPTN">SBMPTN</option>
+                                <option value="SBUB">SBUB</option>
+                                <option value="Ujian Mandiri">Ujian Mandiri</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
                             <label for="recipient-name" class="col-form-label">Status </label>
-                            <select class="form-control" id="topup_status" name="topup_status">
+                            <select class="form-control" id="status" name="status">
                                 <option value="">-- Pilih Status --</option>
-                                <option value="pending">Pending</option>
-                                <option value="success">Success</option>
-                                <option value="failed">Failed</option>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Cuti">Cuti</option>
+                                <option value="Mangkir">Mangkir</option>
+                                <option value="DO">DO</option>
+                                <option value="Undur Diri">Undur Diri</option>
+                                <option value="Meninggal Dunia">Meninggal Dunia</option>
+                                <option value="Lulus">Lulus</option>
                             </select>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" onclick="topup_update()">Submit</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
