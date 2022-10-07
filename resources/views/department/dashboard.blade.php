@@ -8,6 +8,7 @@
                     <h5 class="card-title">Dashboard</h5>
                     <br />
                     <p>Selamat Datang Di SIMI</p>
+                    //nyoba
                 </div>
             </div>
         </div>
