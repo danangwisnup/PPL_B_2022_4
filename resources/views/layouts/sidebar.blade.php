@@ -76,13 +76,13 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
+                                <a class="dropdown-item {{ ($title == 'Progress Studi Mahasiswa')? 'active' : '' }}" href="/dashboard">
                                     <i class="bi bi-people-fill"></i><span> Progress Studi Mahasiswa</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
-                                    <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
+                                <a class="dropdown-item {{ ($title == 'Verifikasi Berkas Mahasiswa')? 'active' : '' }}" href="/dashboard">
+                                    <i class="bi bi-house-door-fill"></i><span> Verifikasi Berkas Mahasiswa</span>
                                 </a>
                             </li>
                         </ul>
@@ -96,6 +96,16 @@
                             <li>
                                 <a class="dropdown-item {{ ($title == 'Progress Studi Mahasiswa')? 'active' : '' }}" href="/department/progress_studi_mahasiswa">
                                     <i class="bi bi-house-door-fill"></i><span> Progress Studi Mahasiswa</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ ($title == 'Data Mahasiswa')? 'active' : '' }}" href="/department/data_mahasiswa">
+                                    <i class="bi bi-file-earmark-text-fill"></i><span> Data Mahasiswa</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ ($title == 'Data Dosen')? 'active' : '' }}" href="/department/data_dosen">
+                                    <i class="bi bi-file-earmark-text-fill"></i><span> Data Dosen</span>
                                 </a>
                             </li>
                         </ul>

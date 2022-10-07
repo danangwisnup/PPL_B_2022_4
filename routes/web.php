@@ -50,3 +50,17 @@ route::get('/department/progress_studi_mahasiswa', function () {
         'title' => 'Progress Studi Mahasiswa',
     ]);
 });
+
+//department: data mahasiswa
+route::get('/department/data_mahasiswa', function () {
+    return view('department.data_mahasiswa', [
+        'title' => 'Data Mahasiswa',
+    ]);
+});
+
+//department: data mahasiswa
+route::get('/department/data_dosen', function () {
+    return view('department.data_dosen', [
+        'title' => 'Data Dosen',
+    ]);
+});

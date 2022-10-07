@@ -17,29 +17,15 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Data Mahasiswa</h5>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>NIM</th>
-                                                <th>Nama</th>
-                                                <th>Prodi</th>
-                                                <th>Angkatan</th>
-                                                <th>Alamat</th>
-                                                <th>No. HP</th>
-                                                <th>Email</th>
-                                                <th>Username</th>
-                                                <th>Password</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                <div class="card mt-4">
+                                    <div class="card-header">Progres Studi Mahasiswa</div>
+                                    <div class="card-body">
+                                        <p>KOSONG</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            @endsection
+                @endsection
