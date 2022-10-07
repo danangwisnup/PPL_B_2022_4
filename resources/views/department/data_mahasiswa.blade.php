@@ -20,7 +20,7 @@
                                 <div class="card mt-4">
                                     <h3 class="card-header">Data Mahasiswa</h3>
                                     <div class="card-body">
-                                        <input type="text" class="form-control" placeholder="Cari Mahasiswa"><span class="bi bi-search"></span>
+                                        <input type="text" class="form-control" placeholder="Cari Mahasiswa"><br>
                                         <table class="table table-striped">
                                             <tr>
                                                 <th>NIM</th>
@@ -28,6 +28,7 @@
                                                 <th>Email</th>
                                                 <th>Angkatan</th>
                                                 <th>Status</th>
+                                                <th></th>
                                             </tr>
                                         </table>
                                     </div>

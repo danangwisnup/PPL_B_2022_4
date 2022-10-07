@@ -17,29 +17,28 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Data Dosen</h5>
-                                    <table>
-                                        <thead>
+                                <div class="card mt-4">
+                                    <h3 class="card-header">Data Dosen</h3>
+                                    <div class="card-body">
+                                        <input type="text" class="form-control" placeholder="Cari Dosen"><br>
+                                        <table class="table table-striped">
                                             <tr>
-                                                <th>NIM</th>
+                                                <th>NIP</th>
                                                 <th>Nama</th>
-                                                <th>Prodi</th>
-                                                <th>Angkatan</th>
-                                                <th>Alamat</th>
-                                                <th>No. HP</th>
                                                 <th>Email</th>
-                                                <th>Username</th>
-                                                <th>Password</th>
-                                                <th>Aksi</th>
+                                                <th>Alamat</th>
+                                                <th>Headphone</th>
                                             </tr>
-                                        </thead>
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </main>
+</div>
 
-            @endsection
+@endsection

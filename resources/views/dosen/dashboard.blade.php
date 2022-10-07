@@ -1,50 +1,36 @@
 @include('layouts.sidebar')
 
-<div class="col-md-9">
+<div class="vstack gap-4 col-md-9">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Total Mahaiswa</h5>
-                    <div class="card-body">
-                        <div class="card-body">
-                            <div class="container overflow-hidden">
-                                <div class="row gx-5">
-                                    <div class="col">
-                                        <div class="p-3 border bg-light">
-                                            <p>0</p>
-                                            <p>Aktif</p>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border bg-light">
-                                            <p>0</p>
-                                            <p>Lulus</p>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border bg-light">
-                                            <p>0</p>
-                                            <p>Cuti</p>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border bg-light">
-                                            <p>0</p>
-                                            <p>PKL</p>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="p-3 border bg-light">
-                                            <p>0</p>
-                                            <p>Skripsi</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <h5 class="card-title">Total Mahasiswa</h5>
+                    <br />
+                    <div class="hstack gap-2 gap-xl-5 justify-content-center text-center">
+                        <div>
+                            <h5 class="mb-0">3</h5>
+                            <span class="badge btn-primary-soft small">Aktif</span>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">3</h5>
+                            <span class="badge btn-success-soft small">Lulus</span>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">3</h5>
+                            <span class="badge btn-warning-soft small">Cuti</span>
                         </div>
                     </div>
-                    <h5 class="card-title">Mahasiswa Per Angkatan</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row2">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Mahasiswa per Angkatan</h5>
+                    <br />
                     <div class="card">
                         <div id="grafik"></div>
                         @section('grafik')
@@ -60,74 +46,62 @@
                                     type: 'column'
                                 },
                                 title: {
-                                    align: 'left',
-                                    text: 'Jumlah Mahasiswa Per Angkatan'
-                                },
-                                accessibility: {
-                                    announceNewData: {
-                                        enabled: true
-                                    }
+                                    text: '',
+                                    align: 'left'
                                 },
                                 xAxis: {
-                                    type: 'category'
+                                    categories: ['2016', '2017', '2018', '2019', '2020', '2021', '2022'],
                                 },
                                 yAxis: {
+                                    min: 0,
                                     title: {
-                                        text: 'Juumlah Mahasiswa'
+                                        text: 'Jumlah Mahasiswa'
+                                    },
+                                    stackLabels: {
+                                        enabled: true,
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray',
+                                            textOutline: 'none'
+                                        }
                                     }
-
                                 },
                                 legend: {
-                                    enabled: false
+                                    align: 'left',
+                                    x: 70,
+                                    verticalAlign: 'top',
+                                    y: 70,
+                                    floating: true,
+                                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                                    borderColor: '#CCC',
+                                    borderWidth: 1,
+                                    shadow: false
+                                },
+                                tooltip: {
+                                    headerFormat: '<b>{point.x}</b><br/>',
+                                    pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
                                 },
                                 plotOptions: {
-                                    series: {
-                                        borderWidth: 0,
+                                    column: {
+                                        stacking: 'normal',
                                         dataLabels: {
-                                            enabled: true,
-                                            format: '{point.y:f}'
+                                            enabled: true
                                         }
                                     }
                                 },
-
-                                tooltip: {
-                                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-                                },
-
                                 series: [{
-                                    name: "Angkatan",
-                                    colorByPoint: true,
-                                    data: [{
-                                            name: "2016",
-                                            y: 60
-                                        },
-                                        {
-                                            name: "2017",
-                                            y: 34
-                                        },
-                                        {
-                                            name: "2018",
-                                            y: 45
-                                        },
-                                        {
-                                            name: "2019",
-                                            y: 50
-                                        },
-                                        {
-                                            name: "2020",
-                                            y: 20
-                                        },
-                                        {
-                                            name: "2021",
-                                            y: 90
-                                        },
-                                        {
-                                            name: "2022",
-                                            y: 39
-                                        }
-                                    ]
-                                }],
+                                    name: 'Lulus',
+                                    data: [0, 2, 6, 3]
+                                }, {
+                                    name: 'Aktif',
+                                    data: [3, 5, 1, 13]
+                                }, {
+                                    name: 'Cuti',
+                                    data: [14, 8, 8, 12]
+                                }, ]
                             });
                         </script>
                         @stop
