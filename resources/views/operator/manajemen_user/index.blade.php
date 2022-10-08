@@ -16,6 +16,14 @@
 
                 <!-- Main content START -->
                 <div class="col-md-8 col-lg-6 vstack gap-4">
+                    @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
                     @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
                         <li>{{session('success')}}</li>
@@ -41,7 +49,7 @@
                                     <div class="row g-3">
                                         <div class="col-12">
                                             <div class="table-responsive">
-                                                <table class="table table-bordered table-responsive-lg table-hover">
+                                                <table class="table" id="table_mahasiswa">
                                                     <thead class="thead-dark">
                                                         <tr>
                                                             <th>NIM</th>
@@ -59,15 +67,21 @@
                                                             <td>{{$data->email}}</td>
                                                             <td>{{$data->angkatan}}</td>
                                                             <td>
-                                                                <button type="submit" class="btn btn-info-soft rounded-circle icon-md" data-bs-toggle="modal" data-bs-target="#mahasiswa_view" data-attr="">
-                                                                    <i class="fa fa-pencil"></i>
-                                                                </button>
+                                                                <form action="{{ route('mahasiswa.destroy', $data->nim) }}" method="POST">
+                                                                    <a class="btn btn-success-soft rounded-circle icon-md" id="buttonModalMahasiswa" data-bs-toggle="modal" data-bs-target="#mahasiswa_view" data-attr="{{ route('mahasiswa.edit', $data->nim) }}">
+                                                                        <i class="bi bi-pencil-fill"></i>
+                                                                    </a>
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                    <button type="submit" title="delete" class="btn btn-danger-soft rounded-circle icon-md">
+                                                                        <i class="bi bi-trash-fill"></i>
+                                                                    </button>
+                                                                </form>
                                                             </td>
                                                         </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
-
                                             </div>
                                         </div>
                                     </div>
@@ -79,23 +93,30 @@
                                     <div class="row g-3">
                                         <div class="col-12">
                                             <div class="table-responsive">
-                                                <table class="table table table-bordered">
-                                                    <thead>
+                                                <table class="table" id="table_dosen">
+                                                    <thead class="thead-dark">
                                                         <tr>
                                                             <th>NIP</th>
                                                             <th>Nama</th>
-                                                            <th>Email</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @foreach ($dosen as $data)
                                                         <tr>
-                                                            <td>{{$data->nim_nip}}</td>
+                                                            <td>{{$data->nip}}</td>
                                                             <td>{{$data->nama}}</td>
-                                                            <td>{{$data->email}}</td>
                                                             <td>
-                                                                <a href="" class="btn btn-sm btn-success-soft">View More</a>
+                                                                <form action="{{ route('dosen.destroy', $data->nip) }}" method="POST">
+                                                                    <a class="btn btn-success-soft rounded-circle icon-md" id="buttonModalDosen" data-bs-toggle="modal" data-bs-target="#dosen_view" data-attr="{{ route('dosen.edit', $data->nip) }}">
+                                                                        <i class="bi bi-pencil-fill"></i>
+                                                                    </a>
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                    <button type="submit" title="delete" class="btn btn-danger-soft rounded-circle icon-md">
+                                                                        <i class="bi bi-trash-fill"></i>
+                                                                    </button>
+                                                                </form>
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -119,9 +140,8 @@
         <!-- Container END -->
     </main>
 </div>
+@include('sweetalert::alert')
 
-
-<!-- Modal Mahasiswa -->
 <div class="modal fade" data-bs-backdrop="static" data-keyboard="false" id="mahasiswa_view" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -129,75 +149,30 @@
                 <h5 class="modal-title">Edit Data Mahasiswa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label for="recipient-name" class="col-form-label">NIM </label>
-                            <input type="text" class="form-control" id="nim_" name="nim_" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label for="recipient-name" class="col-form-label">Nama </label>
-                            <input type="text" class="form-control" id="nama_" name="nama_">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label for="recipient-name" class="col-form-label">Password </label>
-                            <input type="text" class="form-control" id="password_" name="password_">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-6">
-                            <label for="recipient-name" class="col-form-label">Angkatan</label>
-                            <select class="form-select" id="angkatan_" name="angkatan_" required>
-                                <option value="">Pilih Angkatan</option>
-                                <option value="2015">2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                                <option value="2018">2018</option>
-                                <option value="2019">2019</option>
-                                <option value="2020">2020</option>
-                                <option value="2021">2021</option>
-                                <option value="2022">2022</option>
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label for="recipient-name" class="col-form-label">Jenis Masuk</label>
-                            <select class="form-select" id="jalur_masuk_" name="jalur_masuk_" required>
-                                <option value="">Pilih Jenis Masuk</option>
-                                <option value="SNMPTN">SNMPTN</option>
-                                <option value="SBMPTN">SBMPTN</option>
-                                <option value="SBUB">SBUB</option>
-                                <option value="Ujian Mandiri">Ujian Mandiri</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label for="recipient-name" class="col-form-label">Status </label>
-                            <select class="form-control" id="status" name="status">
-                                <option value="">-- Pilih Status --</option>
-                                <option value="Aktif">Aktif</option>
-                                <option value="Cuti">Cuti</option>
-                                <option value="Mangkir">Mangkir</option>
-                                <option value="DO">DO</option>
-                                <option value="Undur Diri">Undur Diri</option>
-                                <option value="Meninggal Dunia">Meninggal Dunia</option>
-                                <option value="Lulus">Lulus</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+            <div id="showModalMahasiswa">
+
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" data-bs-backdrop="static" data-keyboard="false" id="dosen_view" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Data Dosen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="showModalDosen">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
+<script src="{{ asset('assets/js/data-table.js') }}"></script>
 
 @endsection

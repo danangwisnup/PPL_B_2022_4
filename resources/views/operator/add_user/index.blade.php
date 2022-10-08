@@ -16,7 +16,6 @@
 
                 <!-- Main content START -->
                 <div class="col-md-8 col-lg-6 vstack gap-4">
-                    <!-- Event alert START -->
                     @if ($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                         @foreach ($errors->all() as $error)
@@ -25,7 +24,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
-                    <!-- Event alert END -->
                     <!-- Card START -->
                     <div class="card">
                         <!-- Card header START -->
@@ -42,7 +40,7 @@
 
                                 <!-- Tab Mahasiswa -->
                                 <div class="tab-pane fade show active" id="tab-1">
-                                    <form class="row g-3" action="{{ route('add_mahasiswa') }}" method="POST">
+                                    <form class="row g-3" action="/operator/mahasiswa" method="POST">
                                         @csrf
                                         <div class="col-6">
                                             <label class="form-label text-dark">NIM</label>
@@ -85,15 +83,19 @@
 
                                 <!-- Tab Dosen -->
                                 <div class="tab-pane fade" id="tab-2">
-                                    <form class="row g-3" action="{{ route('add_dosen') }}" method="POST">
+                                    <form class="row g-3" action="/operator/dosen" method="POST">
                                         @csrf
+                                        <div class="col-12">
+                                            <label class="form-label text-dark">Nama Dosen</label>
+                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" required>
+                                        </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">NIP</label>
                                             <input type="number" class="form-control" id="nip" name="nip" placeholder="NIP" required>
                                         </div>
                                         <div class="col-6">
-                                            <label class="form-label text-dark">Nama Dosen</label>
-                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" required>
+                                            <label class="form-label text-dark">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                                         </div>
                                         <div class="col-12 text-end">
                                             <button type="submit" class="btn btn-sm btn-primary mb-0">Generate</button>

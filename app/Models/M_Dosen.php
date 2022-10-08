@@ -10,9 +10,12 @@ class M_Dosen extends Model
     use HasFactory;
 
     protected $table = 'dosen';
+    public $timestamps = false;
+    protected $primaryKey = 'nip';
+    
     protected $fillable = [
         'nip',
         'nama',
     ];
-    protected $hidden;
+    
 }

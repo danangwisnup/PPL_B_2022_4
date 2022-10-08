@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->text('alamat')->nullable();
             $table->string('handphone')->nullable();
+            $table->string('status')->nullable();
         });
     }
 

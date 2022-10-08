@@ -11,11 +11,13 @@ class M_Mahasiswa extends Model
     use HasFactory;
 
     protected $table = 'mahasiswa';
+    public $timestamps = false;
+    protected $primaryKey = 'nim';
+
     protected $fillable = [
         'nim',
         'nama',
         'angkatan',
         'jenis_masuk',
     ];
-    protected $hidden;
 }

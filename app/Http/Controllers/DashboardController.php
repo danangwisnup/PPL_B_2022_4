@@ -14,15 +14,24 @@ class DashboardController extends Controller
         $dosen = M_Dosen::all();
         return view('dashboard.index', [
             'title' => 'Dashboard',
-        ])
-            ->with('aktif', $mahasiswa->where('status', 'Aktif')->count())
-            ->with('cuti', $mahasiswa->where('status', 'Cuti')->count())
-            ->with('mangkir', $mahasiswa->where('status', 'Mangkir')->count())
-            ->with('do', $mahasiswa->where('status', 'DO')->count())
-            ->with('ud', $mahasiswa->where('status', 'Undur Diri')->count())
-            ->with('md', $mahasiswa->where('status', 'Meninggal Dunia')->count())
-            ->with('lulus', $mahasiswa->where('status', 'Lulus')->count())
-            ->with('dosen_aktif', $dosen->where('status', 'Aktif')->count())
-            ->with('dosen_cuti', $dosen->where('status', 'Cuti')->count());
+        ])->with('mahasiswa', $mahasiswa)->with('dosen', $dosen);
+    }
+
+    // Fiture Operator: Add User
+    public function add_user()
+    {
+        return view('operator.add_user.index', [
+            'title' => 'Add User',
+        ]);
+    }
+
+    // Fiture Operator: Manajemen User
+    public function manajemen_user()
+    {
+        $Mahasiswa = M_Mahasiswa::all();
+        $Dosen = M_Dosen::all();
+        return view('operator.manajemen_user.index', [
+            'title' => 'Manajemen User',
+        ])->with('mahasiswa', $Mahasiswa)->with('dosen', $Dosen);
     }
 }
