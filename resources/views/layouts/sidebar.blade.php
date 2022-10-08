@@ -23,13 +23,13 @@
                 <!-- Card START -->
                 <div class="card overflow-hidden">
                     <!-- Cover image -->
-                    <div class="h-50px" style="background-image:url(http://ppl-project.test/assets/images/bg/01.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                    <div class="h-80px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/Widya-Puraya-1.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                     <!-- Card body START -->
                     <div class="card-body pt-0">
                         <div class="text-center">
                             <!-- Avatar -->
-                            <div class="avatar avatar-lg mt-n5 mb-3">
-                                <a href="#!"><img class="avatar-img rounded border border-white border-3" src="{{ asset('assets/images/avatar/07.jpg') }}" alt=""></a>
+                            <div class="avatar avatar-xxl mt-n5 mb-1">
+                                <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
                             </div>
                             <!-- Info -->
                             <h5 class="mb-0"> <a href="#!">{{ Auth::user()->nama }}</a> </h5>
