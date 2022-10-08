@@ -174,14 +174,11 @@ return [
     'middleware' => [
 
         'autoClose' => env('SWEET_ALERT_MIDDLEWARE_AUTO_CLOSE', false),
-
         'toast_position' => env('SWEET_ALERT_MIDDLEWARE_TOAST_POSITION', 'top-end'),
-
         'toast_close_button' => env('SWEET_ALERT_MIDDLEWARE_TOAST_CLOSE_BUTTON', true),
-
         'timer' => env('SWEET_ALERT_MIDDLEWARE_ALERT_CLOSE_TIME', 6000),
-
         'auto_display_error_messages' => env('SWEET_ALERT_AUTO_DISPLAY_ERROR_MESSAGES', false),
+
     ],
 
     /*
