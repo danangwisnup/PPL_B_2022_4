@@ -41,7 +41,7 @@ class DosenController extends Controller
     {
         // Validate the request...
         $data = $request->validate([
-            'nip' => 'required|numeric|unique:users,nim_nip',
+            'nip' => 'required|string|unique:users,nim_nip',
             'nama' => 'required|string',
             'email' => 'required|email||unique:users,email',
         ]);
@@ -80,7 +80,7 @@ class DosenController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param string $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -95,7 +95,7 @@ class DosenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  $id
+     * @param string $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -113,9 +113,11 @@ class DosenController extends Controller
             'status' => $request->status,
         ]);
 
-        $data = $request->only(['nama', 'email', 'passoword']);
         if ($request->password == '') {
             $data = $request->only(['nama', 'email']);
+        } else {
+            $data = $request->only(['nama', 'email', 'password']);
+            $data['password'] = bcrypt($request->password);
         }
         User::where('nim_nip', $id)->update($data);
 
@@ -128,7 +130,7 @@ class DosenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  $id
+     * @param string $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

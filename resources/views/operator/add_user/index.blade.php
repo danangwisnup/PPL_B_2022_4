@@ -44,7 +44,7 @@
                                         @csrf
                                         <div class="col-6">
                                             <label class="form-label text-dark">NIM</label>
-                                            <input type="number" class="form-control" id="nim" name="nim" placeholder="NIM" required>
+                                            <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM" required>
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">Nama Mahasiswa</label>
@@ -91,7 +91,7 @@
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">NIP</label>
-                                            <input type="number" class="form-control" id="nip" name="nip" placeholder="NIP" required>
+                                            <input type="text" class="form-control" id="nip" name="nip" placeholder="NIP" required>
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">Email</label>
