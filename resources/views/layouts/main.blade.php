@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>SIMI | {{ $title }} </title>
+    <title>SIMA-IF | {{ $title }} </title>
 
     <!-- Meta Tags -->
     <meta charset="utf-8">
