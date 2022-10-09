@@ -46,7 +46,7 @@ class MahasiswaController extends Controller
             'nim' => 'required|string|unique:users,nim_nip',
             'nama' => 'required|string',
             'angkatan' => 'required|numeric',
-            'jalur_masuk' => 'required',
+            'status' => 'required',
         ]);
 
         $data = $request->except(['_token']);
@@ -105,7 +105,6 @@ class MahasiswaController extends Controller
         $request->validate([
             'nama' => 'required|string',
             'angkatan' => 'required|numeric',
-            'jalur_masuk' => 'required',
             'status' => 'required',
         ]);
 

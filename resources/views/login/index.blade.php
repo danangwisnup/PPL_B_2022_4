@@ -7,6 +7,12 @@
         <div class="row justify-content-center align-items-center vh-100 py-5">
             <!-- Main content START -->
             <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
+                <div class="alert alert-info alert-message">
+                    <strong>Operator</strong> : 123 | op@if.com | 123 <br />
+                    <strong>Mahasiswa</strong> : 24060120120120 | mahasiswa20@if.com | 123 <br />
+                    <strong>Dosen</strong> : H.1.299112052022042000 | dosen@if.com | 123 <br />
+                    <strong>Department</strong> : 24060 | department@if.com | 123
+                </div>
                 <!-- Sign in START -->
                 <div class="card card-body text-center p-4 p-sm-5">
                     @error('loginError')

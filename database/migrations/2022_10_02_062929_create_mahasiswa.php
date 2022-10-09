@@ -20,11 +20,11 @@ return new class extends Migration
             $table->string('kab_kota')->nullable();
             $table->string('propinsi')->nullable();
             $table->integer('angkatan');
-            $table->string('jalur_masuk');
+            $table->string('jalur_masuk')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('handphone')->nullable();
             $table->string('dosen_wali')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status');
             $table->binary('foto')->nullable();
         });
     }

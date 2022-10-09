@@ -44,6 +44,7 @@ class DosenController extends Controller
             'nip' => 'required|string|unique:users,nim_nip',
             'nama' => 'required|string',
             'email' => 'required|email||unique:users,email',
+            'status' => 'required',
         ]);
 
         $data = $request->except(['_token']);

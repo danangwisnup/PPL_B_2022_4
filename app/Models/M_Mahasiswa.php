@@ -17,6 +17,6 @@ class M_Mahasiswa extends Model
         'nim',
         'nama',
         'angkatan',
-        'jenis_masuk',
+        'status',
     ];
 }
