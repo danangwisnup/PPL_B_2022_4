@@ -20,13 +20,8 @@
     <!-- Plugins CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/font-awesome/css/all.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/OverlayScrollbars-master/css/OverlayScrollbars.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/tiny-slider/dist/tiny-slider.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/choices.js/public/assets/styles/choices.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/glightbox-master/dist/css/glightbox.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/dropzone/dist/dropzone.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/flatpickr/dist/flatpickr.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/plyr/plyr.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
     <!-- Theme CSS -->
@@ -43,11 +38,7 @@
 
     <!-- Vendors -->
     <script src="{{ asset('assets/vendor/tiny-slider/dist/tiny-slider.js') }}"></script>
-    <script src="{{ asset('assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/choices.js/public/assets/scripts/choices.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/glightbox-master/dist/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/flatpickr/dist/flatpickr.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/plyr/plyr.js') }}"></script>
     <script src="{{ asset('assets/vendor/dropzone/dist/min/dropzone.min.js') }}"></script>
 
     <!-- Template Functions -->
