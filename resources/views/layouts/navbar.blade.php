@@ -9,7 +9,7 @@
                     <img class="light-mode-item navbar-brand-item" src="{{ asset('assets/images/undip.png') }}" alt="logo">
                 </a>
                 <a class="text-dark" href="/">
-                    <strong>Sistem Informasi Monitoring Prestasi Akademik - Informatika</strong>
+                    <strong>SIMAMI (Sistem Monitoring Akademik Mahasiswa Informatika)</strong>
                 </a>
                 <!-- Logo END -->
 
