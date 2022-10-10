@@ -28,7 +28,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-12">
-                    <label for="recipient-name" class="col-form-label">Status </label>
+                    <label for="recipient-name" class="col-form-label">Status</label>
                     <select class="form-control" id="status" name="status">
                         <option value="">-- Pilih Status --</option>
                         <option value="Aktif" {{ $dosen->status == 'Aktif' ? 'selected="true"' : '' }}>Aktif</option>
