@@ -11,11 +11,11 @@ class M_Dosen extends Model
 
     protected $table = 'dosen';
     public $timestamps = false;
-    protected $primaryKey = 'nip';
-    
+
     protected $fillable = [
         'nip',
         'nama',
+        'email',
+        'status',
     ];
-    
 }

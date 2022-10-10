@@ -62,3 +62,17 @@ route::get('/department/data_dosen', function () {
         'title' => 'Data Dosen',
     ]);
 });
+
+// Dosen: progress studi mahasiswa
+route::get('/dosen/progress_studi_mahasiswa', function () {
+    return view('dosen.progress.index', [
+        'title' => 'Progress Studi Mahasiswa',
+    ]);
+});
+
+// Dosen: verifikasi berkas mahasiswa
+route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
+    return view('dosen.verifikasi.index', [
+        'title' => 'Verifikasi Berkas Mahasiswa',
+    ]);
+});

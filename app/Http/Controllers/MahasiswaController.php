@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\M_Mahasiswa;
 use Illuminate\Http\Request;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -42,10 +43,10 @@ class MahasiswaController extends Controller
     {
         // Validate the request...
         $data = $request->validate([
-            'nim' => 'required|numeric|unique:users,nim_nip',
+            'nim' => 'required|string|unique:users,nim_nip',
             'nama' => 'required|string',
             'angkatan' => 'required|numeric',
-            'jalur_masuk' => 'required',
+            'status' => 'required',
         ]);
 
         $data = $request->except(['_token']);
@@ -102,21 +103,25 @@ class MahasiswaController extends Controller
     {
         // 
         $request->validate([
-            'nim' => 'required|numeric',
             'nama' => 'required|string',
             'angkatan' => 'required|numeric',
-            'jalur_masuk' => 'required',
             'status' => 'required',
         ]);
 
-        $data = $request->except(['_token', '_method', 'password']);
+        // Update to table mahasiswa & users
         if ($request->email == '') {
             $data = $request->except(['_token', '_method', 'password', 'email']);
+        } else {
+            $data = $request->except(['_token', '_method', 'password']);
         }
         M_Mahasiswa::where('nim', $id)->update($data);
 
-
-        $data = $request->only(['nama', 'email', 'passoword']);
+        if ($request->password == '') {
+            $data = $request->only(['nama', 'email']);
+        } else {
+            $data = $request->only(['nama', 'email', 'password']);
+            $data['password'] = bcrypt($request->password);
+        }
         User::where('nim_nip', $id)->update($data);
 
         // Alert success

@@ -97,7 +97,7 @@
                                                     <thead class="thead-dark">
                                                         <tr>
                                                             <th>NIP</th>
-                                                            <th>Nama</th>
+                                                            <th width="300px">Nama</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>

@@ -12,12 +12,11 @@ class M_Mahasiswa extends Model
 
     protected $table = 'mahasiswa';
     public $timestamps = false;
-    protected $primaryKey = 'nim';
 
     protected $fillable = [
         'nim',
         'nama',
         'angkatan',
-        'jenis_masuk',
+        'status',
     ];
 }
