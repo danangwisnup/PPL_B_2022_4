@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
             <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
         </div>
     </form>
