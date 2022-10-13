@@ -33,7 +33,7 @@
                             </div>
                             <!-- Password -->
                             <div class="mb-3 position-relative">
-                                <label class="form-label" style="font-size: small"> NIM atau Email <span style="color: red;">*</span></label>
+                                <label class="form-label" style="font-size: small"> Password <span style="color: red;">*</span></label>
                                 <div class="input-group">
                                     <input type="password" class="form-control fakepassword" style="font-size: small" id="password" name="password" placeholder="Masukkan Password" required>
                                     <span class="input-group-text p-0">
