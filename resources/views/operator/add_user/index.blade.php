@@ -66,8 +66,8 @@
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">Status </label>
-                                            <select class="form-control" id="status" name="status" required>
-                                                <option value="">-- Pilih Status --</option>
+                                            <select class="form-select" id="status" name="status" required>
+                                                <option value="">Pilih Status</option>
                                                 <option value="Aktif" @if (old('status')=="Aktif" ) {{ 'selected' }} @endif>Aktif</option>
                                                 <option value="Cuti" @if (old('status')=="Cuti" ) {{ 'selected' }} @endif>Cuti</option>
                                                 <option value="Mangkir" @if (old('status')=="Mangkir" ) {{ 'selected' }} @endif>Mangkir</option>
@@ -102,8 +102,8 @@
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">Status </label>
-                                            <select class="form-control" id="status" name="status" required>
-                                                <option value="">-- Pilih Status --</option>
+                                            <select class="form-select" id="status" name="status" required>
+                                                <option value="">Pilih Status</option>
                                                 <option value="Aktif" @if (old('status')=="Aktif" ) {{ 'selected' }} @endif>Aktif</option>
                                                 <option value="Cuti" @if (old('status')=="Cuti" ) {{ 'selected' }} @endif>Cuti</option>
                                             </select>

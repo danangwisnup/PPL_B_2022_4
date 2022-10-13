@@ -142,71 +142,73 @@
 </div>
 
 <div class="modal fade" data-bs-backdrop="static" data-keyboard="false" id="progress_view" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header alert alert-info">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content bg-info">
+            <div class="modal-header">
                 <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
-                    <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#tab-1" id="tab1"> IRS </a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-2" id="tab2"> KHS </a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-3" id="tab3"> PKL </a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-4" id="tab4"> Skripsi </a> </li>
+                    <li class="nav-item"> <a class="text-white nav-link active" data-bs-toggle="tab" href="#tab-1" id="tab1"> IRS </a> </li>
+                    <li class="nav-item"> <a class="text-white nav-link" data-bs-toggle="tab" href="#tab-2" id="tab2"> KHS </a> </li>
+                    <li class="nav-item"> <a class="text-white nav-link" data-bs-toggle="tab" href="#tab-3" id="tab3"> PKL </a> </li>
+                    <li class="nav-item"> <a class="text-white nav-link" data-bs-toggle="tab" href="#tab-4" id="tab4"> Skripsi </a> </li>
                 </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body alert alert-info">
+            <div class="modal-body">
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-1">
                         <div class="row g-3">
                             <div class="text-end">
-                                <h2 class="text-info">1</h2>
+                                <h2 class="text-white">1</h2>
                             </div>
                             <div class="col-12 text-center">
-                                <h1 class="text-info">24 SKS</h1>
-                                <button class="btn btn-info mt-3 mb-0">Detail</button>
+                                <h1 class="text-white">24 SKS</h1>
+                                <button class="btn btn-dark mt-3 mb-0">Detail</button>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="tab-2">
                         <div class="row g-3">
                             <div class="text-end">
-                                <h2 class="text-danger">1</h2>
+                                <h2 class="text-white">1</h2>
                             </div>
-                            <div class="col-12 text-center">
+                            <div class="col-12 text-center text-white">
                                 SKS Semester: <br />
                                 IP Semester: <br />
                                 SKS Kumulatif: <br />
                                 IP Kumulatif: <br />
-                                <button class="btn btn-info mt-4 mb-0">Detail</button>
+                                <button class="btn btn-dark mt-3 mb-0">Detail</button>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="tab-3">
                         <div class="row g-3">
                             <div class="text-end">
-                                <h2 class="text-warning">1</h2>
+                                <h2 class="text-white">1</h2>
                             </div>
-                            <div class="col-12 text-center">
+                            <div class="col-12 text-center text-white">
                                 Nilai PKL: <br />
                                 Seminar PKL: <br />
                                 Status: <br />
-                                <button class="btn btn-info mt-4 mb-0">Detail</button>
+                                <button class="btn btn-dark mt-3 mb-0">Detail</button>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="tab-4">
                         <div class="row g-3">
                             <div class="text-end">
-                                <h2 class="text-success">1</h2>
+                                <h2 class="text-white">1</h2>
                             </div>
-                            <div class="col-12 text-center">
+                            <div class="col-12 text-center text-white">
                                 Nilai Skripsi: <br />
                                 Tanggal Skripsi: <br />
                                 Status: <br />
-                                <button class="btn btn-info mt-4 mb-0">Detail</button>
+                                <button class="btn btn-dark mt-3 mb-0">Detail</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="modal-footer">
             </div>
         </div>
     </div>

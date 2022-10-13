@@ -10,11 +10,11 @@
                     <div class="hstack gap-2 gap-xl-5 justify-content-center text-center">
                         <div>
                             <h5 class="mb-0">3</h5>
-                            <span class="badge btn-primary-soft small">Aktif</span>
+                            <span class="badge btn-success-soft small">Lulus</span>
                         </div>
                         <div>
                             <h5 class="mb-0">3</h5>
-                            <span class="badge btn-success-soft small">Lulus</span>
+                            <span class="badge btn-primary-soft small">Aktif</span>
                         </div>
                         <div>
                             <h5 class="mb-0">3</h5>
@@ -35,12 +35,10 @@
                         <div id="grafik"></div>
                         @section('grafik')
                         <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
                         <script>
-                            // Data retrieved from https://gs.statcounter.com/browser-market-share#monthly-202201-202201-bar
-                            // Create the chart
-                            // Data retrieved from https://gs.statcounter.com/browser-market-share#monthly-202201-202201-bar
-
-                            // Create the chart
                             Highcharts.chart('grafik', {
                                 chart: {
                                     type: 'column'
@@ -94,17 +92,20 @@
                                 },
                                 series: [{
                                     name: 'Lulus',
+                                    color: '#00c292',
                                     data: [0, 2, 6, 3]
                                 }, {
                                     name: 'Aktif',
+                                    color: '#00a8ff',
                                     data: [3, 5, 1, 13]
                                 }, {
                                     name: 'Cuti',
+                                    color: '#ff9f43',
                                     data: [14, 8, 8, 12]
                                 }, ]
                             });
                         </script>
-                        @stop
+                        @endsection
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@
             <div class="form-group row">
                 <div class="col-12">
                     <label for="recipient-name" class="col-form-label">Nama </label>
-                    <input type="text" class="form-control" id="nama" name="nama" value="{{ $mahasiswa->nama }}">
+                    <input type="text" class="form-control" id="nama" name="nama" value="{{ $mahasiswa->nama }}" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -55,8 +55,8 @@
             <div class="form-group row">
                 <div class="col-12">
                     <label for="recipient-name" class="col-form-label">Status </label>
-                    <select class="form-control" id="status" name="status">
-                        <option value="">-- Pilih Status --</option>
+                    <select class="form-select" id="status" name="status" required>
+                        <option value="">Pilih Status</option>
                         <option value="Aktif" {{ $mahasiswa->status == 'Aktif' ? 'selected="true"' : '' }}>Aktif</option>
                         <option value="Cuti" {{ $mahasiswa->status == 'Cuti' ? 'selected="true"' : '' }}>Cuti</option>
                         <option value="Mangkir" {{ $mahasiswa->status == 'Mangkir' ? 'selected="true"' : '' }}>Mangkir</option>
@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer bg-white">
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
         </div>
