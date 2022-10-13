@@ -34,8 +34,7 @@ $(document).on("click", "#buttonModalDosen", function (event) {
     });
 });
 
-let modal_header = document.getElementsByClassName("modal-header");
-let modal_body = document.getElementsByClassName("modal-body");
+let modal_content = document.getElementsByClassName("modal-content");
 
 // click class btn-close data-bs-toggle="tab" href="#tab-1" click
 $(".btn-close").click(function () {
@@ -56,57 +55,33 @@ $(".btn-close").click(function () {
 });
 
 $("#tab1").click(function () {
-    // change modal header
-    modal_header[0].classList.add("alert-info");
-    modal_header[0].classList.remove("alert-danger");
-    modal_header[0].classList.remove("alert-warning");
-    modal_header[0].classList.remove("alert-success");
-
-    // change modal body
-    modal_body[0].classList.add("alert-info");
-    modal_body[0].classList.remove("alert-danger");
-    modal_body[0].classList.remove("alert-warning");
-    modal_body[0].classList.remove("alert-success");
+    // change modal content
+    modal_content[0].classList.add("bg-info");
+    modal_content[0].classList.remove("bg-danger");
+    modal_content[0].classList.remove("bg-warning");
+    modal_content[0].classList.remove("bg-success");
 });
 
 $("#tab2").click(function () {
-    // change modal header
-    modal_header[0].classList.remove("alert-info");
-    modal_header[0].classList.add("alert-danger");
-    modal_header[0].classList.remove("alert-warning");
-    modal_header[0].classList.remove("alert-success");
-
-    // change modal body
-    modal_body[0].classList.remove("alert-info");
-    modal_body[0].classList.add("alert-danger");
-    modal_body[0].classList.remove("alert-warning");
-    modal_body[0].classList.remove("alert-success");
+    // change modal content
+    modal_content[0].classList.remove("bg-info");
+    modal_content[0].classList.add("bg-danger");
+    modal_content[0].classList.remove("bg-warning");
+    modal_content[0].classList.remove("bg-success");
 });
 
 $("#tab3").click(function () {
-    // change modal header
-    modal_header[0].classList.remove("alert-info");
-    modal_header[0].classList.remove("alert-danger");
-    modal_header[0].classList.add("alert-warning");
-    modal_header[0].classList.remove("alert-success");
-
-    // change modal body
-    modal_body[0].classList.remove("alert-info");
-    modal_body[0].classList.remove("alert-danger");
-    modal_body[0].classList.add("alert-warning");
-    modal_body[0].classList.remove("alert-success");
+    // change modal content
+    modal_content[0].classList.remove("bg-info");
+    modal_content[0].classList.remove("bg-danger");
+    modal_content[0].classList.add("bg-warning");
+    modal_content[0].classList.remove("bg-success");
 });
 
 $("#tab4").click(function () {
-    // change modal header
-    modal_header[0].classList.remove("alert-info");
-    modal_header[0].classList.remove("alert-danger");
-    modal_header[0].classList.remove("alert-warning");
-    modal_header[0].classList.add("alert-success");
-
-    // change modal body
-    modal_body[0].classList.remove("alert-info");
-    modal_body[0].classList.remove("alert-danger");
-    modal_body[0].classList.remove("alert-warning");
-    modal_body[0].classList.add("alert-success");
+    // change modal content
+    modal_content[0].classList.remove("bg-info");
+    modal_content[0].classList.remove("bg-danger");
+    modal_content[0].classList.remove("bg-warning");
+    modal_content[0].classList.add("bg-success");
 });

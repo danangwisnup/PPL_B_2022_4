@@ -6146,7 +6146,7 @@ textarea.form-control-lg {
   background-color: #fff;
   background-clip: padding-box;
   border: 0 solid rgba(0, 0, 0, 0.2);
-  border-radius: 0.4rem;
+  border-radius: 3px;
   outline: 0;
 }
 
@@ -6179,9 +6179,6 @@ textarea.form-control-lg {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 1rem 1rem;
-  border-bottom: 1px solid #dee2e6;
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
 }
 .modal-header .btn-close {
   padding: 0.5rem 0.5rem;
@@ -6216,9 +6213,8 @@ textarea.form-control-lg {
       -ms-flex-pack: end;
           justify-content: flex-end;
   padding: 0.75rem;
-  border-top: 1px solid #dee2e6;
-  border-bottom-right-radius: 0.4rem;
-  border-bottom-left-radius: 0.4rem;
+  border-top: 1px solid transparent;
+  background: rgba(0, 0, 0, 0.1);
 }
 .modal-footer > * {
   margin: 0.25rem;
@@ -7450,8 +7446,8 @@ textarea.form-control-lg {
 }
 
 .shadow {
-  -webkit-box-shadow: 0px 0px 20px rgba(93, 83, 84, 0.15) !important;
-          box-shadow: 0px 0px 20px rgba(93, 83, 84, 0.15) !important;
+  -webkit-box-shadow: 0px 0px 10px rgba(93, 83, 84, 0.15) !important;
+          box-shadow: 0px 0px 10px rgba(93, 83, 84, 0.15) !important;
 }
 
 .shadow-sm {
@@ -16847,5 +16843,34 @@ html[data-theme=dark] .light-mode-item {
     max-width: 100%;
   }
 }
+
+.garis {
+	text-align: center;
+	color: rgb(158, 158, 158);
+}
+
+.garis p {
+	position: relative;
+	display: inline-block;
+}
+
+.garis p:before {
+	content: " ";
+	position: absolute;
+	border-bottom: 1px solid rgb(194, 194, 194);
+	width: 90px;
+	left: -100px;
+	top: 50%;
+}
+
+.garis p:after {
+	content: " ";
+	position: absolute;
+	border-bottom: 1px solid rgb(194, 194, 194);
+	width: 90px;
+	right: -100px;
+	top: 50%;
+}
+
 /*User CSS*/
 /*# sourceMappingURL=style.css.map */
