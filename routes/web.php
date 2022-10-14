@@ -76,3 +76,5 @@ route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
         'title' => 'Verifikasi Berkas Mahasiswa',
     ]);
 });
+
+// Departement:
