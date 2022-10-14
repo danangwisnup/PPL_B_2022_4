@@ -76,3 +76,24 @@ route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
         'title' => 'Verifikasi Berkas Mahasiswa',
     ]);
 });
+
+// Dosen: data mahasiswa
+route::get('/dosen/data_mahasiswa', function () {
+    return view('dosen.data_mhs.index', [
+        'title' => 'Data Mahasiswa',
+    ]);
+});
+
+// Dosen: data mahasiswa pkl
+route::get('/dosen/data_mahasiswa_pkl', function () {
+    return view('dosen.data_pkl.index', [
+        'title' => 'Data Mahasiswa PKL',
+    ]);
+});
+
+// Dosen: data mahasiswa skripsi
+route::get('/dosen/data_mahasiswa_skripsi', function () {
+    return view('dosen.data_skripsi.index', [
+        'title' => 'Data Mahasiswa Skripsi',
+    ]);
+});
