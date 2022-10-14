@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kabupaten', function (Blueprint $table) {
+        Schema::create('tb_kabupaten', function (Blueprint $table) {
             $table->string('kode_kab')->primary();
-            $table->string('nama');
+            $table->string('kode_prov')->unique();
+            $table->string('nama_kab');
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kabupaten');
+        Schema::dropIfExists('tb_kabupaten');
     }
 };

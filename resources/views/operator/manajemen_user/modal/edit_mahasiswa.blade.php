@@ -29,17 +29,7 @@
             <div class="form-group row">
                 <div class="col-6">
                     <label for="recipient-name" class="col-form-label">Angkatan</label>
-                    <select class="form-select" id="angkatan" name="angkatan" required>
-                        <option value="">Pilih Angkatan</option>
-                        <option value="2015" {{ $mahasiswa->angkatan == '2015' ? 'selected="true"' : '' }}>2015</option>
-                        <option value="2016" {{ $mahasiswa->angkatan == '2016' ? 'selected="true"' : '' }}>2016</option>
-                        <option value="2017" {{ $mahasiswa->angkatan == '2017' ? 'selected="true"' : '' }}>2017</option>
-                        <option value="2018" {{ $mahasiswa->angkatan == '2018' ? 'selected="true"' : '' }}>2018</option>
-                        <option value="2019" {{ $mahasiswa->angkatan == '2019' ? 'selected="true"' : '' }}>2019</option>
-                        <option value="2020" {{ $mahasiswa->angkatan == '2020' ? 'selected="true"' : '' }}>2020</option>
-                        <option value="2021" {{ $mahasiswa->angkatan == '2021' ? 'selected="true"' : '' }}>2021</option>
-                        <option value="2022" {{ $mahasiswa->angkatan == '2022' ? 'selected="true"' : '' }}>2022</option>
-                    </select>
+                    <input type="number" class="form-control" id="angkatan" name="angkatan" value="{{ $mahasiswa->angkatan }}" required>
                 </div>
                 <div class="col-6">
                     <label for="recipient-name" class="col-form-label">Jenis Masuk</label>

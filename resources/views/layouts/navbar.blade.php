@@ -53,7 +53,7 @@
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button class="dropdown-item bg-danger-soft-hover"><i class="bi bi-power fa-fw me-2"></i>Sign Out</button>
+                                    <button class="dropdown-item bg-danger-soft-hover"><i class="bi bi-power fa-fw me-2"></i>Log Out</button>
                                 </form>
                             </li>
                             <li>
