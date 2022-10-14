@@ -5030,8 +5030,10 @@ textarea.form-control-lg {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1.3px solid #ced4da;
+  border: 1px solid rgba(0, 0, 0, 0.09);
   border-radius: 0.4rem;
+  -webkit-box-shadow: 0px 0px 10px rgba(93, 83, 84, 0.15) !important;
+          box-shadow: 0px 0px 10px rgba(93, 83, 84, 0.15) !important;
 }
 .card > hr {
   margin-right: 0;
@@ -7446,8 +7448,8 @@ textarea.form-control-lg {
 }
 
 .shadow {
-  -webkit-box-shadow: 0px 0px 10px rgba(93, 83, 84, 0.15) !important;
-          box-shadow: 0px 0px 10px rgba(93, 83, 84, 0.15) !important;
+  -webkit-box-shadow: 0px 0px 20px rgba(93, 83, 84, 0.15) !important;
+          box-shadow: 0px 0px 20px rgba(93, 83, 84, 0.15) !important;
 }
 
 .shadow-sm {

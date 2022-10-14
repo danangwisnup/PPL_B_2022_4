@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pkl', function (Blueprint $table) {
+        Schema::create('tb_pkl', function (Blueprint $table) {
             $table->string('nim')->primary();
-            $table->string('nilai')->nullable();
             $table->integer('semester_aktif');
-            $table->string('status_konfirmasi')->nullable();
-            $table->binary('upload_pkl')->nullable();
+            $table->string('nilai')->nullable();
             $table->string('status');
+            $table->binary('upload_pkl')->nullable();
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pkl');
+        Schema::dropIfExists('tb_pkl');
     }
 };

@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('provinsi', function (Blueprint $table) {
+        Schema::create('tb_provinsi', function (Blueprint $table) {
             $table->string('kode_prov')->primary();
-            $table->string('nama');
+            $table->string('nama_prov');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provinsi');
+        Schema::dropIfExists('tb_provinsi');
     }
 };
