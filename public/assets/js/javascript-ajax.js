@@ -37,7 +37,7 @@ $(document).on("click", "#buttonModalDosen", function (event) {
 let modal_content = document.getElementsByClassName("modal-content");
 
 // click class btn-close data-bs-toggle="tab" href="#tab-1" click
-$(".btn-close").click(function () {
+$("#btnClose").click(function () {
     // function tab1 click
     $("#tab1").click();
 

@@ -151,7 +151,7 @@
                     <li class="nav-item"> <a class="text-white nav-link" data-bs-toggle="tab" href="#tab-3" id="tab3"> PKL </a> </li>
                     <li class="nav-item"> <a class="text-white nav-link" data-bs-toggle="tab" href="#tab-4" id="tab4"> Skripsi </a> </li>
                 </ul>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" id="btnClose" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="tab-content">

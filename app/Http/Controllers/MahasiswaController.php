@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\M_Mahasiswa;
 use Illuminate\Http\Request;
-use Mockery\Generator\StringManipulation\Pass\Pass;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -42,17 +41,37 @@ class MahasiswaController extends Controller
     public function store(Request $request)
     {
         // Validate the request...
-        $data = $request->validate([
-            'nim' => 'required|string|unique:users,nim_nip',
+        $request->validate([
+            'nim' => 'required|string|unique:users,nim_nip|min:14|max:14',
             'nama' => 'required|string',
-            'angkatan' => 'required|numeric',
             'status' => 'required',
         ]);
 
-        $data = $request->except(['_token']);
+        // Angkatan Mahasiswa
+        $angkatan = 20 . substr($request->nim, 6, 2);
+
+        // 12 = SNMPTN
+        // 13 = SBMPTN
+        // 14 = Ujian Mandiri
+        if (substr($request->nim, 8, 2) == '12') {
+            $jalur_masuk = 'SNMPTN';
+        } elseif (substr($request->nim, 8, 2) == '13') {
+            $jalur_masuk = 'SBMPTN';
+        } elseif (substr($request->nim, 8, 2) == '14') {
+            $jalur_masuk = 'Ujian Mandiri';
+        } else {
+            $jalur_masuk = 'SBUB';
+        }
 
         // Insert to table mahasiswa & users
-        M_Mahasiswa::insert($data);
+        M_Mahasiswa::insert([
+            'nim' => $request->nim,
+            'nama' => $request->nama,
+            'angkatan' => $angkatan,
+            'status' => $request->status,
+            'jalur_masuk' => $jalur_masuk,
+        ]);
+
         User::insert([
             'nim_nip' => $request->nim,
             'nama' => $request->nama,
@@ -112,6 +131,9 @@ class MahasiswaController extends Controller
         if ($request->email == '') {
             $data = $request->except(['_token', '_method', 'password', 'email']);
         } else {
+            $request->validate([
+                'email' => 'unique:users,email,' . $id . ',nim_nip',
+            ]);
             $data = $request->except(['_token', '_method', 'password']);
         }
         M_Mahasiswa::where('nim', $id)->update($data);

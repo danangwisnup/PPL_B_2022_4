@@ -13,17 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mahasiswa', function (Blueprint $table) {
+        Schema::create('tb_mahasiswa', function (Blueprint $table) {
             $table->string('nim')->primary();
             $table->string('nama');
             $table->text('alamat')->nullable();
-            $table->string('kab_kota')->nullable();
-            $table->string('propinsi')->nullable();
+            $table->string('kode_kab')->nullable();
+            $table->string('kode_prov')->nullable();
             $table->integer('angkatan');
             $table->string('jalur_masuk')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('handphone')->nullable();
-            $table->string('dosen_wali')->nullable();
+            $table->string('kode_wali')->nullable();
             $table->string('status');
             $table->binary('foto')->nullable();
         });
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mahasiswa');
+        Schema::dropIfExists('tb_mahasiswa');
     }
 };

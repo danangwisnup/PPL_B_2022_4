@@ -34,4 +34,19 @@ class DashboardController extends Controller
             'title' => 'Manajemen User',
         ])->with('mahasiswa', $Mahasiswa)->with('dosen', $Dosen);
     }
+
+    // Fiture Mahasiswa: IRS
+    // Fiture Mahasiswa: KHS
+    // Fiture Mahasiswa: PKL
+    // Fiture Mahasiswa: Skripsi
+
+    // Fiture Dosen: Progress Studi Mahasiswa
+    // Fiture Dosen: Verifikasi Berkas Mahasiswa
+    // Fiture Dosen: Data Mahasiswa
+    // Fiture Dosen: Data Mahasiswa PKL
+    // Fiture Dosen: Data Mahsiswa Skripsi
+
+    // Fiture Department: Progress Studi Mahasiswa
+    // Fiture Department: Data Mahasiswa
+    // Fiture Department: Data Dosen
 }

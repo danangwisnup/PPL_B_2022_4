@@ -43,7 +43,6 @@
 
     <!-- Template Functions -->
     <script src="{{ asset('assets/js/template.js') }}"></script>
-    @yield('grafik')
 
 </body>
 
