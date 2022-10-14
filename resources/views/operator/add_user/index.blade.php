@@ -16,7 +16,6 @@
 
                 <!-- Main content START -->
                 <div class="col-md-8 col-lg-6 vstack gap-4">
-                    <!-- Event alert START -->
                     @if ($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                         @foreach ($errors->all() as $error)
@@ -25,7 +24,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
-                    <!-- Event alert END -->
                     <!-- Card START -->
                     <div class="card">
                         <!-- Card header START -->
@@ -42,38 +40,27 @@
 
                                 <!-- Tab Mahasiswa -->
                                 <div class="tab-pane fade show active" id="tab-1">
-                                    <form class="row g-3" action="{{ route('add_mahasiswa') }}" method="POST">
+                                    <form class="row g-3" action="/operator/mahasiswa" method="POST">
                                         @csrf
                                         <div class="col-6">
                                             <label class="form-label text-dark">NIM</label>
-                                            <input type="number" class="form-control" id="nim" name="nim" placeholder="NIM" required>
+                                            <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM" value="{{ old('nim') }}" required>
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">Nama Mahasiswa</label>
-                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" required>
+                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ old('nama') }}" required>
                                         </div>
-                                        <div class="col-6">
-                                            <label class="form-label text-dark">Angkatan</label>
-                                            <select class="form-select" id="angkatan" name="angkatan" required>
-                                                <option value="">Pilih Angkatan</option>
-                                                <option value="2015">2015</option>
-                                                <option value="2016">2016</option>
-                                                <option value="2017">2017</option>
-                                                <option value="2018">2018</option>
-                                                <option value="2019">2019</option>
-                                                <option value="2020">2020</option>
-                                                <option value="2021">2021</option>
-                                                <option value="2022">2022</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="form-label text-dark">Jenis Masuk</label>
-                                            <select class="form-select" id="jalur_masuk" name="jalur_masuk" required>
-                                                <option value="">Pilih Jenis Masuk</option>
-                                                <option value="SNMPTN">SNMPTN</option>
-                                                <option value="SBMPTN">SBMPTN</option>
-                                                <option value="SBUB">SBUB</option>
-                                                <option value="Ujian Mandiri">Ujian Mandiri</option>
+                                        <div class="col-12">
+                                            <label class="form-label text-dark">Status </label>
+                                            <select class="form-select" id="status" name="status" required>
+                                                <option value="">Pilih Status</option>
+                                                <option value="Aktif" @if (old('status')=="Aktif" ) {{ 'selected' }} @endif>Aktif</option>
+                                                <option value="Cuti" @if (old('status')=="Cuti" ) {{ 'selected' }} @endif>Cuti</option>
+                                                <option value="Mangkir" @if (old('status')=="Mangkir" ) {{ 'selected' }} @endif>Mangkir</option>
+                                                <option value="DO" @if (old('status')=="DO" ) {{ 'selected' }} @endif>DO</option>
+                                                <option value="Undur Diri" @if (old('status')=="Undur Diri" ) {{ 'selected' }} @endif>Undur Diri</option>
+                                                <option value="Meninggal Dunia" @if (old('status')=="Meninggal Dunia" ) {{ 'selected' }} @endif>Meninggal Dunia</option>
+                                                <option value="Lulus" @if (old('status')=="Lulus" ) {{ 'selected' }} @endif>Lulus</option>
                                             </select>
                                         </div>
                                         <div class="col-12 text-end">
@@ -85,15 +72,27 @@
 
                                 <!-- Tab Dosen -->
                                 <div class="tab-pane fade" id="tab-2">
-                                    <form class="row g-3" action="{{ route('add_dosen') }}" method="POST">
+                                    <form class="row g-3" action="/operator/dosen" method="POST">
                                         @csrf
                                         <div class="col-6">
                                             <label class="form-label text-dark">NIP</label>
-                                            <input type="number" class="form-control" id="nip" name="nip" placeholder="NIP" required>
+                                            <input type="text" class="form-control" id="nip" name="nip" placeholder="NIP" value="{{ old('nip') }}" required>
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">Nama Dosen</label>
-                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" required>
+                                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ old('nama') }}" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label text-dark">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label text-dark">Status </label>
+                                            <select class="form-select" id="status" name="status" required>
+                                                <option value="">Pilih Status</option>
+                                                <option value="Aktif" @if (old('status')=="Aktif" ) {{ 'selected' }} @endif>Aktif</option>
+                                                <option value="Cuti" @if (old('status')=="Cuti" ) {{ 'selected' }} @endif>Cuti</option>
+                                            </select>
                                         </div>
                                         <div class="col-12 text-end">
                                             <button type="submit" class="btn btn-sm btn-primary mb-0">Generate</button>

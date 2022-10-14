@@ -9,10 +9,13 @@ class M_Dosen extends Model
 {
     use HasFactory;
 
-    protected $table = 'dosen';
+    protected $table = 'tb_dosen';
+    public $timestamps = false;
+
     protected $fillable = [
         'nip',
         'nama',
+        'email',
+        'status',
     ];
-    protected $hidden;
 }

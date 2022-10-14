@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('khs', function (Blueprint $table) {
+        Schema::create('tb_khs', function (Blueprint $table) {
             $table->string('nim')->primary();
             $table->integer('semester_aktif');
             $table->integer('sks');
             $table->integer('sks_kumulatif');
             $table->float('ip');
             $table->float('ip_kumulatif');
-            $table->string('status_konfirmasi');
+            $table->string('status');
             $table->binary('upload_khs');
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('khs');
+        Schema::dropIfExists('tb_khs');
     }
 };

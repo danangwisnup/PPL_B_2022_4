@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DosenController;
+use App\Http\Controllers\MahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,38 +31,64 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
 // Operator: Add User
-Route::get('/operator/add_user', [UserController::class, 'add_user'])->middleware('auth', 'operator')->name('user_add');
+Route::get('/operator/add_user', [DashboardController::class, 'add_user'])->middleware('auth', 'operator')->name('user_add');
 
 // Operator: Manajemen User
-Route::get('/operator/manajemen_user', [UserController::class, 'manajemen_user'])->middleware('auth', 'operator')->name('user_manajemen');
+Route::get('/operator/manajemen_user', [DashboardController::class, 'manajemen_user'])->middleware('auth', 'operator')->name('user_manajemen');
 
 // Operator: CRUD Mahasiswa
-Route::post('/operator/add_mahasiswa', [UserController::class, 'add_mahasiswa'])->middleware('auth', 'operator')->name('add_mahasiswa');
-Route::post('/operator/update_mahasiswa', [UserController::class, 'update_mahasiswa'])->middleware('auth', 'operator')->name('update_mahasiswa');
-Route::post('/operator/delete_mahasiswa', [UserController::class, 'delete_mahasiswa'])->middleware('auth', 'operator')->name('delete_mahasiswa');
+Route::resource('/operator/mahasiswa', MahasiswaController::class)->middleware('auth', 'operator');
 
 // Operator: CRUD Dosen
-Route::post('/operator/add_dosen', [UserController::class, 'add_dosen'])->middleware('auth', 'operator')->name('add_dosen');
-Route::post('/operator/update_dosen', [UserController::class, 'update_dosen'])->middleware('auth', 'operator')->name('update_dosen');
-Route::post('/operator/delete_dosen', [UserController::class, 'delete_dosen'])->middleware('auth', 'operator')->name('delete_dosen');
+Route::resource('/operator/dosen', DosenController::class)->middleware('auth', 'operator');
 
-//department: progress studi mahasiswa
+// Department: progress studi mahasiswa
 route::get('/department/progress_studi_mahasiswa', function () {
     return view('department.progress_studi_mahasiswa', [
         'title' => 'Progress Studi Mahasiswa',
     ]);
 });
 
-//department: data mahasiswa
+// Department: data mahasiswa
 route::get('/department/data_mahasiswa', function () {
     return view('department.data_mahasiswa', [
         'title' => 'Data Mahasiswa',
     ]);
 });
 
-//department: data mahasiswa
+// Department: data dosen
 route::get('/department/data_dosen', function () {
     return view('department.data_dosen', [
         'title' => 'Data Dosen',
     ]);
 });
+
+// Dosen: progress studi mahasiswa
+route::get('/dosen/progress_studi_mahasiswa', function () {
+    return view('dosen.progress.index', [
+        'title' => 'Progress Studi Mahasiswa',
+    ]);
+});
+
+// Dosen: verifikasi berkas mahasiswa
+route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
+    return view('dosen.verifikasi.index', [
+        'title' => 'Verifikasi Berkas Mahasiswa',
+    ]);
+});
+
+// Mahasiswa
+route::get('/mahasiswa/edit_profile', function () {
+    return view('mahasiswa.edit_profile', [
+        'title' => 'Edit Profile',
+    ]);
+});
+
+route::get('/mahasiswa/input_irs', function () {
+    return view('mahasiswa.input_irs', [
+        'title' => 'Input IRS',
+    ]);
+});
+
+// Departement:
+// ...

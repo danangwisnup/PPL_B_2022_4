@@ -23,13 +23,13 @@
                 <!-- Card START -->
                 <div class="card overflow-hidden">
                     <!-- Cover image -->
-                    <div class="h-50px" style="background-image:url(http://ppl-project.test/assets/images/bg/01.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                    <div class="h-80px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/Widya-Puraya-1.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                     <!-- Card body START -->
                     <div class="card-body pt-0">
                         <div class="text-center">
                             <!-- Avatar -->
-                            <div class="avatar avatar-lg mt-n5 mb-3">
-                                <a href="#!"><img class="avatar-img rounded border border-white border-3" src="{{ asset('assets/images/avatar/07.jpg') }}" alt=""></a>
+                            <div class="avatar avatar-xxl mt-n5 mb-1">
+                                <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
                             </div>
                             <!-- Info -->
                             <h5 class="mb-0"> <a href="#!">{{ Auth::user()->nama }}</a> </h5>
@@ -42,82 +42,106 @@
                         <hr>
 
                         <!-- Side Nav START -->
-                        @if (Auth::user()->role == 'operator')
-                        <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-0 border-0">
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
-                                    <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
+                        <ul class="nav nav-link-secondary flex-column fw-bold gap-2">
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
+                                    <i class="bi bi-house-door"></i><span> Dashboard</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Add User')? 'active' : '' }}" href="/operator/add_user">
-                                    <i class="bi bi-person-plus-fill"></i><span> Add User</span>
+                            @if (Auth::user()->role == 'operator')
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Add User')? 'active' : '' }}" href="/operator/add_user">
+                                    <i class="bi bi-person-plus"></i><span> Add User</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Manajemen User')? 'active' : '' }}" href="/operator/manajemen_user">
-                                    <i class="bi bi-people-fill"></i><span> Manajemen User</span>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Manajemen User')? 'active' : '' }}" href="/operator/manajemen_user">
+                                    <i class="bi bi-people"></i><span> Manajemen User</span>
                                 </a>
                             </li>
-                        </ul>
-                        @elseif (Auth::user()->role == 'mahasiswa')
-                        <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-0 border-0">
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
-                                    <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
+                            @elseif (Auth::user()->role == 'mahasiswa')
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/input_irs">
+                                    <i class="bi bi-book"></i><span> IRS</span>
                                 </a>
                             </li>
-                        </ul>
-                        @elseif (Auth::user()->role == 'dosen')
-                        <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-0 border-0">
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
-                                    <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'KHS')? 'active' : '' }}" href="/">
+                                    <i class="bi bi-list-columns"></i><span> KHS</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Progress Studi Mahasiswa')? 'active' : '' }}" href="/dashboard">
-                                    <i class="bi bi-people-fill"></i><span> Progress Studi Mahasiswa</span>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'PKL')? 'active' : '' }}" href="/">
+                                    <i class="bi bi-building"></i><span> PKL</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Verifikasi Berkas Mahasiswa')? 'active' : '' }}" href="/dashboard">
-                                    <i class="bi bi-house-door-fill"></i><span> Verifikasi Berkas Mahasiswa</span>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Skripsi')? 'active' : '' }}" href="/">
+                                    <i class="bi bi-mortarboard"></i><span> Skripsi</span>
                                 </a>
                             </li>
-                        </ul>
-                        @elseif (Auth::user()->role == 'department')
-                        <ul class="nav nav-tabs nav-pills nav-pills-soft flex-column fw-bold gap-0 border-0">
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Dashboard')? 'active' : '' }}" href="/dashboard">
-                                    <i class="bi bi-house-door-fill"></i><span> Dashboard</span>
+                            @elseif (Auth::user()->role == 'dosen')
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Progress Studi Mahasiswa')? 'active' : '' }}" href="/dosen/progress_studi_mahasiswa">
+                                    <i class="bi bi-clipboard2-data"></i><span> Progress Studi Mahasiswa</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Progress Studi Mahasiswa')? 'active' : '' }}" href="/department/progress_studi_mahasiswa">
-                                    <i class="bi bi-house-door-fill"></i><span> Progress Studi Mahasiswa</span>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Verifikasi Berkas Mahasiswa')? 'active' : '' }}" href="/dosen/verifikasi_berkas_mahasiswa">
+                                    <i class="bi bi-clipboard2-check"></i><span> Verifikasi Berkas Mahasiswa</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Data Mahasiswa')? 'active' : '' }}" href="/department/data_mahasiswa">
-                                    <i class="bi bi-file-earmark-text-fill"></i><span> Data Mahasiswa</span>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa')? 'active' : '' }}" href="/dosen/data_mahasiswa">
+                                    <i class="bi bi-file-earmark-text"></i><span> Data Mahasiswa</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item {{ ($title == 'Data Dosen')? 'active' : '' }}" href="/department/data_dosen">
-                                    <i class="bi bi-file-earmark-text-fill"></i><span> Data Dosen</span>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa PKL')? 'active' : '' }}" href="/dosen/data_mahasiswa_pkl">
+                                    <i class="bi bi-building"></i><span> Data Mahasiswa PKL</span>
                                 </a>
                             </li>
-                        </ul>
-                        @endif
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa Skripsi')? 'active' : '' }}" href="/dosen/data_mahasiswa_skripsi">
+                                    <i class="bi bi-mortarboard"></i><span> Data Mahasiswa Skripsi</span>
+                                </a>
+                            </li>
+                            @elseif (Auth::user()->role == 'department')
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Progress Studi Mahasiswa')? 'active' : '' }}" href="/department/progress_studi_mahasiswa">
+                                    <i class="bi bi-clipboard2-data"></i><span> Progress Studi Mahasiswa</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa')? 'active' : '' }}" href="/department/data_mahasiswa">
+                                    <i class="bi bi-file-earmark-text"></i><span> Data Mahasiswa</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Dosen')? 'active' : '' }}" href="/department/data_dosen">
+                                    <i class="bi bi-file-earmark-text"></i><span> Data Dosen</span>
+                                </a>
+                            </li>
+                            @endif
 
+                            <li class="nav-item">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button style="font-size: 14px;" class="nav-link btn fw-bold">
+                                        <i class="bi bi-box-arrow-left"></i><span> Logout</span>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                         <!-- Side Nav END -->
                     </div>
                     <!-- Card body END -->
                     <!-- Card footer -->
+                    @if (Auth::user()->role == 'mahasiswa')
                     <div class="card-footer text-center py-2">
-                        <a class="btn btn-link btn-sm" href="javascript:;">View Profile </a>
+                        <a class="btn btn-link btn-sm" href="/mahasiswa/edit_profile">Edit Profile </a>
                     </div>
+                    @endif
                 </div>
                 <!-- Card END -->
             </div>
