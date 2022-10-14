@@ -17,15 +17,21 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card mt-4">
-                                    <div class="card-header">Progres Studi Mahasiswa</div>
-                                    <div class="card-body">
-                                        <p>KOSONG</p>
+                                <div class="card-body">
+                                    <h5 class="card-title">Progres Studi Mahasiswa</h5>
+                                    <div class="col-md-10">
+                                        <div class="nav mt-3 mt-lg-0 d-flex align-items-center px-4 px-lg-0">
+                                            <div class="nav-item w-100">
+                                                <form class="rounded position-relative">
+                                                    <input class="form-control ps-5 bg-light" type="search" placeholder="Search..." aria-label="Search">
+                                                    <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit"><i class="bi bi-search fs-5"> </i></button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                @endsection
+                    @endsection
