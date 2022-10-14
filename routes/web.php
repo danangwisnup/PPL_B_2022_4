@@ -77,5 +77,18 @@ route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
     ]);
 });
 
+// Mahasiswa
+route::get('/mahasiswa/edit_profile', function () {
+    return view('mahasiswa.edit_profile', [
+        'title' => 'Edit Profile',
+    ]);
+});
+
+route::get('/mahasiswa/input_irs', function () {
+    return view('mahasiswa.input_irs', [
+        'title' => 'Input IRS',
+    ]);
+});
+
 // Departement:
 // ...
