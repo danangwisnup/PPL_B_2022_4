@@ -84,9 +84,9 @@ route::get('/mahasiswa/edit_profile', function () {
     ]);
 });
 
-route::get('/mahasiswa/input_irs', function () {
-    return view('mahasiswa.input_irs', [
-        'title' => 'Input IRS',
+route::get('/mahasiswa/irs', function () {
+    return view('mahasiswa.irs', [
+        'title' => 'IRS',
     ]);
 });
 
