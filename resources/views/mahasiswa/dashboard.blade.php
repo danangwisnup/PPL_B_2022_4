@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Dashboard</h5>
                     <br />
-                        <h4 class="text-center" style="font-size:20px">Selamat Datang Di SIMI</h4>
+                        <h4 class="text-center" style="font-size:20px">Selamat Datang di SI-Monitoring Akademik Informatika</h4>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                         <div class="vr"></div>
                         <div>
                             <h5 class="mb-3">PKL</h5>
-                            <span class="badge btn-success">Lulus</span>
+                            <span class="badge btn-success-soft">Lulus</span>
                         </div>
                         <div class="vr"></div>
                         <div>

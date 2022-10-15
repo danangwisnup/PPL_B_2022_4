@@ -61,7 +61,7 @@
                             </li>
                             @elseif (Auth::user()->role == 'mahasiswa')
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/input_irs">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/irs">
                                     <i class="bi bi-book"></i><span> IRS</span>
                                 </a>
                             </li>
