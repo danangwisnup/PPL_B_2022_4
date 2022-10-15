@@ -61,7 +61,7 @@
                             </li>
                             @elseif (Auth::user()->role == 'mahasiswa')
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/irs">
                                     <i class="bi bi-book"></i><span> IRS</span>
                                 </a>
                             </li>
@@ -139,7 +139,7 @@
                     <!-- Card footer -->
                     @if (Auth::user()->role == 'mahasiswa')
                     <div class="card-footer text-center py-2">
-                        <a class="btn btn-link btn-sm" href="javascript:;">View Profile </a>
+                        <a class="btn btn-link btn-sm" href="/mahasiswa/edit_profile">Edit Profile </a>
                     </div>
                     @endif
                 </div>
