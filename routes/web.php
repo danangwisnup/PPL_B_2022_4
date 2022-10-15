@@ -44,7 +44,7 @@ Route::resource('/operator/dosen', DosenController::class)->middleware('auth', '
 
 // Department: progress studi mahasiswa
 route::get('/department/progress_studi_mahasiswa', function () {
-    return view('department.progress_studi_mahasiswa', [
+    return view('department.progress.index', [
         'title' => 'Progress Studi Mahasiswa',
     ]);
 });
@@ -84,11 +84,12 @@ route::get('/mahasiswa/edit_profile', function () {
     ]);
 });
 
-route::get('/mahasiswa/input_irs', function () {
-    return view('mahasiswa.input_irs', [
-        'title' => 'Input IRS',
+route::get('/mahasiswa/irs', function () {
+    return view('mahasiswa.irs', [
+        'title' => 'IRS',
     ]);
 });
 
 // Departement:
+// Update bebas
 // ...

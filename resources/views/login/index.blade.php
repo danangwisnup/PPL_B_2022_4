@@ -2,7 +2,7 @@
 
 @section('content')
 <main>
-    <div class="container">
+    <div class="container-login">
         <div class="row justify-content-center align-item-center">
             <div class="col-lg-10 col-md-10 col-sm-12 py-md-5">
                 <div class="row shadow">

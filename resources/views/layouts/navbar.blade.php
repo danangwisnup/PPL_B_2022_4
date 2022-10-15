@@ -9,7 +9,7 @@
                     <img class="light-mode-item navbar-brand-item" src="{{ asset('assets/images/undip.png') }}" alt="logo">
                 </a>
                 <a class="text-dark" href="/">
-                    <strong>SIMAMI UNDIP</strong>
+                    <strong>SI-Monitoring Akademik Informatika</strong>
                 </a>
                 <!-- Logo END -->
 
