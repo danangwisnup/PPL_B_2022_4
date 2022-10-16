@@ -20,7 +20,8 @@ return new class extends Migration
             $table->date('tanggal_sidang')->nullable();
             $table->integer('lama_studi')->nullable();
             $table->string('status');
-            $table->binary('upload_skripsi')->nullable();
+            $table->string('upload_skripsi')->nullable();
+            $table->unique(['nim', 'semester_aktif']);
         });
     }
 

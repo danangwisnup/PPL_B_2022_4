@@ -15,6 +15,18 @@
                 @include('layouts.sidebar')
 
                 <div class="col-md-8 col-lg-6 vstack gap-4">
+
+                    <!-- Event alert START -->
+                    @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+                    <!-- Event alert END -->
+
                     <!-- Card START -->
                     <div class="card">
                         <!-- Card header START -->
@@ -33,30 +45,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($irs as $item)
                                         <tr>
-                                            <td>1</td>
-                                            <td>24</td>
-                                            <td><a href="{{ asset('file/irs/irs_nim_semseter.pdf') }}" class="btn btn-info btn-sm"><i class="bi bi-download"></i> Download</a></td>
+                                            <td>{{ $item->semester_aktif }}</td>
+                                            <td>{{ $item->sks }}</td>
+                                            <td><a href="{{ asset($item->upload_irs) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Lihat</a></td>
                                             <td>
-                                                <a href="{{ url('/mahasiswa/irs/1') }}" class="btn btn-success btn-sm" id="buttonModalIRS" data-bs-toggle="modal" data-bs-target="#editIRS"><i class="bi bi-pencil"></i> Edit</a>
+                                                <a href="{{ url('/mahasiswa/irs/1') }}" class="btn btn-success btn-sm" id="buttonModalIRS" data-bs-toggle="modal" data-bs-target="#editIRS" data-attr="{{ route('irs.edit', $item->semester_aktif) }}">
+                                                    <i class="bi bi-pencil-square"></i> Edit
+                                                </a>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Event alert START -->
-                    @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    @endif
-                    <!-- Event alert END -->
 
                     <!-- Card START -->
                     <div class="card">
@@ -65,7 +70,7 @@
                             <h1 class="card-title h5">Input IRS</h1>
                         </div>
                         <div class="card-body">
-                            <form class="row g-3" action="" method="POST">
+                            <form class="row g-3" action="{{ route('irs.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <!-- Pilih Semester START-->
                                 <div class="col-6">
@@ -98,17 +103,15 @@
                                 <!-- Input Jumlah SKS END-->
 
                                 <!-- Dropzone START-->
-                                <div>
+                                <div class="col-12">
                                     <label class="form-label">Scan IRS</label>
-                                    <div class="dropzone dropzone-default shadow-none" data-dropzone='{"maxFiles":1}'>
-                                        <div class="dz-message">
-                                            <i class="bi bi-upload display-4"></i>
-                                            <p>Upload File</p>
-                                        </div>
+                                    <div class="dropzone">
+                                        <input type="file" class="filepond" id="file" name="file" data-allow-reorder="true">
                                     </div>
                                 </div>
+
                                 <!-- Dropzone END -->
-                                <div class="text-danger small fst-italic">*format nama irs_nim_semseter.pdf</div>
+                                <div class="text-danger small fst-italic">*Format file [.pdf], pastikan file yang diupload benar.</div>
 
                                 <div class="col-12 text-end">
                                     <button type="submit" class="btn btn-sm btn-primary mb-0">Submit</button>
@@ -135,29 +138,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" id="btnClose" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3" action="" method="POST">
-                    @csrf
-                    <div class="col-12">
-                        <label class="form-label text-dark">SKS</label>
-                        <input type="number" class="form-control" id="jumlah_sks" name="jumlah_sks" placeholder="Jumlah SKS" value="{{ 24 }}" required>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label text-dark">Scan IRS</label>
-                        <div class="dropzone dropzone-default shadow-none" data-dropzone='{"maxFiles":1}'>
-                            <div class="dz-message">
-                                <i class="bi bi-upload display-4"></i>
-                                <p>Upload File</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 text-end">
-                        <button type="submit" class="btn btn-sm btn-primary mb-0">Submit</button>
-                    </div>
-                </form>
+                <div id="showModalIRS">
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('script')
 
 @include('sweetalert::alert')
 
@@ -166,4 +156,54 @@
 <script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
 <script src="{{ asset('assets/js/data-table.js') }}"></script>
 
-@endsection
+<!-- Load FilePond library -->
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond@4.17.1/dist/filepond.js"></script>
+
+<!-- Turn all file input elements into ponds -->
+<script>
+    FilePond.registerPlugin(
+        FilePondPluginFileValidateType,
+        FilePondPluginFileValidateSize
+    );
+    FilePond.create(document.getElementById('file'), {
+        maxParallelUploads: 1,
+        maxFileSize: "15MB",
+        acceptedFileTypes: ['application/pdf'],
+        labelIdle: '<br/><div class="avatar avatar-xxl"><a class="link"><img class="avatar-img" src="{{ asset("assets/images/upload.png") }}" alt=""></a></div><br/><span class="link">Upload File</span><br/><br><br/>',
+        stylePanelAspectRatio: 0.2,
+    });
+
+    // Send the files to the Controller
+    FilePond.setOptions({
+        server: {
+            url: '/upload',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    // display a modal dosen
+    $(document).on("click", "#buttonModalIRS", function() {
+        event.preventDefault();
+        let href = $(this).attr("data-attr");
+        $.ajax({
+            url: href,
+            // return the result
+            success: function(result) {
+                $("#editIRS").modal("show");
+                $("#showModalIRS").html(result).show();
+            },
+            error: function(jqXHR, testStatus, error) {
+                console.log(error);
+                alert("Page " + href + " cannot open. Error:" + error);
+            },
+        });
+    });
+</script>
+
+@stop

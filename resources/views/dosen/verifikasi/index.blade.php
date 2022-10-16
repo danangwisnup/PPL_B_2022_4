@@ -75,6 +75,10 @@
 <!-- Container END -->
 </main>
 </div>
+@endsection
+
+@section('script')
+
 @include('sweetalert::alert')
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
@@ -82,4 +86,4 @@
 <script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
 <script src="{{ asset('assets/js/data-table.js') }}"></script>
 
-@endsection
+@stop

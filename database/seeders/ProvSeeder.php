@@ -16,15 +16,24 @@ class ProvSeeder extends Seeder
     public function run()
     {
         // Api Provinsi
-        $url = 'http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json';
+        $url = 'https://dev.farizdotid.com/api/daerahindonesia/provinsi';
         $data = json_decode(file_get_contents($url), true);
+        $data = $data['provinsi'];
 
         // Insert ke database
         foreach ($data as $d) {
             DB::table('tb_provinsi')->insert([
                 'kode_prov' => $d['id'],
-                'nama_prov' => $d['name'],
+                'nama_prov' => $d['nama'],
             ]);
         }
+
+        DB::table('tb_provinsi')->where('kode_prov', 31)->update([
+            'nama_prov' => 'DKI Jakarta',
+        ]);
+
+        DB::table('tb_provinsi')->where('kode_prov', 34)->update([
+            'nama_prov' => 'Daerah Istimewa Yogyakarta',
+        ]);
     }
 }

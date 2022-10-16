@@ -33,6 +33,9 @@
                     <br />
                     <div class="chart-container">
                         <div id="grafik"></div>
+
+                        @section('script')
+
                         <script src="https://code.highcharts.com/highcharts.js"></script>
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -104,7 +107,8 @@
                                 data: [5, 7, 8, 3, 2, 1, 0]
                             }]
                         });
-                        </script>        
+                        </script>
+                        @stop    
                 </div>
             </div>
         </div>

@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_pkl', function (Blueprint $table) {
-            $table->string('nim')->primary();
-            $table->integer('semester_aktif');
-            $table->string('nilai')->nullable();
-            $table->string('status');
-            $table->string('upload_pkl')->nullable();
-            $table->unique(['nim', 'semester_aktif']);
+        Schema::create('tb_temp_file', function (Blueprint $table) {
+            $table->id();
+            $table->string('folder');
+            $table->string('path');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_pkl');
+        Schema::dropIfExists('tb_temp_file');
     }
 };
