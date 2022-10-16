@@ -40,6 +40,7 @@
                                         <tr>
                                             <th>Semester</th>
                                             <th>SKS</th>
+                                            <th>Status</th>
                                             <th>Scan IRS</th>
                                             <th>Action</th>
                                         </tr>
@@ -49,6 +50,13 @@
                                         <tr>
                                             <td>{{ $item->semester_aktif }}</td>
                                             <td>{{ $item->sks }}</td>
+                                            <td>
+                                                @if ($item->status == 'Belum Diverifikasi')
+                                                <span class="badge bg-warning">Belum Diverifikasi</span>
+                                                @elseif($item->status == 'Diverifikasi')
+                                                <span class="badge bg-success">Diverifikasi</span>
+                                                @endif
+                                            </td>
                                             <td><a href="{{ asset($item->upload_irs) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Lihat</a></td>
                                             <td>
                                                 <a href="{{ url('/mahasiswa/irs/1') }}" class="btn btn-success btn-sm" id="buttonModalIRS" data-bs-toggle="modal" data-bs-target="#editIRS" data-attr="{{ route('irs.edit', $item->semester_aktif) }}">
@@ -68,6 +76,7 @@
                         <!-- Card header START -->
                         <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
                             <h1 class="card-title h5">Input IRS</h1>
+                            <div class="text-dark small">Harap diisi dengan data yang benar.</div>
                         </div>
                         <div class="card-body">
                             <form class="row g-3" action="{{ route('irs.store') }}" method="POST" enctype="multipart/form-data">
@@ -76,7 +85,7 @@
                                 <div class="col-6">
                                     <label class="form-label text-dark">Semester Aktif</label>
                                     <select class="form-select" id="semester_aktif" name="semester_aktif" required>
-                                        <option value="">Pilih Angkatan</option>
+                                        <option value="">Pilih Semester</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>

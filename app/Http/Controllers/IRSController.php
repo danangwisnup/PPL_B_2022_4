@@ -112,14 +112,15 @@ class IRSController extends Controller
         // Validate
         $request->validate([
             'jumlah_sks' => 'required|numeric',
-            'fileEdit' => 'required',
+            'confirm' => 'sometimes|accepted',
+            'fileEdit' => 'required_if:confirm,on',
         ]);
 
         $db = M_IRS::where('semester_aktif', $semester)->where('nim', Auth::user()->nim_nip)->first();
 
         $temp = M_TempFile::where('path', $request->fileEdit)->first();
 
-        if ($temp) {
+        if ($temp && $request->confirm == 'on') {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '_' . $request->jumlah_sks . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
@@ -128,10 +129,14 @@ class IRSController extends Controller
                 'upload_irs' => 'files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '_' . $request->jumlah_sks . '.pdf'
             ]);
             $temp->delete();
+            unlink(public_path($db->upload_irs));
+        } else {
+            M_IRS::where('semester_aktif', $semester)->where('nim', Auth::user()->nim_nip)->update([
+                'sks' => $request->jumlah_sks,
+            ]);
         }
 
         if ($db->update()) {
-            unlink(public_path($db->upload_irs));
             Alert::success('Berhasil', 'Data berhasil diubah');
             return redirect()->route('irs');
         } else {
