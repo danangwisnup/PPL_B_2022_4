@@ -59,7 +59,7 @@
                                             </td>
                                             <td><a href="{{ asset($item->upload_irs) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Lihat</a></td>
                                             <td>
-                                                <a href="{{ url('/mahasiswa/irs/1') }}" class="btn btn-success btn-sm" id="buttonModalIRS" data-bs-toggle="modal" data-bs-target="#editIRS" data-attr="{{ route('irs.edit', [$item->semester_aktif, $item->nim]) }}">
+                                                <a href="" class="btn btn-success btn-sm" id="buttonModalIRS" data-bs-toggle="modal" data-bs-target="#editIRS" data-attr="{{ route('irs.edit', [$item->semester_aktif, $item->nim]) }}">
                                                     <i class="bi bi-pencil-square"></i> Edit
                                                 </a>
                                             </td>
