@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\M_Mahasiswa;
 use App\Models\M_Dosen;
+use App\Models\M_IRS;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -14,7 +16,7 @@ class DashboardController extends Controller
         $dosen = M_Dosen::all();
         return view('dashboard.index', [
             'title' => 'Dashboard',
-        ])->with('mahasiswa', $mahasiswa)->with('dosen', $dosen);
+        ])->with(compact('mahasiswa', 'dosen'));
     }
 
     // Fiture Operator: Add User
@@ -28,14 +30,22 @@ class DashboardController extends Controller
     // Fiture Operator: Manajemen User
     public function manajemen_user()
     {
-        $Mahasiswa = M_Mahasiswa::all();
-        $Dosen = M_Dosen::all();
+        $mahasiswa = M_Mahasiswa::all();
+        $dosen = M_Dosen::all();
         return view('operator.manajemen_user.index', [
             'title' => 'Manajemen User',
-        ])->with('mahasiswa', $Mahasiswa)->with('dosen', $Dosen);
+        ])->with(compact('mahasiswa', 'dosen'));
     }
 
     // Fiture Mahasiswa: IRS
+    public function irs()
+    {
+        $irs = M_IRS::where('nim', Auth::user()->nim_nip)->get();
+        return view('mahasiswa.irs.index', [
+            'title' => 'IRS',
+        ])->with(compact('irs'));
+    }
+
     // Fiture Mahasiswa: KHS
     // Fiture Mahasiswa: PKL
     // Fiture Mahasiswa: Skripsi

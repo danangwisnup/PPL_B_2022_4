@@ -110,27 +110,27 @@
                                 </div>
                                 <div class="col-10">
                                     <h6>Semester</h6>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>1</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>2</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>3</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>4</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>5</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>6</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>7</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>8</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>9</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>10</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>11</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>12</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>13</a>
-                                    <a class="btn btn-danger avatar-xl mb-3 me-2" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>14</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>1</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>2</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>3</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>4</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>5</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>6</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>7</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>8</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>9</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>10</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>11</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>12</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>13</a>
+                                    <a class="btn btn-danger avatar-xl mb-3 me-3" id="buttonModalProgress" data-bs-toggle="modal" data-bs-target="#progress_view" data-attr=""><br>14</a>
 
                                     <br />
                                     <h6 class="mt-2 mb-2">Keterangan:</h6>
+                                    <a class="btn btn-danger btn-sm mb-1"></a> <small>Belum diisikan (IRS dan KHS) atau tidak digunakan</small><br />
                                     <a class="btn btn-info btn-sm mb-1"></a> <small>Sudah diisikan (IRS dan KHS)</small><br />
                                     <a class="btn btn-warning btn-sm mb-1"></a> <small>Sudah Lulus PKL (IRS, KHS, dan PKL)</small><br />
                                     <a class="btn btn-success btn-sm mb-1"></a> <small>Sudah Lulus Skripsi)</small><br />
-                                    <a class="btn btn-danger btn-sm mb-1"></a> <small>Belum diisikan (IRS dan KHS) atau tidak digunakan</small><br />
                                 </div>
                             </form>
                         </div>
@@ -213,10 +213,13 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
 <script src="{{ asset('assets/js/data-table.js') }}"></script>
 
-@endsection
+@stop

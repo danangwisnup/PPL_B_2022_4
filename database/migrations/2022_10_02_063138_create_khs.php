@@ -14,14 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tb_khs', function (Blueprint $table) {
-            $table->string('nim')->primary();
+            $table->string('nim');
             $table->integer('semester_aktif');
             $table->integer('sks');
             $table->integer('sks_kumulatif');
             $table->float('ip');
             $table->float('ip_kumulatif');
             $table->string('status');
-            $table->binary('upload_khs');
+            $table->string('upload_khs');
+            $table->unique(['nim', 'semester_aktif']);
         });
     }
 

@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_kabupaten', function (Blueprint $table) {
-            $table->string('kode_kab')->primary();
-            $table->string('kode_prov');
-            $table->string('nama_kab');
+        Schema::create('tb_temp_file', function (Blueprint $table) {
+            $table->id();
+            $table->string('folder');
+            $table->string('path');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_kabupaten');
+        Schema::dropIfExists('tb_temp_file');
     }
 };

@@ -1,20 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IRSController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\UploadController;
+use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\EditProfileController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
+| Here is where you can register web Routes for your application. These
+| Routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
 */
@@ -43,53 +46,49 @@ Route::resource('/operator/mahasiswa', MahasiswaController::class)->middleware('
 Route::resource('/operator/dosen', DosenController::class)->middleware('auth', 'operator');
 
 // Department: progress studi mahasiswa
-route::get('/department/progress_studi_mahasiswa', function () {
+Route::get('/department/progress_studi_mahasiswa', function () {
     return view('department.progress.index', [
         'title' => 'Progress Studi Mahasiswa',
     ]);
 });
 
 // Department: data mahasiswa
-route::get('/department/data_mahasiswa', function () {
+Route::get('/department/data_mahasiswa', function () {
     return view('department.data_mahasiswa', [
         'title' => 'Data Mahasiswa',
     ]);
 });
 
 // Department: data dosen
-route::get('/department/data_dosen', function () {
+Route::get('/department/data_dosen', function () {
     return view('department.data_dosen', [
         'title' => 'Data Dosen',
     ]);
 });
 
 // Dosen: progress studi mahasiswa
-route::get('/dosen/progress_studi_mahasiswa', function () {
+Route::get('/dosen/progress_studi_mahasiswa', function () {
     return view('dosen.progress.index', [
         'title' => 'Progress Studi Mahasiswa',
     ]);
 });
 
 // Dosen: verifikasi berkas mahasiswa
-route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
+Route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
     return view('dosen.verifikasi.index', [
         'title' => 'Verifikasi Berkas Mahasiswa',
     ]);
 });
 
-// Mahasiswa
-route::get('/mahasiswa/edit_profile', function () {
-    return view('mahasiswa.edit_profile', [
-        'title' => 'Edit Profile',
-    ]);
-});
+// Mahasiswa: edit profile
+Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('auth');
 
-route::get('/mahasiswa/irs', function () {
-    return view('mahasiswa.irs', [
-        'title' => 'IRS',
-    ]);
-});
+Route::get('/mahasiswa/irs', [DashboardController::class, 'irs'])->middleware('auth')->name('irs');
 
-// Departement:
-// Update bebas
-// ...
+Route::resource('/mahasiswa/proses/irs', IRSController::class)->middleware('auth');
+
+// Wilayah Indonesia
+Route::get('/wilayah/{provinsi}', [WilayahController::class, 'index'])->middleware('auth')->name('wilayah');
+
+// Upload File
+Route::post('/upload', [UploadController::class, 'upload'])->middleware('auth');

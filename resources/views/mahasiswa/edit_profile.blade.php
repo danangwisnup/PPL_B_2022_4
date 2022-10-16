@@ -39,7 +39,7 @@
                                 <div class="row mt-1 mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nama :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" required>
+                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ $mahasiswa->nama }}" required>
                                     </div>
                                 </div>
 
@@ -47,7 +47,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">NIM :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM" readonly>
+                                        <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM" value="{{ $mahasiswa->nim }}" readonly>
                                     </div>
                                 </div>
 
@@ -55,7 +55,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Angkatan :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="angkatan" name="angkatan" placeholder="Angkatan" readonly>
+                                        <input type="text" class="form-control" id="angkatan" name="angkatan" placeholder="Angkatan" value="{{ $mahasiswa->angkatan }}" readonly>
                                     </div>
                                 </div>
 
@@ -63,7 +63,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Status :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="status" name="status" placeholder="Status" readonly>
+                                        <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{ $mahasiswa->status }}" readonly>
                                     </div>
                                 </div>
 
@@ -71,7 +71,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Jalur Masuk :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="jalur_Masuk" name="jalur_masuk" placeholder="Jalur Masuk" readonly>
+                                        <input type="text" class="form-control" id="jalur_Masuk" name="jalur_masuk" placeholder="Jalur Masuk" value="{{ $mahasiswa->jalur_masuk }}" readonly>
                                     </div>
                                 </div>
 
@@ -79,7 +79,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nomor HP :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Nomor HP" required>
+                                        <input type="text" class="form-control" id="handphone" name="handphone" placeholder="Nomor HP" value="{{ $mahasiswa->handphone }}" required>
                                     </div>
                                 </div>
 
@@ -87,7 +87,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Email Pribadi :</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $mahasiswa->email }}" required>
                                     </div>
                                 </div>
 
@@ -95,17 +95,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Alamat :</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" required></textarea>
-                                    </div>
-                                </div>
-
-                                {{-- Select Kota/Kab --}}
-                                <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">Kota/Kab :</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-select" id="kota_kab" name="kota_kab" required>
-                                            <option value="">Pilih Kota/Kab</option>
-                                        </select>
+                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" required>{{ $mahasiswa->alamat }}</textarea>
                                     </div>
                                 </div>
 
@@ -115,6 +105,22 @@
                                     <div class="col-sm-10">
                                         <select class="form-select" id="provinsi" name="provinsi" required>
                                             <option value="">Pilih Provinsi</option>
+                                            @foreach ($provinsi as $prov)
+                                            <option value="{{ $prov->kode_prov }}" {{ $mahasiswa->kode_prov == $prov->kode_prov ? 'selected="true"' : '' }}>{{ $prov->nama_prov }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {{-- Select Kota/Kab --}}
+                                <div class="row mb-1">
+                                    <label class="col-sm-2 col-form-label text-dark">Kabupaten/Kota :</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="kabupatenkota" name="kabupatenkota" required>
+                                            <option value="">Pilih Kabupaten/Kota</option>
+                                            @foreach ($kabupaten as $kab)
+                                            <option value="{{ $kab->kode_kab }}" {{ $mahasiswa->kode_kab == $kab->kode_kab ? 'selected="true"' : '' }}>{{ $kab->nama_kab }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -125,10 +131,13 @@
                                     <div class="col-sm-10">
                                         <select class="form-select" id="dosen_wali" name="dosen_wali" required>
                                             <option value="">Pilih Dosen Wali</option>
+                                            @foreach ($dosen_wali as $wali)
+                                            <option value="{{ $wali->nip }}" {{ $mahasiswa->kode_wali == $wali->nip ? 'selected="true"' : '' }}>{{ $wali->nama }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12 text-end">
                                     <button type="submit" class="btn btn-sm btn-primary mt-2 mb-0">Save</button>
                                 </div>
@@ -146,3 +155,31 @@
 </div>
 
 @endsection
+
+@section('script')
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var url = $('meta[name="url"]').attr('content');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#provinsi').change(function() {
+            var id = document.getElementById("provinsi").value;
+            $.ajax({
+                url: '/wilayah/' + id,
+                type: 'GET',
+                success: function(val) {
+                    $('#kabupatenkota').html(val);
+                }
+            });
+        });
+    });
+</script>
+
+
+@stop

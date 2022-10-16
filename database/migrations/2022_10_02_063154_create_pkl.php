@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('semester_aktif');
             $table->string('nilai')->nullable();
             $table->string('status');
-            $table->binary('upload_pkl')->nullable();
+            $table->string('upload_pkl')->nullable();
+            $table->unique(['nim', 'semester_aktif']);
         });
     }
 

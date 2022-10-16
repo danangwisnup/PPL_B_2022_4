@@ -14,11 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tb_irs', function (Blueprint $table) {
-            $table->integer('nim')->primary();
+            $table->string('nim');
             $table->integer('semester_aktif');
             $table->integer('sks');
             $table->string('status');
-            $table->binary('upload_irs');
+            $table->string('upload_irs');
+            $table->unique(['nim', 'semester_aktif']);
         });
     }
 
