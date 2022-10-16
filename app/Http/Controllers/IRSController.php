@@ -93,10 +93,9 @@ class IRSController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($semester)
+    public function edit($semester_aktif, $nim)
     {
-        $nim = Auth::user()->nim_nip;
-        $data = M_IRS::where('nim', $nim)->where('semester_aktif', $semester)->first();
+        $data = M_IRS::where('nim', $nim)->where('semester_aktif', $semester_aktif)->first();
         return view('mahasiswa.irs.modal', compact('data'));
     }
 
@@ -107,7 +106,7 @@ class IRSController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $semester)
+    public function update(Request $request, $semester_aktif)
     {
         // Validate
         $request->validate([
@@ -116,7 +115,7 @@ class IRSController extends Controller
             'fileEdit' => 'required_if:confirm,on',
         ]);
 
-        $db = M_IRS::where('semester_aktif', $semester)->where('nim', Auth::user()->nim_nip)->first();
+        $db = M_IRS::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();
 
         $temp = M_TempFile::where('path', $request->fileEdit)->first();
 
@@ -124,14 +123,14 @@ class IRSController extends Controller
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '_' . $request->jumlah_sks . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
-            M_IRS::where('semester_aktif', $semester)->where('nim', Auth::user()->nim_nip)->update([
+            M_IRS::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'sks' => $request->jumlah_sks,
                 'upload_irs' => 'files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '_' . $request->jumlah_sks . '.pdf'
             ]);
             $temp->delete();
             unlink(public_path($db->upload_irs));
         } else {
-            M_IRS::where('semester_aktif', $semester)->where('nim', Auth::user()->nim_nip)->update([
+            M_IRS::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'sks' => $request->jumlah_sks,
             ]);
         }

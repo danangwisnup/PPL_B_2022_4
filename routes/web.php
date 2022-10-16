@@ -45,6 +45,29 @@ Route::resource('/operator/mahasiswa', MahasiswaController::class)->middleware('
 // Operator: CRUD Dosen
 Route::resource('/operator/dosen', DosenController::class)->middleware('auth', 'operator');
 
+// Mahasiswa: edit profile
+Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('auth', 'mahasiswa');
+
+// Mahasiswa: irs
+Route::get('/mahasiswa/irs', [DashboardController::class, 'irs'])->middleware('auth', 'mahasiswa')->name('irs');
+Route::resource('/mahasiswa/proses/irs', IRSController::class)->middleware('auth', 'mahasiswa');
+Route::get('/mahasiswa/proses/irs/{semester}/{nim}/edit', [IRSController::class, 'edit'])->middleware('auth', 'mahasiswa')->name('irs.edit');
+
+// Mahasiswa: khs
+// Route::get('/mahasiswa/khs', [DashboardController::class, 'khs'])->middleware('auth', 'mahasiswa')->name('khs');
+// Route::resource('/mahasiswa/proses/khs', KHSController::class)->middleware('auth', 'mahasiswa');
+// Route::get('/mahasiswa/proses/irs/{semester}/{nim}/edit', [KHSController::class, 'edit'])->middleware('auth', 'mahasiswa')->name('khs.edit');
+
+// Mahasiswa: pkl
+// Route::get('/mahasiswa/pkl', [DashboardController::class, 'pkl'])->middleware('auth', 'mahasiswa')->name('pkl');
+// Route::resource('/mahasiswa/proses/pkl', PKLController::class)->middleware('auth', 'mahasiswa');
+// Route::get('/mahasiswa/proses/irs/{semester}/{nim}/edit', [PKLController::class, 'edit'])->middleware('auth', 'mahasiswa')->name('pkl.edit');
+
+// Mahasiswa: skripsi
+// Route::get('/mahasiswa/skripsi', [DashboardController::class, 'skripsi'])->middleware('auth', 'mahasiswa')->name('skripsi');
+// Route::resource('/mahasiswa/proses/skripsi', SkripsiController::class)->middleware('auth', 'mahasiswa');
+// Route::get('/mahasiswa/proses/irs/{semester}/{nim}/edit', [SkripsiController::class, 'edit'])->middleware('auth', 'mahasiswa')->name('skripsi.edit');
+
 // Department: progress studi mahasiswa
 Route::get('/department/progress_studi_mahasiswa', function () {
     return view('department.progress.index', [
@@ -79,13 +102,6 @@ Route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
         'title' => 'Verifikasi Berkas Mahasiswa',
     ]);
 });
-
-// Mahasiswa: edit profile
-Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('auth');
-
-Route::get('/mahasiswa/irs', [DashboardController::class, 'irs'])->middleware('auth')->name('irs');
-
-Route::resource('/mahasiswa/proses/irs', IRSController::class)->middleware('auth');
 
 // Wilayah Indonesia
 Route::get('/wilayah/{provinsi}', [WilayahController::class, 'index'])->middleware('auth')->name('wilayah');
