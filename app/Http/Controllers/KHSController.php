@@ -13,7 +13,7 @@ class KHSController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
