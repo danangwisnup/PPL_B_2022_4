@@ -70,17 +70,17 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'KHS')? 'active' : '' }}" href="/">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'KHS')? 'active' : '' }}" href="/mahasiswa/khs">
                                     <i class="bi bi-list-columns"></i><span> KHS</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'PKL')? 'active' : '' }}" href="/">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'PKL')? 'active' : '' }}" href="/mahasiswa/pkl">
                                     <i class="bi bi-building"></i><span> PKL</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Skripsi')? 'active' : '' }}" href="/">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Skripsi')? 'active' : '' }}" href="/mahasiswa/skripsi">
                                     <i class="bi bi-mortarboard"></i><span> Skripsi</span>
                                 </a>
                             </li>

@@ -130,3 +130,18 @@ Route::post('/upload', [UploadController::class, 'upload'])->middleware('auth');
 // Fiture Department: Progress Studi Mahasiswa
 // Fiture Department: Data Mahasiswa
 // Fiture Department: Data Dosen
+
+Route::get('/mahasiswa/khs', function () {
+    return view('mahasiswa.khs.index', [
+        'title' => 'KHS']);
+});
+
+Route::get('/mahasiswa/pkl', function () {
+    return view('mahasiswa.pkl.index', [
+        'title' => 'PKL']);
+});
+
+Route::get('/mahasiswa/skripsi', function () {
+    return view('mahasiswa.skripsi.index', [
+        'title' => 'Skripsi']);
+});
