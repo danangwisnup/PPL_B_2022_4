@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\M_IRS;
+use App\Models\M_Mahasiswa;
 use App\Models\M_TempFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Unique;
@@ -18,7 +19,11 @@ class IRSController extends Controller
      */
     public function index()
     {
-        //
+        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $irs = M_IRS::where('nim', Auth::user()->nim_nip)->get();
+        return view('mahasiswa.irs.index', [
+            'title' => 'IRS',
+        ])->with(compact('mahasiswa', 'irs'));
     }
 
     /**
@@ -69,10 +74,10 @@ class IRSController extends Controller
 
         if ($db->save()) {
             Alert::success('Berhasil', 'Data berhasil disimpan');
-            return redirect()->route('irs');
+            return redirect()->route('irs.index');
         } else {
             Alert::error('Gagal', 'Data gagal disimpan');
-            return redirect()->route('irs');
+            return redirect()->route('irs.index');
         }
     }
 
@@ -137,10 +142,10 @@ class IRSController extends Controller
 
         if ($db->update()) {
             Alert::success('Berhasil', 'Data berhasil diubah');
-            return redirect()->route('irs');
+            return redirect()->route('irs.index');
         } else {
             Alert::error('Gagal', 'Data gagal diubah');
-            return redirect()->route('irs');
+            return redirect()->route('irs.index');
         }
     }
 

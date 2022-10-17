@@ -34,7 +34,19 @@
                             <h1 class="card-title h5">Profile</h1>
                         </div>
                         <div class="card-body">
-                            <form action="" method="POST">
+                            <form action="{{ route('edit_profile.update', $mahasiswa->nim) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="row mt-1 mb-1">
+                                    <div class="form-group">
+                                        <div class="text-center">
+                                            <div class="avatar avatar-xxxl">
+                                                <img class="avatar-img border border-white border-3 rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/03.jpg') : asset($mahasiswa->foto) }}" alt="...">
+                                            </div>
+                                            <input type="file" class="filepond" id="fileProfile" name="fileProfile" data-allow-reorder="true">
+                                        </div>
+                                    </div>
+                                </div>
                                 {{-- Form Nama --}}
                                 <div class="row mt-1 mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nama :</label>
@@ -71,7 +83,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Jalur Masuk :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="jalur_Masuk" name="jalur_masuk" placeholder="Jalur Masuk" value="{{ $mahasiswa->jalur_masuk }}" readonly>
+                                        <input type="text" class="form-control" id="jalur_masuk" name="jalur_masuk" placeholder="Jalur Masuk" value="{{ $mahasiswa->jalur_masuk }}" readonly>
                                     </div>
                                 </div>
 
@@ -178,6 +190,45 @@
                 }
             });
         });
+    });
+</script>
+
+<!-- Load FilePond library -->
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond@4.17.1/dist/filepond.js"></script>
+
+<!-- Turn all file input elements into ponds -->
+<script>
+    var fileProfile = document.getElementById('fileProfile');
+    FilePond.registerPlugin(FilePondPluginFileValidateType, FilePondPluginFileValidateSize);
+    var pondProfile = FilePond.create(fileProfile, {
+        labelIdle: '<span class="link small text-dark"><i class="bi bi-pencil-square"></i> Perbarui Foto Profil</span>',
+        acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+        allowFileSizeValidation: true,
+        maxFileSize: '15MB',
+    });
+
+    FilePond.setOptions({
+        server: {
+            url: '/upload',
+            process: {
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            }
+        }
+    });
+
+    // show image profile after upload
+    pondProfile.on('processfile', (error, file) => {
+        if (error) {
+            return;
+        }
+        var url = $('meta[name="url"]').attr('content');
+        var public = window.location.origin;
+        var image = public + '/files/temp/' + file.filename;
+        $('.avatar-img').attr('src', image);
     });
 </script>
 

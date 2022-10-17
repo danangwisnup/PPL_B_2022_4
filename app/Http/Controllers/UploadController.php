@@ -37,5 +37,20 @@ class UploadController extends Controller
 
             return $name;
         }
+
+        if ($request->hasFile('fileProfile')) {
+            $file = $request->file('fileProfile');
+            $name = $file->getClientOriginalName();
+            $folder = '';
+            $file->move('files/temp/' . $folder, $name);
+
+            M_TempFile::create([
+                'folder' => $folder,
+                'path' => $name,
+            ]);
+
+            //$resultLocation = 'http://' . $_SERVER['HTTP_HOST'] . '/files/temp/' . $folder . '/' . $name;
+            return $name;
+        }
     }
 }

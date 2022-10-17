@@ -624,6 +624,23 @@ progress {
   color: #6c757d;
 }
 
+/* hide mobile version by default */
+.mobile {
+  display: none;
+}
+
+/* when screen is less than 600px wide
+     show mobile version and hide desktop */
+@media (max-width: 600px) {
+  .mobile {
+    display: block;
+  }
+
+  .desktop {
+    display: none;
+  }
+}
+
 .container,
 .container-fluid,
 .container-xxl,

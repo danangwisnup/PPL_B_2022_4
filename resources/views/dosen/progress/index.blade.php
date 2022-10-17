@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="table" id="table_mahasiswa">
+                                        <table class="table" id="table_1">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>Nama</th>
@@ -217,8 +217,11 @@
 
 @section('script')
 
+@include('sweetalert::alert')
+
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 <script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
 <script src="{{ asset('assets/js/data-table.js') }}"></script>
 

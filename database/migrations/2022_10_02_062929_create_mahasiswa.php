@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('handphone')->nullable();
             $table->string('kode_wali')->nullable();
             $table->string('status');
-            $table->binary('foto')->nullable();
+            $table->string('foto')->nullable();
         });
     }
 
