@@ -29,7 +29,11 @@
                         <div class="text-center">
                             <!-- Avatar -->
                             <div class="avatar avatar-xxl mt-n5 mb-1">
-                                <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                @if (Auth::user()->role == 'mahasiswa')
+                                <a href="#"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/03.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
+                                @else
+                                <a href="#"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                @endif
                             </div>
                             <!-- Info -->
                             <h5 class="mb-0"> <a href="#!">{{ Auth::user()->nama }}</a> </h5>
@@ -142,7 +146,7 @@
                     <div class="card-footer text-center py-2">
                         Informatika S1 <br />
                         Fakultas Sains dan Matematika
-                        <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="{{ url()->previous() }}">
+                        <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="{{ route('home') }}">
                             <i class="bi bi-arrow-bar-left"></i> Kembali
                         </a>
                     </div>

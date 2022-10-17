@@ -1,17 +1,17 @@
 (function ($) {
     "use strict";
     $(function () {
-        $("#table_mahasiswa").DataTable({
+        $("#table_1").DataTable({
             aLengthMenu: [
                 [5, 10, 15, -1],
                 [5, 10, 15, "All"],
             ],
-            iDisplayLength: 10,
+            iDisplayLength: 5,
             language: {
                 search: "",
             },
         });
-        $("#table_mahasiswa").each(function () {
+        $("#table_1").each(function () {
             var datatable = $(this);
             // SEARCH - Add the placeholder for Search and Turn this into in-line form control
             var search_input = datatable
@@ -31,17 +31,17 @@
 (function ($) {
     "use strict";
     $(function () {
-        $("#table_dosen").DataTable({
+        $("#table_2").DataTable({
             aLengthMenu: [
                 [5, 10, 15, -1],
                 [5, 10, 15, "All"],
             ],
-            iDisplayLength: 10,
+            iDisplayLength: 5,
             language: {
                 search: "",
             },
         });
-        $("#table_dosen").each(function () {
+        $("#table_2").each(function () {
             var datatable = $(this);
             // SEARCH - Add the placeholder for Search and Turn this into in-line form control
             var search_input = datatable
