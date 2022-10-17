@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\M_PKL;
+use App\Models\M_Mahasiswa;
+use App\Models\M_TempFile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Unique;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PKLController extends Controller
 {
@@ -13,7 +19,11 @@ class PKLController extends Controller
      */
     public function index()
     {
-        //
+        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $pkl = M_PKL::where('nim', Auth::user()->nim_nip)->get();
+        return view('mahasiswa.pkl.index', [
+            'title' => 'PKL',
+        ])->with(compact('mahasiswa', 'pkl'));
     }
 
     /**

@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\M_Skripsi;
+use App\Models\M_Mahasiswa;
+use App\Models\M_TempFile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Unique;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SkripsiController extends Controller
 {
@@ -13,7 +19,11 @@ class SkripsiController extends Controller
      */
     public function index()
     {
-        //
+        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $skripsi = M_Skripsi::where('nim', Auth::user()->nim_nip)->get();
+        return view('mahasiswa.skripsi.index', [
+            'title' => 'Skripsi',
+        ])->with(compact('mahasiswa', 'skripsi'));
     }
 
     /**
