@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\M_KHS;
+use App\Models\M_Mahasiswa;
+use App\Models\M_TempFile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Unique;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KHSController extends Controller
 {
@@ -13,7 +19,11 @@ class KHSController extends Controller
      */
     public function index()
     {
-        
+        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $khs = M_KHS::where('nim', Auth::user()->nim_nip)->get();
+        return view('mahasiswa.khs.index', [
+            'title' => 'KHS',
+        ])->with(compact('mahasiswa', 'khs'));
     }
 
     /**
