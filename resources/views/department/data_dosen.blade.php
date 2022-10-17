@@ -28,19 +28,11 @@
                     <div class="card">
                         <!-- Card header START -->
                         <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <h1 class="card-title h5">Cari Dosen</h1>
+                            <h1 class="card-title h5">Dosen</h1>
                         </div>
                         <div class="card-body">
                             <form class="row g-3" action="/dosen/progress" method="POST">
                                 @csrf
-                                <div class="col-11">
-                                    <input type="text" class="form-control" id="identifier" name="identifier" placeholder="Masukkan Nama, NIP atau Email Dosen" required>
-                                </div>
-                                <div class="col-1">
-                                    <button type="submit" class="icon-md btn btn-primary-soft p-0">
-                                        <i class="bi bi-search fs-6"> </i>
-                                    </button>
-                                </div>
                                 <div class="col-12">
                                     <div class="table-responsive">
                                         <table class="table" id="table_1">
