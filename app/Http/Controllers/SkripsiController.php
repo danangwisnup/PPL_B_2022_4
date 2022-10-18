@@ -84,7 +84,11 @@ class SkripsiController extends Controller
                 'upload_skripsi' => $temp->path,
             ]);
             if ($request->status_pkl == 'Lulus') {
-                $db->nilai = $request->nilai_skripsi;
+                M_Skripsi::where('nim', Auth::user()->nim_nip)
+                    ->where('semester_aktif', $request->semester_aktif)
+                    ->update([
+                        'nilai' => $request->nilai_skripsi,
+                    ]);
             }
         } else {
             $db = M_Skripsi::create([

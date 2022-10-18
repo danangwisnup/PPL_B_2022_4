@@ -82,7 +82,11 @@ class PKLController extends Controller
                 'upload_pkl' => $temp->path,
             ]);
             if ($request->status_pkl == 'Lulus') {
-                $db->nilai = $request->nilai_pkl;
+                M_PKL::where('nim', Auth::user()->nim_nip)
+                    ->where('semester_aktif', $request->semester_aktif)
+                    ->update([
+                        'nilai' => $request->nilai_pkl,
+                    ]);
             }
         } else {
             $db = M_PKL::create([

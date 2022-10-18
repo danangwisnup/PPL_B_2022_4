@@ -151,9 +151,11 @@
                     <div class="card-footer text-center py-2">
                         Informatika S1 <br />
                         Fakultas Sains dan Matematika
-                        <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="{{ route('home') }}">
+                        @if (url()->previous() != url()->current())
+                        <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="{{ url()->previous() }}">
                             <i class="bi bi-arrow-bar-left"></i> Kembali
                         </a>
+                        @endif
                     </div>
                     @elseif (Auth::user()->role == 'mahasiswa')
                     <div class="card-footer text-center py-2">

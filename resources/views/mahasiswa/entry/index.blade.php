@@ -64,20 +64,9 @@
                                                 <label class="form-label text-dark">Semester Aktif</label>
                                                 <select class="form-select" id="semester_aktif" name="semester_aktif" required>
                                                     <option value="">Pilih Semester</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                    <option value="13">13</option>
-                                                    <option value="14">14</option>
+                                                    {{ $progress == null ? $i = 1 : $i = $progress->semester_aktif + 1 }}
+                                                    @for ($i = $i; $i <= 14; $i++) <option value="{{ $i }}">Semseter {{ $i }}</option>
+                                                        @endfor
                                                 </select>
                                             </div>
                                             <!-- Pilih Semester END -->

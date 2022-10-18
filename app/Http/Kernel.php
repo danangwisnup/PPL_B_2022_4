@@ -73,5 +73,6 @@ class Kernel extends HttpKernel
         'khs' => \App\Http\Middleware\KHS::class,
         'pkl' => \App\Http\Middleware\PKL::class,
         'skripsi' => \App\Http\Middleware\Skripsi::class,
+        'editprofile' => \App\Http\Middleware\EditProfile::class,
     ];
 }
