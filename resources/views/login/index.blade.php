@@ -21,8 +21,8 @@
                         <div class="text-center text-md-start">
                             <img src="{{ asset('assets/images/undip.png') }}" class="img-fluid mb-3 ml-md-4 ml-sm-5" width="60px" alt="Logo">
                             <p class="mb-0">Selamat Datang</p>
-                            <h4 style="font-weight: bolder;">di SIMAMI UNDIP</h4>
-                            <p style="font-size: small; color: grey;">SIMAMI merupakan aplikasi untuk memonitoring akademik mahasiswa Informatika Universitas Diponegoro.</p>
+                            <h4 style="font-weight: bolder;">di SI-Monitoring Akademik Informatika</h4>
+                            <p style="font-size: small; color: grey;">merupakan aplikasi untuk memonitoring prestasi akademik mahasiswa Informatika Universitas Diponegoro.</p>
                         </div>
                         <form class="mb-3 mt-md-3" action="/login" method="POST">
                             @csrf
@@ -66,3 +66,5 @@
 
 </main>
 @endsection
+
+@include('sweetalert::alert')

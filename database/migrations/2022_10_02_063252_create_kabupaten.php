@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tb_kabupaten', function (Blueprint $table) {
             $table->string('kode_kab')->primary();
-            $table->string('kode_prov')->unique();
+            $table->string('kode_prov');
             $table->string('nama_kab');
         });
     }

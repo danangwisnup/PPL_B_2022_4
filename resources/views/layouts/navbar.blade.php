@@ -8,8 +8,11 @@
                 <a class="navbar-brand" href="/">
                     <img class="light-mode-item navbar-brand-item" src="{{ asset('assets/images/undip.png') }}" alt="logo">
                 </a>
-                <a class="text-dark" href="/">
+                <a class="text-dark desktop" href="/">
                     <strong>SI-Monitoring Akademik Informatika</strong>
+                </a>
+                <a class="text-dark mobile" href="/">
+                    <strong>SI-MAIF</strong>
                 </a>
                 <!-- Logo END -->
 

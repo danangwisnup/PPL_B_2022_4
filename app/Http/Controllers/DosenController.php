@@ -16,9 +16,6 @@ class DosenController extends Controller
      */
     public function index()
     {
-        $dosen = M_Dosen::latest()->paginate(5);
-        return view('operator.manajemen_user', compact('dosen'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
