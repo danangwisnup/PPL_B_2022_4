@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('sks_kumulatif');
             $table->float('ip');
             $table->float('ip_kumulatif');
-            $table->string('status');
             $table->string('upload_khs');
             $table->unique(['nim', 'semester_aktif']);
         });

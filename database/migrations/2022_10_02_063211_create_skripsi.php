@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tb_skripsi', function (Blueprint $table) {
-            $table->string('nim')->primary();
+            $table->string('nim');
             $table->integer('semester_aktif');
             $table->string('nilai')->nullable();
             $table->date('tanggal_sidang')->nullable();

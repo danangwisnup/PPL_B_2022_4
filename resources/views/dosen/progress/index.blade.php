@@ -33,14 +33,6 @@
                         <div class="card-body">
                             <form class="row g-3" action="/dosen/progress" method="POST">
                                 @csrf
-                                <div class="col-11">
-                                    <input type="text" class="form-control" id="identifier" name="identifier" placeholder="Masukkan Nama, NIM atau Email Mahasiswa" required>
-                                </div>
-                                <div class="col-1">
-                                    <button type="submit" class="icon-md btn btn-primary-soft p-0">
-                                        <i class="bi bi-search fs-6"> </i>
-                                    </button>
-                                </div>
                                 <div class="col-12">
                                     <div class="table-responsive">
                                         <table class="table" id="table_1">

@@ -17,8 +17,16 @@
             var search_input = datatable
                 .closest(".dataTables_wrapper")
                 .find("div[id$=_filter] input");
-            search_input.attr("placeholder", "Search");
-            search_input.removeClass("form-control-sm");
+            // Change the input attributes
+            search_input.attr({
+                placeholder: "Search",
+                class: "form-control form-control-sm ps-5",
+                // add icon fa fa-search
+                style: "width: 400px; background-image: url(http://ppl-project.test/assets/images/search.jpg); background-repeat: no-repeat; background-position: 10px 7px !important; background-size: 18px 18px !important;",
+                id: "search",
+                name: "search",
+            });
+
             // LENGTH - Inline-Form control
             var length_sel = datatable
                 .closest(".dataTables_wrapper")
@@ -47,8 +55,15 @@
             var search_input = datatable
                 .closest(".dataTables_wrapper")
                 .find("div[id$=_filter] input");
-            search_input.attr("placeholder", "Search");
-            search_input.removeClass("form-control-sm");
+            // Change the input attributes
+            search_input.attr({
+                placeholder: "Search",
+                class: "form-control form-control-sm ps-5",
+                // add icon fa fa-search
+                style: "width: 400px; background-image: url(http://ppl-project.test/assets/images/search.jpg); background-repeat: no-repeat; background-position: 10px 7px !important; background-size: 18px 18px !important;",
+                id: "search",
+                name: "search",
+            });
             // LENGTH - Inline-Form control
             var length_sel = datatable
                 .closest(".dataTables_wrapper")

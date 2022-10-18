@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('nim');
             $table->integer('semester_aktif');
             $table->integer('sks');
-            $table->string('status');
             $table->string('upload_irs');
             $table->unique(['nim', 'semester_aktif']);
         });

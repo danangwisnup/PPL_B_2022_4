@@ -65,22 +65,27 @@
                             </li>
                             @elseif (Auth::user()->role == 'mahasiswa')
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/irs">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Entry Progress' || $title == 'Entry IRS' || $title == 'Entry KHS' || $title == 'Entry PKL' || $title == 'Entry Skripsi')? 'active' : '' }}" href="/mahasiswa/entry">
+                                    <i class="bi bi-bar-chart"></i><span> Entry Progress</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/data/irs">
                                     <i class="bi bi-book"></i><span> IRS</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'KHS')? 'active' : '' }}" href="/mahasiswa/khs">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'KHS')? 'active' : '' }}" href="/mahasiswa/data/khs">
                                     <i class="bi bi-list-columns"></i><span> KHS</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'PKL')? 'active' : '' }}" href="/mahasiswa/pkl">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'PKL')? 'active' : '' }}" href="/mahasiswa/data/pkl">
                                     <i class="bi bi-building"></i><span> PKL</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Skripsi')? 'active' : '' }}" href="/mahasiswa/skripsi">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Skripsi')? 'active' : '' }}" href="/mahasiswa/data/skripsi">
                                     <i class="bi bi-mortarboard"></i><span> Skripsi</span>
                                 </a>
                             </li>

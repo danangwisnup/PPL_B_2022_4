@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\M_EntryProgress;
 use Illuminate\Http\Request;
 use App\Models\M_IRS;
 use App\Models\M_Mahasiswa;
@@ -18,6 +19,23 @@ class IRSController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        $countSemsester = M_EntryProgress::where('nim', Auth::user()->nim_nip)->count();
+        $progress = M_EntryProgress::where('nim', Auth::user()->nim_nip)
+            ->where('semester_aktif', $countSemsester)->first();
+        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $irs = M_IRS::where('nim', Auth::user()->nim_nip)->get();
+        return view('mahasiswa.irs.entry', [
+            'title' => 'Entry IRS',
+        ])->with(compact('mahasiswa', 'irs', 'progress'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function data()
     {
         $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
         $irs = M_IRS::where('nim', Auth::user()->nim_nip)->get();
@@ -58,23 +76,28 @@ class IRSController extends Controller
             'nim' => Auth::user()->nim_nip,
             'semester_aktif' => $request->semester_aktif,
             'sks' => $request->jumlah_sks,
-            'status' => 'Belum Diverifikasi',
             'upload_irs' => $request->file,
         ]);
 
+        M_EntryProgress::where('nim', Auth::user()->nim_nip)
+            ->where('semester_aktif', $request->semester_aktif)
+            ->update([
+                'is_irs' => 1,
+            ]);
+
         if ($temp) {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '_' . $db->sks . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
-                'upload_irs' => 'files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '_' . $db->sks . '.pdf'
+                'upload_irs' => 'files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
             ]);
             $temp->delete();
         }
 
         if ($db->save()) {
             Alert::success('Berhasil', 'Data berhasil disimpan');
-            return redirect()->route('irs.index');
+            return redirect()->route('khs.index');
         } else {
             Alert::error('Gagal', 'Data gagal disimpan');
             return redirect()->route('irs.index');
@@ -126,11 +149,11 @@ class IRSController extends Controller
 
         if ($temp && $request->confirm == 'on') {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '_' . $request->jumlah_sks . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             M_IRS::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'sks' => $request->jumlah_sks,
-                'upload_irs' => 'files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '_' . $request->jumlah_sks . '.pdf'
+                'upload_irs' => 'files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
             ]);
             $temp->delete();
             unlink(public_path($db->upload_irs));
@@ -142,10 +165,10 @@ class IRSController extends Controller
 
         if ($db->update()) {
             Alert::success('Berhasil', 'Data berhasil diubah');
-            return redirect()->route('irs.index');
+            return redirect('/mahasiswa/data/irs');
         } else {
             Alert::error('Gagal', 'Data gagal diubah');
-            return redirect()->route('irs.index');
+            return redirect('/mahasiswa/data/irs');
         }
     }
 

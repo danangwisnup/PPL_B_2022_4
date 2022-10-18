@@ -26,47 +26,52 @@
                     </div>
                     @endif
                     <!-- Event alert END -->
-
-                    <!-- Card START -->
+                    <!-- error alert START -->
                     <div class="card">
-                        <!-- Card header START -->
-                        <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <h1 class="card-title h5">Data IRS</h1>
-                        </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table" id="table_1">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Semester</th>
-                                            <th>SKS</th>
-                                            <th>Scan IRS</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($irs as $item)
-                                        <tr>
-                                            <td>{{ $item->semester_aktif }}</td>
-                                            <td>{{ $item->sks }}</td>
-                                            <td><a href="{{ asset($item->upload_irs) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Lihat</a></td>
-                                            <td>
-                                                <a href="" class="btn btn-success btn-sm" id="buttonModalIRS" data-bs-toggle="modal" data-bs-target="#editIRS" data-attr="{{ route('irs.edit', [$item->semester_aktif, $item->nim]) }}">
-                                                    <i class="bi bi-pencil-square"></i> Edit
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            <h5 class="card-title">Entry Progress</h5>
+                            @include('layouts/entryprogress')
+                            <div class="tab-content mb-0 pb-0">
+                                <div class="tab-pane fade show active">
+                                    <div class="col-12">
+                                        <div class="mb-4 alert alert-info"> Semester aktif saat ini adalah <strong> {{ $progress != null ? $progress->semester_aktif : 'Belum ada data' }} </strong> </div>
+                                    </div>
+                                    <!-- Card header START -->
+                                    <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
+                                        <h1 class="card-title h5">Input IRS</h1>
+                                        <div class="text-dark small">Harap diisi dengan data yang benar.</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="row g-3" action="{{ route('irs.store') }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="semester_aktif" value="{{ $progress != null ? $progress->semester_aktif : '' }}">
+                                            <!-- Input Jumlah SKS START -->
+                                            <div class="col-12">
+                                                <label class="form-label text-dark">Jumlah SKS</label>
+                                                <input type="text" class="form-control" id="jumlah_sks" name="jumlah_sks" placeholder="Jumlah SKS" required>
+                                            </div>
+                                            <!-- Input Jumlah SKS END-->
 
-            </div> <!-- Row END -->
-        </div>
-        <!-- Container END -->
+                                            <!-- Dropzone START-->
+                                            <div class="col-12">
+                                                <label class="form-label">Scan IRS</label>
+                                                <div class="dropzone">
+                                                    <input type="file" class="filepond" id="file" name="file" data-allow-reorder="true">
+                                                </div>
+                                            </div>
+
+                                            <!-- Dropzone END -->
+                                            <div class="text-danger small fst-italic">*Format file [.pdf], pastikan file yang diupload benar.</div>
+
+                                            <div class="col-12 text-end">
+                                                <button type="submit" class="btn btn-sm btn-primary mb-0">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div> <!-- Row END -->
+                            </div>
+                            <!-- Container END -->
     </main>
 </div>
 
