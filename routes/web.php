@@ -13,9 +13,10 @@ use App\Http\Controllers\SkripsiController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\ProgressMhsContoller;
 use App\Http\Controllers\EditProfileController;
-use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\EntryProgressController;
+use App\Http\Controllers\ManajemenUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,11 +105,7 @@ Route::get('/department/data_dosen', function () {
 });
 
 // Fiture Dosen: progress studi mahasiswa
-Route::get('/dosen/progress_studi_mahasiswa', function () {
-    return view('dosen.progress.index', [
-        'title' => 'Progress Studi Mahasiswa',
-    ]);
-});
+Route::resource('/dosen/progress_studi_mahasiswa', ProgressMhsContoller::class);
 
 // Fiture Dosen: verifikasi berkas mahasiswa
 Route::get('/dosen/verifikasi_berkas_mahasiswa', function () {

@@ -6,7 +6,7 @@
                 [5, 10, 15, -1],
                 [5, 10, 15, "All"],
             ],
-            iDisplayLength: 5,
+            iDisplayLength: 10,
             language: {
                 search: "",
             },
@@ -44,7 +44,7 @@
                 [5, 10, 15, -1],
                 [5, 10, 15, "All"],
             ],
-            iDisplayLength: 5,
+            iDisplayLength: 10,
             language: {
                 search: "",
             },
