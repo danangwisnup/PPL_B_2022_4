@@ -103,7 +103,7 @@ class DosenController extends Controller
     {
         $request->validate([
             'nama' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,' . $id . ',nim_nip',
             'status' => 'required',
         ]);
 

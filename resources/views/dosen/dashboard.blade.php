@@ -31,82 +31,80 @@
                 <div class="card-body">
                     <h5 class="card-title">Mahasiswa per Angkatan</h5>
                     <br />
-                    <div class="card">
+                    <div class="chart-container">
                         <div id="grafik"></div>
-                        @section('grafik')
                         <script src="https://code.highcharts.com/highcharts.js"></script>
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script src="https://code.highcharts.com/modules/export-data.js"></script>
                         <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-                        <script>
-                            Highcharts.chart('grafik', {
-                                chart: {
-                                    type: 'column'
-                                },
+                        <script type="text/javascript">
+                        Highcharts.chart('grafik', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: 'Grafik Mahasiswa',
+                            },
+                            colors : ['#D6BBFB', '#9E77ED', '#6941C6'],
+                            xAxis: {
+                                categories: ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
+                            },
+                            yAxis: {
+                                min: 0,
                                 title: {
-                                    text: '',
-                                    align: 'left'
+                                    text: 'Jumlah Mahasiswa'
                                 },
-                                xAxis: {
-                                    categories: ['2016', '2017', '2018', '2019', '2020', '2021', '2022'],
-                                },
-                                yAxis: {
-                                    min: 0,
-                                    title: {
-                                        text: 'Jumlah Mahasiswa'
+                                stackLabels: {
+                                    enabled: true,
+                                    style: {
+                                        fontWeight: 'bold',
+                                        color: ( // theme
+                                            Highcharts.defaultOptions.title.style &&
+                                            Highcharts.defaultOptions.title.style.color
+                                        ) || 'gray',
+                                        textOutline: 'none'
+                                    }
+                                }
+                            },
+                            legend: {
+                                align: 'left',
+                                x: 70,
+                                verticalAlign: 'top',
+                                y: 70,
+                                floating: true,
+                                backgroundColor:
+                                    Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                                borderColor: '#CCC',
+                                borderWidth: 1,
+                                shadow: false
+                            },
+                            tooltip: {
+                                headerFormat: '<b>{point.x}</b><br/>',
+                                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                            },
+                            plotOptions: {
+                                column: {
+                                    stacking: 'normal',
+                                    dataLabels: {
+                                        enabled: false
                                     },
-                                    stackLabels: {
-                                        enabled: true,
-                                        style: {
-                                            fontWeight: 'bold',
-                                            color: ( // theme
-                                                Highcharts.defaultOptions.title.style &&
-                                                Highcharts.defaultOptions.title.style.color
-                                            ) || 'gray',
-                                            textOutline: 'none'
-                                        }
-                                    }
-                                },
-                                legend: {
-                                    align: 'left',
-                                    x: 70,
-                                    verticalAlign: 'top',
-                                    y: 70,
-                                    floating: true,
-                                    backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                                    borderColor: '#CCC',
-                                    borderWidth: 1,
-                                    shadow: false
-                                },
-                                tooltip: {
-                                    headerFormat: '<b>{point.x}</b><br/>',
-                                    pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-                                },
-                                plotOptions: {
-                                    column: {
-                                        stacking: 'normal',
-                                        dataLabels: {
-                                            enabled: true
-                                        }
-                                    }
-                                },
-                                series: [{
-                                    name: 'Lulus',
-                                    color: '#00c292',
-                                    data: [0, 2, 6, 3]
-                                }, {
-                                    name: 'Aktif',
-                                    color: '#00a8ff',
-                                    data: [3, 5, 1, 13]
-                                }, {
-                                    name: 'Cuti',
-                                    color: '#ff9f43',
-                                    data: [14, 8, 8, 12]
-                                }, ]
-                            });
-                        </script>
-                        @endsection
-                    </div>
+                                    shadow: false,
+                                    center: ['50%', '50%'],
+                                    borderWidth: 0
+                                }
+                            },
+                            series: [{
+                                name: 'Aktif',
+                                data: [12, 31, 50, 103, 150, 162, 174]
+                            }, {
+                                name: 'Lulus',
+                                data: [9, 13, 22, 30, 0, 0, 0]
+                            }, {
+                                name: 'Cuti',
+                                data: [5, 7, 8, 3, 2, 1, 0]
+                            }]
+                        });
+                        </script>        
                 </div>
             </div>
         </div>

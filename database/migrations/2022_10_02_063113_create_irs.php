@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('irs', function (Blueprint $table) {
+        Schema::create('tb_irs', function (Blueprint $table) {
             $table->integer('nim')->primary();
             $table->integer('semester_aktif');
             $table->integer('sks');
-            $table->string('status_informasi');
+            $table->string('status');
             $table->binary('upload_irs');
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('irs');
+        Schema::dropIfExists('tb_irs');
     }
 };

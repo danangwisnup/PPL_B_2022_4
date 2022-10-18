@@ -9,7 +9,7 @@
                     <img class="light-mode-item navbar-brand-item" src="{{ asset('assets/images/undip.png') }}" alt="logo">
                 </a>
                 <a class="text-dark" href="/">
-                    <strong>SIMAMI UNDIP</strong>
+                    <strong>SI-Monitoring Akademik Informatika</strong>
                 </a>
                 <!-- Logo END -->
 
@@ -53,7 +53,7 @@
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button class="dropdown-item bg-danger-soft-hover"><i class="bi bi-power fa-fw me-2"></i>Sign Out</button>
+                                    <button class="dropdown-item bg-danger-soft-hover"><i class="bi bi-power fa-fw me-2"></i>Log Out</button>
                                 </form>
                             </li>
                             <li>

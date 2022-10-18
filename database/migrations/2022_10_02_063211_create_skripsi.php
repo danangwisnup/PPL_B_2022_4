@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('skripsi', function (Blueprint $table) {
+        Schema::create('tb_skripsi', function (Blueprint $table) {
             $table->string('nim')->primary();
+            $table->integer('semester_aktif');
             $table->string('nilai')->nullable();
             $table->date('tanggal_sidang')->nullable();
             $table->integer('lama_studi')->nullable();
-            $table->string('status_konfirmasi')->nullable();
-            $table->binary('upload_skripsi')->nullable();
             $table->string('status');
+            $table->binary('upload_skripsi')->nullable();
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skripsi');
+        Schema::dropIfExists('tb_skripsi');
     }
 };

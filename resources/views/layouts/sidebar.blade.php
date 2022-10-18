@@ -61,7 +61,7 @@
                             </li>
                             @elseif (Auth::user()->role == 'mahasiswa')
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/irs">
                                     <i class="bi bi-book"></i><span> IRS</span>
                                 </a>
                             </li>
@@ -122,16 +122,26 @@
                                     <i class="bi bi-file-earmark-text"></i><span> Data Dosen</span>
                                 </a>
                             </li>
-                        </ul>
-                        @endif
+                            @endif
 
+                            <li class="nav-item">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button style="font-size: 14px;" class="nav-link btn fw-bold">
+                                        <i class="bi bi-box-arrow-left"></i><span> Logout</span>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                         <!-- Side Nav END -->
                     </div>
                     <!-- Card body END -->
                     <!-- Card footer -->
+                    @if (Auth::user()->role == 'mahasiswa')
                     <div class="card-footer text-center py-2">
-                        <a class="btn btn-link btn-sm" href="javascript:;">View Profile </a>
+                        <a class="btn btn-link btn-sm" href="/mahasiswa/edit_profile">Edit Profile </a>
                     </div>
+                    @endif
                 </div>
                 <!-- Card END -->
             </div>

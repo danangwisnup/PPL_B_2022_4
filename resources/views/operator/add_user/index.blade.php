@@ -50,21 +50,7 @@
                                             <label class="form-label text-dark">Nama Mahasiswa</label>
                                             <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ old('nama') }}" required>
                                         </div>
-                                        <div class="col-6">
-                                            <label class="form-label text-dark">Angkatan</label>
-                                            <select class="form-select" id="angkatan" name="angkatan" required>
-                                                <option value="">Pilih Angkatan</option>
-                                                <option value="2015" @if (old('angkatan')=="2015" ) {{ 'selected' }} @endif>2015</option>
-                                                <option value="2016" @if (old('angkatan')=="2016" ) {{ 'selected' }} @endif>2016</option>
-                                                <option value="2017" @if (old('angkatan')=="2017" ) {{ 'selected' }} @endif>2017</option>
-                                                <option value="2018" @if (old('angkatan')=="2018" ) {{ 'selected' }} @endif>2018</option>
-                                                <option value="2019" @if (old('angkatan')=="2019" ) {{ 'selected' }} @endif>2019</option>
-                                                <option value="2020" @if (old('angkatan')=="2020" ) {{ 'selected' }} @endif>2020</option>
-                                                <option value="2021" @if (old('angkatan')=="2021" ) {{ 'selected' }} @endif>2021</option>
-                                                <option value="2022" @if (old('angkatan')=="2022" ) {{ 'selected' }} @endif>2022</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-6">
+                                        <div class="col-12">
                                             <label class="form-label text-dark">Status </label>
                                             <select class="form-select" id="status" name="status" required>
                                                 <option value="">Pilih Status</option>

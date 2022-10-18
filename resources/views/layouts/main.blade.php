@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    <title>SIMAMI | {{ $title }} </title>
+    <title>Sistem Informasi Monitoring Akademik Informatika | {{ $title }} </title>
 
     <!-- Meta Tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="Webestica.com">
-    <meta name="description" content="Bootstrap 5 based Social Media Network and Community Theme">
+    <meta name="description" content="Sistem Informasi Monitoring Akademik Informatika Universitas Diponegoro">
+    <meta name="author" content="Kelompok 4 PPL 2022">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/undip.png') }}">
@@ -34,16 +34,19 @@
     @yield('content')
 
     <!-- Bootstrap JS -->
-    <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 
-    <!-- Vendors -->
-    <script src="{{ asset('assets/vendor/tiny-slider/dist/tiny-slider.js') }}"></script>
-    <script src="{{ asset('assets/vendor/flatpickr/dist/flatpickr.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/dropzone/dist/min/dropzone.min.js') }}"></script>
+	<!-- Vendors -->
+	<script src="{{ asset('assets/vendor/tiny-slider/dist/tiny-slider.js') }}"></script>
+	<script src="{{ asset('assets/vendor/OverlayScrollbars-master/js/OverlayScrollbars.min.js') }}"></script>
+	<script src="{{ asset('assets/vendor/choices.js/public/assets/scripts/choices.min.js') }}"></script>
+	<script src="{{ asset('assets/vendor/glightbox-master/dist/js/glightbox.min.js') }}"></script>
+	<script src="{{ asset('assets/vendor/flatpickr/dist/flatpickr.min.js') }}"></script>
+	<script src="{{ asset('assets/vendor/plyr/plyr.js') }}"></script>
+	<script src="{{ asset('assets/vendor/dropzone/dist/min/dropzone.min.js') }}"></script>
 
     <!-- Template Functions -->
     <script src="{{ asset('assets/js/template.js') }}"></script>
-    @yield('grafik')
 
 </body>
 
