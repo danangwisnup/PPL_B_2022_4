@@ -68,5 +68,11 @@ class Kernel extends HttpKernel
         'dosen' => \App\Http\Middleware\Dosen::class,
         'mahasiswa' => \App\Http\Middleware\Mahasiswa::class,
         'department' => \App\Http\Middleware\Department::class,
+        'entry_progress' => \App\Http\Middleware\entry_progress::class,
+        'irs' => \App\Http\Middleware\IRS::class,
+        'khs' => \App\Http\Middleware\KHS::class,
+        'pkl' => \App\Http\Middleware\PKL::class,
+        'skripsi' => \App\Http\Middleware\Skripsi::class,
+        'editprofile' => \App\Http\Middleware\EditProfile::class,
     ];
 }

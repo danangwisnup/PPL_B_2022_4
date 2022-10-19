@@ -31,7 +31,7 @@
                     <div class="card">
                         <!-- Card header START -->
                         <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <h1 class="card-title h5">Data PKL</h1>
+                            <h1 class="card-title h5">Data Skripsi</h1>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -42,7 +42,7 @@
                                             <th>Nilai</th>
                                             <th>Tanggal Sidang</th>
                                             <th>Status</th>
-                                            <th>Scan KHS</th>
+                                            <th>Scan Skripsi</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -52,10 +52,18 @@
                                             <td>{{$item->semester_aktif}}</td>
                                             <td>{{$item->nilai}}</td>
                                             <td>{{$item->tanggal_sidang}}</td>
-                                            <td>{{$item->status}}</td>
-                                            <td><a href="{{ asset($item->upload_pkl) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Lihat</a></td></td>
+                                            <td>@if ($item->status == 'Lulus')
+                                                <span class="badge bg-success">{{$item->status}}</span>
+                                                @elseif ($item->status == 'Sedang Ambil')
+                                                <span class="badge bg-warning">{{$item->status}}</span>
+                                                @else
+                                                <span class="badge bg-danger">{{$item->status}}</span>
+                                                @endif
+                                            </td>
+                                            <td><a href="{{ asset($item->upload_skripsi) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Lihat</a></td>
+                                            </td>
                                             <td>
-                                                <a href="" class="btn btn-success btn-sm" id="buttonModalKHS" data-bs-toggle="modal" data-bs-target="#editKHS" data-attr="{{ route('khs.edit', [$item->semester_aktif, $item->nim]) }}">
+                                                <a href="" class="btn btn-success btn-sm" id="buttonModalSkripsi" data-bs-toggle="modal" data-bs-target="#editSkripsi" data-attr="{{ route('skripsi.edit', [$item->semester_aktif, $item->nim]) }}">
                                                     <i class="bi bi-pencil-square"></i> Edit
                                                 </a>
                                             </td>
@@ -67,96 +75,28 @@
                         </div>
                     </div>
 
-                    <!-- Card START -->
-                    <div class="card">
-                        <!-- Card header START -->
-                        <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <h1 class="card-title h5">Skripsi</h1>
-                            <div class="text-dark small">Harap diisi dengan data yang benar.</div>
-                        </div>
-                        <div class="card-body">
-                            <form class="row g-3" action="" method="POST">
-                                @csrf
-                                <!-- Input Tanggal START -->
-                                <div class="col-6">
-                                    <label class="form-label text-dark">Tanggal Sidang</label>
-                                    <input type="date" class="form-control" id="tanggal_sidang" name="tanggal_sidang"  required>
-                                </div>
-                                <!-- Input Tanggal END -->
-
-                                <!-- Input Lama Studi START -->
-                                <div class="col-6">
-                                    <label class="form-label text-dark">Lama Studi (Semester)</label>
-                                    <select class="form-select" id="lama_studi" name="lama_studi" required>
-                                        <option value="">Pilih Lama Studi</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                    </select>
-                                </div>
-                                <!-- Input Lama Studi END -->
-
-                                <!-- Pilih Nilai START-->
-                                <div class="col-6">
-                                    <label class="form-label text-dark">Nilai</label>
-                                    <select class="form-select" id="nilai_skripsi" name="nilai_skripsi" required>
-                                        <option value="">-- Pilih Nilai --</option>
-                                        <option value="A">A</option>
-                                        <option value="B">B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
-                                        <option value="E">E</option>
-                                    </select>
-                                </div>
-                                <!-- Pilih Nilai END -->
-
-                                <!-- Pilih Status START-->
-                                <div class="col-6">
-                                    <label class="form-label text-dark">Status</label>
-                                    <select class="form-select" id="status_skripsi" name="status_skripsi" required>
-                                        <option value="">-- Pilih Status --</option>
-                                        <option value="Belum ambil">Belum ambil</option>
-                                        <option value="Sedang ambil">Sedang ambil</option>
-                                        <option value="Lulus">Lulus</option>
-                                    </select>
-                                </div>
-                                <!-- Pilih Status END-->
-
-                                <!-- Dropzone START-->
-                                <div class="col-12">
-                                    <label class="form-label">Scan Sckripsi</label>
-                                    <div class="dropzone">
-                                        <input type="file" class="filepond" id="file" name="file" data-allow-reorder="true">
-                                    </div>
-                                </div>
-                                <!-- Dropzone END -->
-                                <div class="text-danger small fst-italic">*Format file [.pdf], pastikan file yang diupload benar.</div>
-
-                                <div class="col-12 text-end">
-                                    <button type="submit" class="btn btn-sm btn-primary mb-0">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- Card body END -->
-                    </div>
-                    <!-- Card END -->
                 </div>
 
             </div> <!-- Row END -->
         </div>
         <!-- Container END -->
     </main>
+</div>
+
+<!-- modal edit skripsi -->
+<div class="modal fade" data-bs-backdrop="static" data-keyboard="false" id="editSkripsi" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Skripsi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="btnClose" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="showModalSkripsi">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -203,15 +143,15 @@
 
 <script type="text/javascript">
     // display a modal dosen
-    $(document).on("click", "#buttonModalKHS", function() {
+    $(document).on("click", "#buttonModalSkripsi", function() {
         event.preventDefault();
         let href = $(this).attr("data-attr");
         $.ajax({
             url: href,
             // return the result
             success: function(result) {
-                $("#editKHS").modal("show");
-                $("#showModalKHS").html(result).show();
+                $("#editSkripsi").modal("show");
+                $("#showModalSkripsi").html(result).show();
             },
             error: function(jqXHR, testStatus, error) {
                 console.log(error);
