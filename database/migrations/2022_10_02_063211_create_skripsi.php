@@ -14,13 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tb_skripsi', function (Blueprint $table) {
-            $table->string('nim')->primary();
+            $table->string('nim');
             $table->integer('semester_aktif');
             $table->string('nilai')->nullable();
             $table->date('tanggal_sidang')->nullable();
             $table->integer('lama_studi')->nullable();
             $table->string('status');
-            $table->binary('upload_skripsi')->nullable();
+            $table->string('upload_skripsi')->nullable();
+            $table->unique(['nim', 'semester_aktif']);
         });
     }
 

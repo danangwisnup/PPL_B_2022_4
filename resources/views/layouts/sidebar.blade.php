@@ -23,24 +23,33 @@
                 <!-- Card START -->
                 <div class="card overflow-hidden">
                     <!-- Cover image -->
-                    <div class="h-80px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/Widya-Puraya-1.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                    <div class="h-90px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/Widya-Puraya-1.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                     <!-- Card body START -->
                     <div class="card-body pt-0">
                         <div class="text-center">
                             <!-- Avatar -->
                             <div class="avatar avatar-xxl mt-n5 mb-1">
-                                <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                @if (Auth::user()->role == 'mahasiswa')
+                                <a href="#"><img class="avatar-img rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/03.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
+                                @else
+                                <a href="#"><img class="avatar-img rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                @endif
                             </div>
                             <!-- Info -->
-                            <h5 class="mb-0"> <a href="#!">{{ Auth::user()->nama }}</a> </h5>
-                            <small class="mb-2">{{ Auth::user()->email }}</small>
-                            <br>
-                            <small>{{ Auth::user()->role }}</small>
+                            <h1 class="mb-0 mt-2 small bold"><a href=""><strong>{{ Auth::user()->nama }}</strong></a></h1>
+                            <div class="mt-1 small bold">{{ Auth::user()->nim_nip }}</div>
+                            <div class="mt-1 text-dark" style="font-size: 14px;">
+                                {{ Auth::user()->role == 'operator' ? 'Operator Department' : ''}}
+                                {{ Auth::user()->role == 'mahasiswa' ? 'Student' : ''}}
+                                {{ Auth::user()->role == 'dosen' ? 'Lecturer' : ''}}
+                                {{ Auth::user()->role == 'department' ? 'Department' : ''}}
+                            </div>
                         </div>
+
+                        @if ($title != 'Edit Profile')
 
                         <!-- Divider -->
                         <hr>
-
                         <!-- Side Nav START -->
                         <ul class="nav nav-link-secondary flex-column fw-bold gap-2">
                             <li class="nav-item">
@@ -61,22 +70,27 @@
                             </li>
                             @elseif (Auth::user()->role == 'mahasiswa')
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/irs">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Entry Progress' || $title == 'Entry IRS' || $title == 'Entry KHS' || $title == 'Entry PKL' || $title == 'Entry Skripsi')? 'active' : '' }}" href="/mahasiswa/entry">
+                                    <i class="bi bi-bar-chart"></i><span> Entry Progress</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/data/irs">
                                     <i class="bi bi-book"></i><span> IRS</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'KHS')? 'active' : '' }}" href="/">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'KHS')? 'active' : '' }}" href="/mahasiswa/data/khs">
                                     <i class="bi bi-list-columns"></i><span> KHS</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'PKL')? 'active' : '' }}" href="/">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'PKL')? 'active' : '' }}" href="/mahasiswa/data/pkl">
                                     <i class="bi bi-building"></i><span> PKL</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Skripsi')? 'active' : '' }}" href="/">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Skripsi')? 'active' : '' }}" href="/mahasiswa/data/skripsi">
                                     <i class="bi bi-mortarboard"></i><span> Skripsi</span>
                                 </a>
                             </li>
@@ -128,18 +142,27 @@
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button style="font-size: 14px;" class="nav-link btn fw-bold">
-                                        <i class="bi bi-box-arrow-left"></i><span> Logout</span>
+                                        <i class="bi bi-power"></i><span> Logout</span>
                                     </button>
                                 </form>
                             </li>
                         </ul>
                         <!-- Side Nav END -->
+                        @endif
                     </div>
                     <!-- Card body END -->
                     <!-- Card footer -->
-                    @if (Auth::user()->role == 'mahasiswa')
+                    @if ($title == 'Edit Profile')
                     <div class="card-footer text-center py-2">
-                        <a class="btn btn-link btn-sm" href="/mahasiswa/edit_profile">Edit Profile </a>
+                        Informatika S1 <br />
+                        Fakultas Sains dan Matematika
+                        <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="/">
+                            <i class="bi bi-house-door"></i><span> Dashboard</span>
+                        </a>
+                    </div>
+                    @elseif (Auth::user()->role == 'mahasiswa')
+                    <div class="card-footer text-center py-2">
+                        <a class="btn btn-link btn-sm bold" style="font-size: 14px;" href="/mahasiswa/edit_profile">Edit Profile </a>
                     </div>
                     @endif
                 </div>

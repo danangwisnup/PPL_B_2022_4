@@ -26,3 +26,5 @@
 
 </div>
 @endsection
+
+@include('sweetalert::alert')

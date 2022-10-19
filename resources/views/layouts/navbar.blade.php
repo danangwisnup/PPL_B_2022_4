@@ -8,8 +8,11 @@
                 <a class="navbar-brand" href="/">
                     <img class="light-mode-item navbar-brand-item" src="{{ asset('assets/images/undip.png') }}" alt="logo">
                 </a>
-                <a class="text-dark" href="/">
+                <a class="text-dark desktop" href="/">
                     <strong>SI-Monitoring Akademik Informatika</strong>
+                </a>
+                <a class="text-dark mobile" href="/">
+                    <strong>SI-MAIF</strong>
                 </a>
                 <!-- Logo END -->
 
@@ -41,10 +44,9 @@
                         <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3" aria-labelledby="profileDropdown">
                             <!-- Profile info -->
                             <li class="px-3">
-                                <div class="position-relative text-center m-3">
+                                <div class="position-relative text-center">
                                     <div>
-                                        <a class="h6 stretched-link" href="#">{{ Auth::user()->nama }}</a>
-                                        <p class="small m-0">{{ Auth::user()->role }}</p>
+                                        <h1 class="mt-3 mb-4 small bold"><a href=""><strong>{{ Auth::user()->nama }}</strong></a></h1>
                                     </div>
                                 </div>
                                 <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href="javascript:;">View profile</a>
