@@ -137,7 +137,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'nim' => '24060120120001',
-                'nama' => 'Rijal Kurniawan',
+                'nama' => 'Rijal Kurniawan ✨',
                 'email' => 'rijal@if.com',
                 'jalur_masuk' => 'SNMPTN',
                 'angkatan' => '2020',
