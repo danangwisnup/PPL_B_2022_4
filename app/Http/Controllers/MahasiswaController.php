@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\M_Mahasiswa;
+use App\Models\M_PKL;
+use App\Models\M_Skripsi;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -167,5 +169,31 @@ class MahasiswaController extends Controller
         // Alert success
         Alert::success('Success!', 'Data mahasiswa berhasil dihapus');
         return redirect()->route('user_manajemen');
+    }
+
+    public function data_mahasiswa()
+    {
+        $mahasiswaAll = M_Mahasiswa::all();
+        return view('dosen.data_mhs.index', [
+            'title' => 'Data Mahasiswa',
+        ])->with(compact('mahasiswaAll'));
+    }
+
+    public function data_pkl()
+    {
+        $mahasiswaAll = M_Mahasiswa::all();
+        $mahasiswaPKL = M_PKL::all();
+        return view('dosen.data_pkl.index', [
+            'title' => 'Data Mahasiswa PKL',
+        ])->with(compact('mahasiswaAll', 'mahasiswaPKL'));
+    }
+
+    public function data_skripi()
+    {
+        $mahasiswaAll = M_Mahasiswa::all();
+        $mahasiswaSkripsi = M_Skripsi::all();
+        return view('dosen.data_skripsi.index', [
+            'title' => 'Data Mahasiswa Skripsi',
+        ])->with(compact('mahasiswaAll', 'mahasiswaSkripsi'));
     }
 }

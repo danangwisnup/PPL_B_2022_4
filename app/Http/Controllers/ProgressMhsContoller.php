@@ -13,10 +13,23 @@ class ProgressMhsContoller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function dosen()
     {
         $mahasiswa = M_Mahasiswa::where('kode_wali', Auth::user()->nim_nip)->get();
         return view('dosen.progress.index', [
+            'title' => 'Progress Studi Mahasiswa',
+        ])->with(compact('mahasiswa'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function department()
+    {
+        $mahasiswa = M_Mahasiswa::all();
+        return view('department.progress.index', [
             'title' => 'Progress Studi Mahasiswa',
         ])->with(compact('mahasiswa'));
     }

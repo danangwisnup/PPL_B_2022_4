@@ -84,11 +84,7 @@ Route::group(['middleware' => ['auth', 'mahasiswa', 'editprofile']], function ()
 });
 
 // Fiture Department: progress studi mahasiswa
-Route::get('/department/progress_studi_mahasiswa', function () {
-    return view('department.progress.index', [
-        'title' => 'Progress Studi Mahasiswa',
-    ]);
-});
+Route::get('/department/progress_studi_mahasiswa', [ProgressMhsContoller::class, 'department'])->middleware('auth')->middleware('department');
 
 // Fiture Department: data mahasiswa
 Route::get('/department/data_mahasiswa', function () {
@@ -105,7 +101,7 @@ Route::get('/department/data_dosen', function () {
 });
 
 // Fiture Dosen: progress studi mahasiswa
-Route::resource('/dosen/progress_studi_mahasiswa', ProgressMhsContoller::class);
+Route::get('/dosen/progress_studi_mahasiswa', [ProgressMhsContoller::class, 'dosen'])->middleware('auth')->middleware('dosen');
 
 // Fiture Dosen: verifikasi berkas mahasiswa
 Route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
@@ -115,25 +111,13 @@ Route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
 });
 
 // Dosen: data mahasiswa
-route::get('/dosen/data_mahasiswa', function () {
-    return view('dosen.data_mhs.index', [
-        'title' => 'Data Mahasiswa',
-    ]);
-});
+Route::get('/dosen/data_mahasiswa', [MahasiswaController::class, 'data_mahasiswa'])->middleware('auth')->middleware('dosen');
 
 // Dosen: data mahasiswa pkl
-route::get('/dosen/data_mahasiswa_pkl', function () {
-    return view('dosen.data_pkl.index', [
-        'title' => 'Data Mahasiswa PKL',
-    ]);
-});
+Route::get('/dosen/data_mahasiswa_pkl', [MahasiswaController::class, 'data_pkl'])->middleware('auth')->middleware('dosen');
 
 // Dosen: data mahasiswa skripsi
-route::get('/dosen/data_mahasiswa_skripsi', function () {
-    return view('dosen.data_skripsi.index', [
-        'title' => 'Data Mahasiswa Skripsi',
-    ]);
-});
+Route::get('/dosen/data_mahasiswa_skripsi', [MahasiswaController::class, 'data_skripi'])->middleware('auth')->middleware('dosen');
 
 // Wilayah Indonesia
 Route::get('/wilayah/{provinsi}', [WilayahController::class, 'index'])->middleware('auth')->name('wilayah');

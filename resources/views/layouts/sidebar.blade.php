@@ -38,7 +38,12 @@
                             <!-- Info -->
                             <h1 class="mb-0 mt-2 small bold"><a href=""><strong>{{ Auth::user()->nama }}</strong></a></h1>
                             <div class="mt-1 small bold">{{ Auth::user()->nim_nip }}</div>
-                            <div class="mt-1 text-dark" style="font-size: 15px;">{{ Auth::user()->role }}</div>
+                            <div class="mt-1 text-dark" style="font-size: 14px;">
+                                {{ Auth::user()->role == 'operator' ? 'Operator Department' : ''}}
+                                {{ Auth::user()->role == 'mahasiswa' ? 'Student' : ''}}
+                                {{ Auth::user()->role == 'dosen' ? 'Lecturer' : ''}}
+                                {{ Auth::user()->role == 'department' ? 'Department' : ''}}
+                            </div>
                         </div>
 
                         @if ($title != 'Edit Profile')

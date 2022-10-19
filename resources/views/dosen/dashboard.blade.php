@@ -74,6 +74,32 @@
                                     aktif.push(aktifCount);
                                     cuti.push(cutiCount);
                                 }
+                                Highcharts.setOptions({
+                                    exporting: {
+                                        buttons: {
+                                            contextButton: {
+                                                text: 'Menu Chart',
+                                                theme: {
+                                                    'stroke-width': 1,
+                                                    stroke: 'silver',
+                                                    r: 5,
+                                                    states: {
+                                                        hover: {
+                                                            fill: '#0d6efd',
+                                                            style: {
+                                                                color: 'white'
+                                                            }
+                                                        },
+                                                        select: {
+                                                            stroke: 'white',
+                                                            fill: '#0d6efd'
+                                                        }
+                                                    }
+                                                },
+                                            }
+                                        }
+                                    }
+                                });
                                 Highcharts.chart('grafik', {
                                     chart: {
                                         type: 'column'

@@ -41,18 +41,20 @@
                                                     <th>Nama</th>
                                                     <th>NIM</th>
                                                     <th>Email</th>
-                                                    <th>Alamat</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($mahasiswaAll as $mhs)
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>{{ $mhs->nama }}</td>
+                                                    <td>{{ $mhs->nim }}</td>
+                                                    <td>{{ $mhs->email }}</td>
+                                                    <td>
+                                                        <a href="/dosen/progress/{{ $mhs->nim }}" class="btn btn-primary btn-sm">Lihat Progress</a>
+                                                    </td>
                                                 </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
