@@ -17,6 +17,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-4 mb-3">
+                                <label class="mb-1 text-dark"><strong>Pilih Angkatan</strong></label>
                                 <select class="form-select shadow" id="angkatan" name="angkatan">
                                     <option selected>Semua Angkatan</option>
                                     @for ($i = 2015; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
@@ -25,7 +26,7 @@
                             </div>
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Data Mahasiswa Skripsi per Angkatan</h5>
+                                    <h5 class="card-title">Grafik Mahasiswa Skripsi per Angkatan</h5>
                                     <div class="chart-container">
                                         <div id="grafik"></div>
 
@@ -41,7 +42,8 @@
                                                 var data = <?php echo json_encode($mahasiswaAll); ?>;
                                                 var skripsi = <?php echo json_encode($mahasiswaSkripsi); ?>;
                                                 var tahun = [];
-                                                var sudah = [];
+                                                var lulus = [];
+                                                var sedang = [];
                                                 var belum = [];
                                                 // grouping data by year
                                                 for (var i = 0; i < data.length; i++) {
@@ -51,7 +53,8 @@
                                                 }
                                                 // grouping data by status
                                                 for (var i = 0; i < tahun.length; i++) {
-                                                    var sudahCount = 0;
+                                                    var lulusCount = 0;
+                                                    var sedangCount = 0;
                                                     var belumCount = 0;
 
                                                     // count data by year select nim from skripsi and get status
@@ -60,7 +63,9 @@
                                                             for (var k = 0; k < skripsi.length; k++) {
                                                                 if (data[j].nim == skripsi[k].nim) {
                                                                     if (skripsi[k].status == 'Lulus') {
-                                                                        sudahCount++;
+                                                                        lulusCount++;
+                                                                    } else if (skripsi[k].status == 'Sedang Ambil') {
+                                                                        sedangCount++;
                                                                     } else {
                                                                         belumCount++;
                                                                     }
@@ -68,7 +73,8 @@
                                                             }
                                                         }
                                                     }
-                                                    sudah.push(sudahCount);
+                                                    lulus.push(lulusCount);
+                                                    sedang.push(sedangCount);
                                                     belum.push(belumCount);
                                                 }
                                                 Highcharts.setOptions({
@@ -102,7 +108,7 @@
                                                         type: 'column'
                                                     },
                                                     title: {
-                                                        text: 'Grafik Mahasiswa Skripsi',
+                                                        text: 'Mahasiswa Skripsi',
                                                     },
                                                     colors: ['#D6BBFB', '#9E77ED', '#6941C6'],
                                                     xAxis: {
@@ -152,10 +158,13 @@
                                                         }
                                                     },
                                                     series: [{
-                                                        name: 'Sudah',
-                                                        data: sudah
+                                                        name: 'Lulus',
+                                                        data: lulus
                                                     }, {
-                                                        name: 'Belum',
+                                                        name: 'Sedang Ambil',
+                                                        data: sedang
+                                                    }, {
+                                                        name: 'Belum Ambil',
                                                         data: belum
                                                     }]
                                                 });

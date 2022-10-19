@@ -7,6 +7,8 @@ use App\Models\M_Mahasiswa;
 use App\Models\M_PKL;
 use App\Models\M_Skripsi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -181,8 +183,16 @@ class MahasiswaController extends Controller
 
     public function data_pkl()
     {
-        $mahasiswaAll = M_Mahasiswa::all();
-        $mahasiswaPKL = M_PKL::all();
+        // sort by nim
+        $mahasiswaAll = M_Mahasiswa::orderBy('angkatan', 'asc')->get();
+        $mahasiswaPKL = DB::table('tb_mahasiswa')
+            ->join('tb_pkl', function ($join) {
+                $join->on('tb_mahasiswa.nim', '=', 'tb_pkl.nim')
+                    ->where('tb_pkl.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_pkl where nim = tb_mahasiswa.nim)'));
+            })
+            ->select('tb_mahasiswa.nim', 'tb_mahasiswa.nama', 'tb_pkl.semester_aktif', 'tb_pkl.status')
+            ->get();
+
         return view('dosen.data_pkl.index', [
             'title' => 'Data Mahasiswa PKL',
         ])->with(compact('mahasiswaAll', 'mahasiswaPKL'));
@@ -190,8 +200,14 @@ class MahasiswaController extends Controller
 
     public function data_skripi()
     {
-        $mahasiswaAll = M_Mahasiswa::all();
-        $mahasiswaSkripsi = M_Skripsi::all();
+        $mahasiswaAll = M_Mahasiswa::orderBy('angkatan', 'asc')->get();
+        $mahasiswaSkripsi = DB::table('tb_mahasiswa')
+            ->join('tb_skripsi', function ($join) {
+                $join->on('tb_mahasiswa.nim', '=', 'tb_skripsi.nim')
+                    ->where('tb_skripsi.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_skripsi where nim = tb_mahasiswa.nim)'));
+            })
+            ->select('tb_mahasiswa.nim', 'tb_mahasiswa.nama', 'tb_skripsi.semester_aktif', 'tb_skripsi.status')
+            ->get();
         return view('dosen.data_skripsi.index', [
             'title' => 'Data Mahasiswa Skripsi',
         ])->with(compact('mahasiswaAll', 'mahasiswaSkripsi'));

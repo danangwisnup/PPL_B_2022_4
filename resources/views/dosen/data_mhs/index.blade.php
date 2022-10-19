@@ -41,6 +41,7 @@
                                                     <th>Nama</th>
                                                     <th>NIM</th>
                                                     <th>Email</th>
+                                                    <th>Angkatan</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -50,8 +51,9 @@
                                                     <td>{{ $mhs->nama }}</td>
                                                     <td>{{ $mhs->nim }}</td>
                                                     <td>{{ $mhs->email }}</td>
+                                                    <td>{{ $mhs->angkatan }}</td>
                                                     <td>
-                                                        <a href="/dosen/progress/{{ $mhs->nim }}" class="btn btn-primary btn-sm">Lihat Progress</a>
+                                                        <a href="/dosen/progress/{{ $mhs->nim }}" class="btn btn-primary btn-sm">View Detail</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach

@@ -37,11 +37,12 @@ class PKLController extends Controller
      */
     public function data()
     {
+        $progress = M_EntryProgress::where('nim', Auth::user()->nim_nip)->first();
         $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
         $pkl = M_PKL::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.pkl.index', [
             'title' => 'PKL',
-        ])->with(compact('mahasiswa', 'pkl'));
+        ])->with(compact('mahasiswa', 'pkl', 'progress'));
     }
 
     /**

@@ -37,11 +37,12 @@ class SkripsiController extends Controller
      */
     public function data()
     {
+        $progress = M_EntryProgress::where('nim', Auth::user()->nim_nip)->first();
         $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
         $skripsi = M_Skripsi::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.skripsi.index', [
             'title' => 'Skripsi',
-        ])->with(compact('mahasiswa', 'skripsi'));
+        ])->with(compact('mahasiswa', 'skripsi', 'progress'));
     }
 
     /**

@@ -37,11 +37,12 @@ class KHSController extends Controller
      */
     public function data()
     {
+        $progress = M_EntryProgress::where('nim', Auth::user()->nim_nip)->first();
         $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
         $khs = M_KHS::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.khs.index', [
             'title' => 'KHS',
-        ])->with(compact('mahasiswa', 'khs'));
+        ])->with(compact('mahasiswa', 'khs', 'progress'));
     }
 
     /**

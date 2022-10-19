@@ -41,6 +41,7 @@
                                                     <tr>
                                                         <th>Nama</th>
                                                         <th>NIM</th>
+                                                        <th>Email</th>
                                                         <th>Angkatan</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -50,9 +51,10 @@
                                                     <tr>
                                                         <td>{{ $data->nama }}</td>
                                                         <td>{{ $data->nim }}</td>
+                                                        <td>{{ $data->email }}</td>
                                                         <td>{{ $data->angkatan }}</td>
                                                         <td>
-                                                            <a href="javascript:;" class="btn btn-primary btn-sm" id="getDetail">Detail</a>
+                                                            <a href="javascript:;" class="btn btn-primary btn-sm" id="getDetail">Lihat Progress</a>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -68,7 +70,7 @@
                         <div class="card">
                             <!-- Card header START -->
                             <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                                <div class=""><a href="/dosen/progress_studi_mahasiswa" class="btn btn-outline-secondary btn-sm"><i class="bi bi-backspace"></i> Kembali</a></div>
+                                <div class=""><a href="{{ Auth::user()->role == 'dosen' ? '/dosen/progress_studi_mahasiswa' : '/department/progress_studi_mahasiswa' }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-backspace"></i> Kembali</a></div>
                             </div>
                             <div class="card-body">
                                 <h1 class="text-center h5">Progress Mahasiswa</h1>

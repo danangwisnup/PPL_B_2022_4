@@ -37,11 +37,12 @@ class IRSController extends Controller
      */
     public function data()
     {
+        $progress = M_EntryProgress::where('nim', Auth::user()->nim_nip)->first();
         $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
         $irs = M_IRS::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.irs.index', [
             'title' => 'IRS',
-        ])->with(compact('mahasiswa', 'irs'));
+        ])->with(compact('mahasiswa', 'irs', 'progress'));
     }
 
     /**

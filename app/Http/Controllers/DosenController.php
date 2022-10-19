@@ -142,4 +142,17 @@ class DosenController extends Controller
 
         return redirect()->route('user_manajemen');
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function data_dosen()
+    {
+        $dosen = M_Dosen::all();
+        return view('department.data_dosen', [
+            'title' => 'Data Dosen',
+        ])->with('dosen', $dosen);
+    }
 }
