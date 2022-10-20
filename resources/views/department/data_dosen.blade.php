@@ -46,13 +46,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($dosen as $dsn)
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>{{ $dsn->nama }}</td>
+                                                    <td>{{ $dsn->nip }}</td>
+                                                    <td>{{ $dsn->email }}</td>
+                                                    <td>{{ $dsn->alamat }}</td>
+                                                    <td>
+                                                        <a href="/dosen/progress/{{ $dsn->nip }}" class="btn btn-primary btn-sm">View Detail</a>
+                                                    </td>
                                                 </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
