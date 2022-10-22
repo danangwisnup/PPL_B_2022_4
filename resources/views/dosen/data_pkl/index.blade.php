@@ -16,14 +16,6 @@
                 <div class="col-md-9">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-4 mb-3">
-                                <label class="mb-1 text-dark"><strong>Pilih Angkatan</strong></label>
-                                <select class="form-select shadow" id="angkatan" name="angkatan">
-                                    <option selected>Semua Angkatan</option>
-                                    @for ($i = 2015; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                </select>
-                            </div>
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Grafik Mahasiswa PKL per Angkatan</h5>
@@ -131,17 +123,6 @@
                                                             }
                                                         }
                                                     },
-                                                    legend: {
-                                                        align: 'left',
-                                                        x: 70,
-                                                        verticalAlign: 'top',
-                                                        y: 70,
-                                                        floating: true,
-                                                        backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                                                        borderColor: '#CCC',
-                                                        borderWidth: 1,
-                                                        shadow: false
-                                                    },
                                                     tooltip: {
                                                         headerFormat: '<b>{point.x}</b><br/>',
                                                         pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
@@ -176,7 +157,20 @@
                                         <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
                                         <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
                                         <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+                                        <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+                                        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.bootstrap5.min.js"></script>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+                                        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+                                        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+                                        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+
                                         <script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
+                                        <script>
+                                            var title = 'PKL';
+                                        </script>
                                         <script src="{{ asset('assets/js/data-table.js') }}"></script>
 
                                         @stop
@@ -191,41 +185,49 @@
                                     <h5 class="card-title">Rincian Data Mahasiswa PKL</h5>
                                     <div class="col-12">
                                         <div class="d-flex flex-column align-items-end mb-4">
-                                            <button class="btn btn-primary btn-sm"><i class="bi bi-printer"></i> Cetak</button>
+                                            <div id="table_wrapper"></div>
+                                        </div>
+                                        <div class="row g-3 mb-4">
+                                            <div class="col-4">
+                                                <div id="filter_col3" data-column="3">
+                                                    <label class="form-label text-dark">Pilih Angkatan</label>
+                                                    <select class="form-select column_filter" id="col3_filter">
+                                                        <option value="">Semua Angkatan</option>
+                                                        @for ($i = 2015; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
+                                                            @endfor
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="table-responsive">
-                                            <table class="table" id="table_1">
+                                            <table class="table table-bordered" id="table_1">
                                                 <thead class="thead-dark">
                                                     <tr>
-                                                        <th>Nama</th>
                                                         <th>NIM</th>
+                                                        <th>Nama</th>
                                                         <th>Angkatan</th>
                                                         <th>Nilai</th>
                                                         <th>Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @foreach ($mahasiswaPKL as $data)
                                                     <tr>
-                                                        <td>Siapa</td>
-                                                        <td>12345</td>
-                                                        <td>2020</td>
-                                                        <td class="bg-light bg-opacity-75">Kosong</td>
-                                                        <td><span class="badge btn-danger-soft small">Belum</span></td>
+                                                        <td>{{ $data->nim }}</td>
+                                                        <td>{{ $data->nama }}</td>
+                                                        <td>{{ $data->angkatan }}</td>
+                                                        <td>{{ $data->nilai }}</td>
+                                                        <td>
+                                                            @if ($data->status == 'Lulus')
+                                                            <span class="badge bg-success">{{ $data->status }}</span>
+                                                            @elseif ($data->status == 'Sedang Ambil')
+                                                            <span class="badge bg-warning">{{ $data->status }}</span>
+                                                            @else
+                                                            <span class="badge bg-danger">{{ $data->status }}</span>
+                                                            @endif
+                                                        </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>Kars</td>
-                                                        <td>123464</td>
-                                                        <td>2018</td>
-                                                        <td>A</td>
-                                                        <td><span class="badge btn-success-soft small">Lulus</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>John</td>
-                                                        <td>123475</td>
-                                                        <td>2019</td>
-                                                        <td class="bg-light bg-opacity-75">Kosong</td>
-                                                        <td><span class="badge btn-primary-soft small">Sedang</span></td>
-                                                    </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>

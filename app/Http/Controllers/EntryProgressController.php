@@ -30,6 +30,7 @@ class EntryProgressController extends Controller
 
         $semester_aktif = $request->semester_aktif;
         $nim = Auth::user()->nim_nip;
+        $kode_wali = M_Mahasiswa::where('nim', $nim)->first()->kode_wali;
 
         // user memilih semseter 2, tetapi belum memilih semster 1 maka akan muncul error
         if ($semester_aktif > 1) {
@@ -40,6 +41,7 @@ class EntryProgressController extends Controller
                 $entry_progress = M_EntryProgress::create([
                     'semester_aktif' => $semester_aktif,
                     'nim' => $nim,
+                    'nip' => $kode_wali,
                 ]);
 
                 Alert::success('Berhasil', 'Data berhasil disimpan');
@@ -49,6 +51,7 @@ class EntryProgressController extends Controller
             $entry_progress = M_EntryProgress::create([
                 'semester_aktif' => $semester_aktif,
                 'nim' => $nim,
+                'nip' => $kode_wali,
             ]);
 
             Alert::success('Berhasil', 'Data berhasil disimpan');

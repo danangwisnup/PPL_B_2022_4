@@ -14,5 +14,6 @@ class M_EntryProgress extends Model
     protected $fillable = [
         'semester_aktif',
         'nim',
+        'nip',
     ];
 }

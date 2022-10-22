@@ -181,6 +181,21 @@ class MahasiswaController extends Controller
         ])->with(compact('mahasiswaAll'));
     }
 
+    public function data_mahasiswa_detail(Request $request)
+    {
+        $mahasiswa = M_Mahasiswa::where('nim', $request->nim)->first();
+        if ($mahasiswa->kode_kab != null or $mahasiswa->kode_prov != null) {
+            $kabupaten = DB::table('tb_kabupaten')->where('kode_kab', $mahasiswa->kode_kab)->first();
+            $provinsi = DB::table('tb_provinsi')->where('kode_prov', $mahasiswa->kode_prov)->first();
+            return view('dosen.data_mhs.detail', [
+                'title' => 'Data Mahasiswa',
+            ])->with(compact('mahasiswa', 'kabupaten', 'provinsi'));
+        } else {
+            Alert::error('Error!', 'Data Mahasiswa tidak lengkap');
+            return redirect()->back();
+        }
+    }
+
     public function data_pkl()
     {
         // sort by nim
@@ -190,7 +205,7 @@ class MahasiswaController extends Controller
                 $join->on('tb_mahasiswa.nim', '=', 'tb_pkl.nim')
                     ->where('tb_pkl.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_pkl where nim = tb_mahasiswa.nim)'));
             })
-            ->select('tb_mahasiswa.nim', 'tb_mahasiswa.nama', 'tb_pkl.semester_aktif', 'tb_pkl.status')
+            ->select('tb_mahasiswa.nim', 'tb_mahasiswa.nama', 'tb_mahasiswa.angkatan', 'tb_pkl.semester_aktif', 'tb_pkl.nilai', 'tb_pkl.status')
             ->get();
 
         return view('dosen.data_pkl.index', [
@@ -206,7 +221,7 @@ class MahasiswaController extends Controller
                 $join->on('tb_mahasiswa.nim', '=', 'tb_skripsi.nim')
                     ->where('tb_skripsi.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_skripsi where nim = tb_mahasiswa.nim)'));
             })
-            ->select('tb_mahasiswa.nim', 'tb_mahasiswa.nama', 'tb_skripsi.semester_aktif', 'tb_skripsi.status')
+            ->select('tb_mahasiswa.nim', 'tb_mahasiswa.nama', 'tb_mahasiswa.angkatan', 'tb_skripsi.semester_aktif', 'tb_skripsi.nilai', 'tb_skripsi.status')
             ->get();
         return view('dosen.data_skripsi.index', [
             'title' => 'Data Mahasiswa Skripsi',

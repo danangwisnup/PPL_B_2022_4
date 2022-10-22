@@ -87,6 +87,7 @@ class EditProfileController extends Controller
         $request->validate([
             'fileProfile' =>
             [
+                // required if fileProfile null
                 Rule::requiredIf(function () {
                     return M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first()->foto == null;
                 }),
@@ -123,13 +124,12 @@ class EditProfileController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
         ]);
-        if (M_Mahasiswa::where('nim', $id)->first()->foto != null) {
+        if ($request->fileProfile != null && M_Mahasiswa::where('nim', $id)->first()->foto != null) {
             unlink(M_Mahasiswa::where('nim', $id)->first()->foto);
         }
-        if ($temp) {
+        if ($temp && $request->fileProfile != null) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $uniq . '_' . $id . '.jpg'));
-            //rmdir(public_path('files/temp/' . $temp->folder));
             M_Mahasiswa::where('nim', $id)->update([
                 'foto' => 'files/profile/' . $uniq . '_' . $id . '.jpg',
             ]);
@@ -137,7 +137,7 @@ class EditProfileController extends Controller
         }
 
         Alert::success('Berhasil', 'Data berhasil disimpan');
-        return redirect()->route('edit_profile.index');
+        return redirect()->route('home');
     }
 
     /**

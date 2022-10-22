@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('tb_entry_progress', function (Blueprint $table) {
             $table->string('nim');
+            $table->string('nip');
             $table->string('semester_aktif');
             $table->boolean('is_irs')->default(false);
             $table->boolean('is_khs')->default(false);

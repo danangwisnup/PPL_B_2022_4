@@ -31,11 +31,23 @@
                             <h1 class="card-title h5">Mahasiswa</h1>
                         </div>
                         <div class="card-body">
-                            <form class="row g-3" action="/dosen/progress" method="POST">
+                            <div class="row g-3 mb-4">
+                                <div class="col-4">
+                                    <div id="filter_col3" data-column="3">
+                                        <label class="form-label text-dark">Pilih Angkatan</label>
+                                        <select class="form-select column_filter" id="col3_filter">
+                                            <option value="">Semua Angkatan</option>
+                                            @for ($i = 2015; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
+                                                @endfor
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <form class="row g-3" action="/dosen/data_mahasiswa/detail" method="POST">
                                 @csrf
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="table" id="table_1">
+                                        <table class="table table-bordered" id="table_1">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>Nama</th>
@@ -53,7 +65,7 @@
                                                     <td>{{ $mhs->email }}</td>
                                                     <td>{{ $mhs->angkatan }}</td>
                                                     <td>
-                                                        <a href="/dosen/progress/{{ $mhs->nim }}" class="btn btn-primary btn-sm">View Detail</a>
+                                                        <button type="submit" name="nim" value="{{ $mhs->nim }}" class="btn btn-primary btn-sm">Detail</button>
                                                     </td>
                                                 </tr>
                                                 @endforeach

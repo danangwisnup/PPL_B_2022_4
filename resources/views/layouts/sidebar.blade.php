@@ -23,7 +23,8 @@
                 <!-- Card START -->
                 <div class="card overflow-hidden">
                     <!-- Cover image -->
-                    <div class="h-90px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/Widya-Puraya-1.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                    <div class="h-90px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/informatika.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    </div>
                     <!-- Card body START -->
                     <div class="card-body pt-0">
                         <div class="text-center">
@@ -100,9 +101,16 @@
                                     <i class="bi bi-clipboard2-data"></i><span> Progress Studi Mahasiswa</span>
                                 </a>
                             </li>
+                            <?php
+                            $progress = App\Models\M_EntryProgress::where('nip', Auth::user()->nim_nip)->where('is_verifikasi', 0)->get();
+                            $count = count($progress);
+                            ?>
                             <li class="nav-item">
                                 <a style="font-size: 14px;" class="nav-link {{ ($title == 'Verifikasi Berkas Mahasiswa')? 'active' : '' }}" href="/dosen/verifikasi_berkas_mahasiswa">
-                                    <i class="bi bi-clipboard2-check"></i><span> Verifikasi Berkas Mahasiswa</span>
+                                    <i class="bi bi-clipboard2-check"></i><span> Verifikasi Berkas Mahasiswa
+                                        @if ($count > 0)
+                                        <span class="badge bg-danger">{{ $count }}</span>
+                                        @endif
                                 </a>
                             </li>
                             <li class="nav-item">
