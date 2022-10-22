@@ -51,7 +51,7 @@
                                                     <td>{{ $mhs->nim }}</td>
                                                     <td>{{ $mhs->email }}</td>
                                                     <td>
-                                                        <a href="/dosen/progress/{{ $mhs->nim }}" class="btn btn-primary btn-sm">Lihat Progress</a>
+                                                        <a href="/dosen/progress/{{ $mhs->nim }}" class="btn btn-primary btn-sm">Lihat Progres</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
