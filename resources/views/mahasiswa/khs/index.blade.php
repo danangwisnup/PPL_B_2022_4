@@ -35,7 +35,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="table_1">
+                                <table class="table" id="table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Semester</th>

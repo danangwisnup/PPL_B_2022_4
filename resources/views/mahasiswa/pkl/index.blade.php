@@ -35,7 +35,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="table_1">
+                                <table class="table" id="table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Semester</th>
@@ -49,7 +49,7 @@
                                         @foreach ($pkl as $item)
                                         <tr>
                                             <td>{{$item->semester_aktif}}</td>
-                                            <td>{{$item->nilai}}</td>
+                                            <td>{{$item->nilai != null ? $item->nilai : '-'}}</td>
                                             <td>@if ($item->status == 'Lulus')
                                                 <span class="badge bg-success">{{$item->status}}</span>
                                                 @elseif ($item->status == 'Sedang Ambil')

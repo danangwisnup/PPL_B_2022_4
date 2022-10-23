@@ -67,10 +67,14 @@ class PKLController extends Controller
         $request->validate([
             'semester_aktif' => 'required|unique:tb_pkl,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
             'confirm' => 'sometimes|accepted',
-            'nilai_pkl' => 'required_if:status_pkl,Lulus',
-            'status_pkl' => 'required_if:confirm,on',
+            'status_pkl' => 'required_if:confirm,on|in:,Lulus,Sedang Ambil,Belum Ambil',
+            'nilai_pkl' => 'required_if:status_pkl,Lulus|in:,A,B,C,D,E',
             'file' => 'required_if:confirm,on',
         ]);
+        if ($request->status_pkl != 'Lulus' && $request->nilai_pkl != null) {
+            Alert::error('Gagal', 'Nilai PKL hanya bisa diisi jika status PKL adalah Lulus');
+            return redirect()->back();
+        }
 
         $temp = M_TempFile::where('path', $request->file)->first();
 
@@ -157,9 +161,14 @@ class PKLController extends Controller
         // Validate
         $request->validate([
             'confirm' => 'sometimes|accepted',
-            'status_pkl' => 'required',
+            'status_pkl' => 'required|in:Lulus,Sedang Ambil,Belum Ambil',
+            'nilai_pkl' => 'required_if:status_pkl,Lulus|in:,A,B,C,D,E',
             'fileEdit' => 'required_if:confirm,on',
         ]);
+        if ($request->status_pkl != 'Lulus' && $request->nilai_pkl != null) {
+            Alert::error('Gagal', 'Nilai PKL hanya bisa diisi jika status PKL adalah Lulus');
+            return redirect()->back();
+        }
 
         $db = M_PKL::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();
 

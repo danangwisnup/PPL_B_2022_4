@@ -130,7 +130,7 @@
                                         @if ($pkl->status != 'Belum Ambil')
                                         <tr>
                                             <td class="col-2 mb-3"> <strong> Nilai: </strong> </td>
-                                            <td> {{ $pkl->nilai }} </td>
+                                            <td> {{ $pkl->nilai != null ? $pkl->nilai : '-'}} </td>
                                         </tr>
                                         <tr>
                                             <td class="col-2 mb-3"> <strong> File PKL: </strong> </td>
@@ -154,11 +154,11 @@
                                         @if ($skripsi->status != 'Belum Ambil')
                                         <tr>
                                             <td class="col-2 mb-3"> <strong> Nilai: </strong> </td>
-                                            <td> {{ $skripsi->nilai }} </td>
+                                            <td> {{ $skripsi->nilai != null ? $skripsi->nilai : '-'}} </td>
                                         </tr>
                                         <tr>
                                             <td class="col-2 mb-3"> <strong> Tanggal Sidang: </strong> </td>
-                                            <td> {{ $skripsi->tanggal_sidang }} </td>
+                                            <td> {{ $skripsi->tanggal_sidang != null ? $skripsi->tanggal_sidang : '-' }} </td>
                                         </tr>
                                         <tr>
                                             <td class="col-2 mb-3"> <strong> File Skripsi: </strong> </td>

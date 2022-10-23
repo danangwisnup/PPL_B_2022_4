@@ -67,13 +67,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['dosen']], function () {
         // progress studi mahasiswa
         Route::get('/dosen/progress_studi_mahasiswa', [ProgressMhsContoller::class, 'dosen']);
-        Route::get('/dosen/progress_detail', [ProgressMhsContoller::class, 'show'])->name('progress_detail');
-        Route::get('/dosen/progress_detail/semester', [ProgressMhsContoller::class, 'show_semester'])->name('progress_detail_semester');
+        Route::get('/dosen/progress_studi_mahasiswa/detail', [ProgressMhsContoller::class, 'show'])->name('progress_detail');
+        Route::get('/dosen/progress_studi_mahasiswa/semester', [ProgressMhsContoller::class, 'show_semester'])->name('progress_detail_semester');
 
         // verifikasi berkas mahasiswa
-        Route::resource('/dosen/verifikasi_berkas_mahasiswa', VerifikasiBerkasController::class);
-        Route::get('/dosen/berkas_detail', [VerifikasiBerkasController::class, 'berkas_detail'])->name('berkas_detail');
-        Route::post('/dosen/verifikasi/update', [VerifikasiBerkasController::class, 'update'])->name('verifikasi_update');
+        Route::get('/dosen/verifikasi_berkas_mahasiswa', [VerifikasiBerkasController::class, 'index']);
+        Route::get('/dosen/verifikasi_berkas_mahasiswa/detail', [VerifikasiBerkasController::class, 'show'])->name('berkas_detail');
+        Route::post('/dosen/verifikasi_berkas_mahasiswa/update', [VerifikasiBerkasController::class, 'update'])->name('verifikasi_update');
 
         // data mahasiswa
         Route::get('/dosen/data_mahasiswa', [MahasiswaController::class, 'data_mahasiswa']);

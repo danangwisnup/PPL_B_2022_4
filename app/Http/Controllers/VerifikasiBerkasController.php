@@ -18,17 +18,14 @@ class VerifikasiBerkasController extends Controller
     public function index()
     {
         $mahasiswa = M_Mahasiswa::where('kode_wali', Auth::user()->nim_nip)->get();
-        if ($mahasiswa == null) {
-            return redirect()->route('dashboard');
-        } else {
-            $progress = M_EntryProgress::where('is_verifikasi', '0')->get();
-        }
+        $progress = M_EntryProgress::where('nip', Auth::user()->nim_nip)->where('is_irs', 1)->where('is_khs', 1)->where('is_pkl', 1)->where('is_skripsi', 1)->where('is_verifikasi', '0')->get();
+
         return view('dosen.verifikasi.index', [
             'title' => 'Verifikasi Berkas Mahasiswa',
         ])->with(compact('mahasiswa', 'progress'));
     }
 
-    public function berkas_detail(Request $request)
+    public function show(Request $request)
     {
         $mahasiswa = M_Mahasiswa::where('nim', $request->nim)->first();
         $dosen = M_Dosen::where('nip', $mahasiswa->kode_wali)->first();
@@ -40,11 +37,13 @@ class VerifikasiBerkasController extends Controller
 
         if ($progress == null) {
             return redirect()->back()->with('error', 'Data tidak ditemukan');
+        } else if ($progress->is_irs == 0 || $progress->is_khs == 0 || $progress->is_pkl == 0 || $progress->is_skripsi == 0) {
+            return redirect()->back()->with('error', 'Mahasiswa belum mengisi semua data');
+        } else {
+            return view('dosen.verifikasi.berkas', [
+                'title' => 'Verifikasi Berkas Mahasiswa',
+            ])->with(compact('mahasiswa', 'dosen', 'progress', 'irs', 'khs', 'pkl', 'skripsi', 'request'));
         }
-
-        return view('dosen.verifikasi.berkas', [
-            'title' => 'Verifikasi Berkas Mahasiswa',
-        ])->with(compact('mahasiswa', 'dosen', 'progress', 'irs', 'khs', 'pkl', 'skripsi', 'request'));
     }
 
     public function update(Request $request)

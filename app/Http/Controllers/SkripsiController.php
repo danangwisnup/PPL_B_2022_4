@@ -67,7 +67,7 @@ class SkripsiController extends Controller
         $request->validate([
             'semester_aktif' => 'required|unique:tb_skripsi,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
             'confirm' => 'sometimes|accepted',
-            'tanggal_sidang' => 'required_if:confirm,on',
+            'tanggal_sidang' => 'required_if:status_skripsi,Lulus',
             'nilai_skripsi' => 'required_if:status_skripsi,Lulus',
             'status_skripsi' => 'required_if:confirm,on',
             'file' => 'required_if:confirm,on',

@@ -40,7 +40,7 @@
                                     <div id="filter_col0" data-column="0">
                                         <label class="form-label text-dark">Pilih Semester</label>
                                         <select class="form-select column_filter" id="col0_filter">
-                                            <option value="">Semua Semester</option>
+                                            <option value="">Semua</option>
                                             @for ($i = 1; $i <= 14; $i++) <option value="{{ $i }}">{{ $i }}</option>
                                                 @endfor
                                         </select>
@@ -50,7 +50,7 @@
                                     <div id="filter_col3" data-column="3">
                                         <label class="form-label text-dark">Pilih Angkatan</label>
                                         <select class="form-select column_filter" id="col3_filter">
-                                            <option value="">Semua Angkatan</option>
+                                            <option value="">Semua</option>
                                             @for ($i = 2015; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
                                                 @endfor
                                         </select>

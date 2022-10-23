@@ -49,7 +49,7 @@
                                             <div class="col-12">
                                                 <input class="form-check-input" type="checkbox" id="confirm" name="confirm">
                                                 <label class="form-check-label" for="confirm">
-                                                    Apakah anda sedang atau sudah mengambil Skripsi?
+                                                    Pilih jika sedang atau sudah mengambil Skripsi
                                                 </label>
                                                 <br />
                                                 <small class="form-text text-danger">*Biarkan jika belum mengambil Skripsi</small>
@@ -73,6 +73,7 @@
                                                     <div class="col-6 mb-3">
                                                         <label class="form-label text-dark">Tanggal Sidang</label>
                                                         <input type="date" class="form-control" id="tanggal_sidang" name="tanggal_sidang">
+                                                        <div class="text-danger small fst-italic">*Kosongkan jika status sedang ambil</div>
                                                     </div>
                                                     <!-- Input Tanggal END -->
 
@@ -87,12 +88,13 @@
                                                             <option value="D">D</option>
                                                             <option value="E">E</option>
                                                         </select>
+                                                        <div class="text-danger small fst-italic">*Kosongkan jika status sedang ambil</div>
                                                     </div>
                                                     <!-- Pilih Nilai END -->
 
                                                     <!-- Dropzone START-->
                                                     <div class="col-12">
-                                                        <label class="form-label">Scan Sckripsi</label>
+                                                        <label class="form-label">Scan Skripsi</label>
                                                         <div class="dropzone">
                                                             <input type="file" class="filepond" id="file" name="file" data-allow-reorder="true">
                                                         </div>
@@ -126,10 +128,6 @@
 @include('sweetalert::alert')
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-<script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
-<script src="{{ asset('assets/js/data-table.js') }}"></script>
 
 <!-- Load FilePond library -->
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>

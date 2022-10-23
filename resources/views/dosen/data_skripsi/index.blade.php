@@ -172,6 +172,11 @@
                                             var title = 'Skripsi';
                                         </script>
                                         <script src="{{ asset('assets/js/data-table.js') }}"></script>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $("#table_1").DataTable().buttons().container().appendTo("#table_wrapper");
+                                            });
+                                        </script>
 
                                         @stop
                                     </div>
@@ -192,7 +197,7 @@
                                                 <div id="filter_col3" data-column="3">
                                                     <label class="form-label text-dark">Pilih Angkatan</label>
                                                     <select class="form-select column_filter" id="col3_filter">
-                                                        <option value="">Semua Angkatan</option>
+                                                        <option value="">Semua</option>
                                                         @for ($i = 2015; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
                                                             @endfor
                                                     </select>
