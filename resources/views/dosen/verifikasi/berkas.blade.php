@@ -45,7 +45,7 @@
                                             </td>
                                             <td rowspan="5">
                                                 <div class="avatar avatar-xxxl">
-                                                    <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                                    <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/default.jpg') }}" alt=""></a>
                                                 </div>
                                             </td>
                                         </tr>

@@ -5,15 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class M_EntryProgress extends Model
+class tb_dosen extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_entry_progress';
-
     protected $fillable = [
-        'semester_aktif',
-        'nim',
         'nip',
+        'nama',
+        'email',
+        'alamat',
+        'kode_kab',
+        'kode_prov',
+        'handphone',
+        'status',
     ];
+
+    public $timestamps = false;
 }

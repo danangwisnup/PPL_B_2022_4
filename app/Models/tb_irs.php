@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class M_Dosen extends Model
+class tb_irs extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_dosen';
-    public $timestamps = false;
-
     protected $fillable = [
-        'nip',
-        'nama',
-        'email',
-        'status',
+        'nim',
+        'semester_aktif',
+        'sks',
+        'upload_irs',
     ];
+
+    public $timestamps = false;
 }

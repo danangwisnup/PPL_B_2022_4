@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class M_TempFile extends Model
+class tb_kab extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_temp_file';
-
     protected $fillable = [
-        'folder',
-        'path',
+        'kode_kab',
+        'nama_kab',
+        'kode_prov',
     ];
+
+    public $timestamps = false;
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_entry_progress', function (Blueprint $table) {
+        Schema::create('tb_entry_progresses', function (Blueprint $table) {
             $table->string('nim');
             $table->string('nip');
             $table->string('semester_aktif');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_entry_progress');
+        Schema::dropIfExists('tb_entry_progresses');
     }
 };

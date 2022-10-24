@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_skripsi', function (Blueprint $table) {
+        Schema::create('tb_skripsis', function (Blueprint $table) {
             $table->string('nim');
             $table->integer('semester_aktif');
             $table->string('nilai')->nullable();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_skripsi');
+        Schema::dropIfExists('tb_skripsis');
     }
 };

@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\M_EntryProgress;
 use Illuminate\Http\Request;
-use App\Models\M_PKL;
-use App\Models\M_Mahasiswa;
-use App\Models\M_TempFile;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_entry_progress;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Unique;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PKLController extends Controller
@@ -20,11 +25,11 @@ class PKLController extends Controller
      */
     public function index()
     {
-        $countSemsester = M_EntryProgress::where('nim', Auth::user()->nim_nip)->count();
-        $progress = M_EntryProgress::where('nim', Auth::user()->nim_nip)
+        $countSemsester = tb_entry_progress::where('nim', Auth::user()->nim_nip)->count();
+        $progress = tb_entry_progress::where('nim', Auth::user()->nim_nip)
             ->where('semester_aktif', $countSemsester)->first();
-        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
-        $pkl = M_PKL::where('nim', Auth::user()->nim_nip)->get();
+        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $pkl = tb_pkl::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.pkl.entry', [
             'title' => 'Entry PKL',
         ])->with(compact('mahasiswa', 'pkl', 'progress'));
@@ -37,9 +42,9 @@ class PKLController extends Controller
      */
     public function data()
     {
-        $progress = M_EntryProgress::where('nim', Auth::user()->nim_nip)->first();
-        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
-        $pkl = M_PKL::where('nim', Auth::user()->nim_nip)->get();
+        $progress = tb_entry_progress::where('nim', Auth::user()->nim_nip)->first();
+        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $pkl = tb_pkl::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.pkl.index', [
             'title' => 'PKL',
         ])->with(compact('mahasiswa', 'pkl', 'progress'));
@@ -65,7 +70,7 @@ class PKLController extends Controller
     {
         // Validate
         $request->validate([
-            'semester_aktif' => 'required|unique:tb_pkl,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
+            'semester_aktif' => 'required|unique:tb_pkls,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
             'confirm' => 'sometimes|accepted',
             'status_pkl' => 'required_if:confirm,on|in:,Lulus,Sedang Ambil,Belum Ambil',
             'nilai_pkl' => 'required_if:status_pkl,Lulus|in:,A,B,C,D,E',
@@ -76,32 +81,32 @@ class PKLController extends Controller
             return redirect()->back();
         }
 
-        $temp = M_TempFile::where('path', $request->file)->first();
+        $temp = tb_temp_file::where('path', $request->file)->first();
 
         // Insert to DB
         if ($request->confirm == 'on') {
-            $db = M_PKL::create([
+            $db = tb_pkl::create([
                 'nim' => Auth::user()->nim_nip,
                 'semester_aktif' => $request->semester_aktif,
                 'status' => $request->status_pkl,
                 'upload_pkl' => $temp->path,
             ]);
             if ($request->status_pkl == 'Lulus') {
-                M_PKL::where('nim', Auth::user()->nim_nip)
+                tb_pkl::where('nim', Auth::user()->nim_nip)
                     ->where('semester_aktif', $request->semester_aktif)
                     ->update([
                         'nilai' => $request->nilai_pkl,
                     ]);
             }
         } else {
-            $db = M_PKL::create([
+            $db = tb_pkl::create([
                 'nim' => Auth::user()->nim_nip,
                 'semester_aktif' => $request->semester_aktif,
                 'status' => 'Belum Ambil',
             ]);
         }
 
-        M_EntryProgress::where('nim', Auth::user()->nim_nip)
+        tb_entry_progress::where('nim', Auth::user()->nim_nip)
             ->where('semester_aktif', $request->semester_aktif)
             ->update([
                 'is_pkl' => 1,
@@ -145,7 +150,7 @@ class PKLController extends Controller
      */
     public function edit($semester_aktif, $nim)
     {
-        $data = M_PKL::where('nim', $nim)->where('semester_aktif', $semester_aktif)->first();
+        $data = tb_pkl::where('nim', $nim)->where('semester_aktif', $semester_aktif)->first();
         return view('mahasiswa.pkl.modal', compact('data'));
     }
 
@@ -170,25 +175,25 @@ class PKLController extends Controller
             return redirect()->back();
         }
 
-        $db = M_PKL::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();
+        $db = tb_pkl::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();
 
-        $temp = M_TempFile::where('path', $request->fileEdit)->first();
+        $temp = tb_temp_file::where('path', $request->fileEdit)->first();
 
         if ($temp && $request->confirm == 'on') {
-            if (M_PKL::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->where('upload_pkl', '!=', NULL)->first()) {
+            if (tb_pkl::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->where('upload_pkl', '!=', NULL)->first()) {
                 unlink(public_path($db->upload_pkl));
             }
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/pkl/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
-            M_PKL::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
+            tb_pkl::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'status' => $request->status_pkl,
                 'nilai' => $request->nilai_pkl,
                 'upload_pkl' => 'files/pkl/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
             ]);
             $temp->delete();
         } else {
-            M_PKL::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
+            tb_pkl::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'status' => $request->status_pkl,
                 'nilai' => $request->nilai_pkl,
             ]);

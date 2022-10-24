@@ -51,7 +51,7 @@
                                             <td>{{ $item->sks }}</td>
                                             <td><a href="{{ asset($item->upload_irs) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Lihat</a></td>
                                             <td>
-                                                @if ($progress->where('semester_aktif', $item->semester_aktif)->first()->is_verifikasi == 1)
+                                                @if ($progress->where('nim', Auth::User()->nim_nip)->where('semester_aktif', $item->semester_aktif)->first()->is_verifikasi == 1)
                                                 <small>Data telah diverifikasi</small>
                                                 @else
                                                 <a href="" class="btn btn-success btn-sm" id="buttonModalIRS" data-bs-toggle="modal" data-bs-target="#editIRS" data-attr="{{ route('irs.edit', [$item->semester_aktif, $item->nim]) }}">

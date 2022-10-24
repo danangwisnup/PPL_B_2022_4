@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\M_Dosen;
-use App\Models\M_EntryProgress;
-use App\Models\M_IRS;
-use App\Models\M_KHS;
-use App\Models\M_Mahasiswa;
-use App\Models\M_PKL;
-use App\Models\M_Skripsi;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_entry_progress;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class VerifikasiBerkasController extends Controller
 {
     public function index()
     {
-        $mahasiswa = M_Mahasiswa::where('kode_wali', Auth::user()->nim_nip)->get();
-        $progress = M_EntryProgress::where('nip', Auth::user()->nim_nip)->where('is_irs', 1)->where('is_khs', 1)->where('is_pkl', 1)->where('is_skripsi', 1)->where('is_verifikasi', '0')->get();
+        $mahasiswa = tb_mahasiswa::where('kode_wali', Auth::user()->nim_nip)->get();
+        $progress = tb_entry_progress::where('nip', Auth::user()->nim_nip)->where('is_irs', 1)->where('is_khs', 1)->where('is_pkl', 1)->where('is_skripsi', 1)->where('is_verifikasi', '0')->get();
 
         return view('dosen.verifikasi.index', [
             'title' => 'Verifikasi Berkas Mahasiswa',
@@ -27,13 +30,13 @@ class VerifikasiBerkasController extends Controller
 
     public function show(Request $request)
     {
-        $mahasiswa = M_Mahasiswa::where('nim', $request->nim)->first();
-        $dosen = M_Dosen::where('nip', $mahasiswa->kode_wali)->first();
-        $progress = M_EntryProgress::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
-        $irs = M_IRS::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
-        $khs = M_KHS::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
-        $pkl = M_PKL::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
-        $skripsi = M_Skripsi::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
+        $mahasiswa = tb_mahasiswa::where('nim', $request->nim)->first();
+        $dosen = tb_dosen::where('nip', $mahasiswa->kode_wali)->first();
+        $progress = tb_entry_progress::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
+        $irs = tb_irs::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
+        $khs = tb_khs::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
+        $pkl = tb_pkl::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
+        $skripsi = tb_skripsi::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
 
         if ($progress == null) {
             return redirect()->back()->with('error', 'Data tidak ditemukan');
@@ -49,13 +52,13 @@ class VerifikasiBerkasController extends Controller
     public function update(Request $request)
     {
         if ($request->id == 1) {
-            M_EntryProgress::where('nim', $request->nim)->where('semester_aktif', $request->semester)->update([
+            tb_entry_progress::where('nim', $request->nim)->where('semester_aktif', $request->semester)->update([
                 'is_verifikasi' => '1',
             ]);
             Alert::success('Berhasil', 'Berkas berhasil diverifikasi');
             return redirect('/dosen/verifikasi_berkas_mahasiswa');
         } else {
-            M_EntryProgress::where('nim', $request->nim)->where('semester_aktif', $request->semester)->update([
+            tb_entry_progress::where('nim', $request->nim)->where('semester_aktif', $request->semester)->update([
                 'is_verifikasi' => '0',
             ]);
             Alert::success('Berhasil', 'Berkas berhasil dibatalkan');

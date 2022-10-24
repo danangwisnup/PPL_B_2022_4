@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class M_IRS extends Model
+class tb_entry_progress extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_irs';
-    public $timestamps = false;
-    
     protected $fillable = [
         'nim',
+        'nip',
         'semester_aktif',
-        'sks',
-        'status',
-        'upload_irs',
+        'is_irs',
+        'is_khs',
+        'is_pkl',
+        'is_skripsi',
+        'is_verifikasi',
     ];
 }

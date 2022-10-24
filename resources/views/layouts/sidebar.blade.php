@@ -102,7 +102,7 @@
                                 </a>
                             </li>
                             <?php
-                            $progress = App\Models\M_EntryProgress::where('nip', Auth::user()->nim_nip)->where('is_irs', 1)->where('is_khs', 1)->where('is_pkl', 1)->where('is_skripsi', 1)->where('is_verifikasi', '0')->get();
+                            $progress = App\Models\tb_entry_progress::where('nip', Auth::user()->nim_nip)->where('is_irs', 1)->where('is_khs', 1)->where('is_pkl', 1)->where('is_skripsi', 1)->where('is_verifikasi', '0')->get();
                             $count = count($progress);
                             ?>
                             <li class="nav-item">

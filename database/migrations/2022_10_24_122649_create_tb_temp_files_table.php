@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_temp_file', function (Blueprint $table) {
+        Schema::create('tb_temp_files', function (Blueprint $table) {
             $table->id();
             $table->string('folder');
             $table->string('path');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_temp_file');
+        Schema::dropIfExists('tb_temp_files');
     }
 };

@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class M_KHS extends Model
+class tb_khs extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_khs';
-    public $timestamps = false;
-
     protected $fillable = [
         'nim',
-        'semester_aktif',    
+        'semester_aktif',
         'sks',
         'sks_kumulatif',
-        'ip', 
-        'ip_kumulatif',    
-        'status',
+        'ip',
+        'ip_kumulatif',
         'upload_khs',
     ];
+
+    public $timestamps = false;
 }

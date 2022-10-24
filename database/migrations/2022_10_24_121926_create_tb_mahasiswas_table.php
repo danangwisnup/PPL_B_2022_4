@@ -13,15 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_dosen', function (Blueprint $table) {
-            $table->string('nip')->primary();
+        Schema::create('tb_mahasiswas', function (Blueprint $table) {
+            $table->string('nim')->primary();
             $table->string('nama');
-            $table->string('email')->unique()->nullable();
             $table->text('alamat')->nullable();
             $table->string('kode_kab')->nullable();
             $table->string('kode_prov')->nullable();
+            $table->integer('angkatan');
+            $table->string('jalur_masuk')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->string('handphone')->nullable();
+            $table->string('kode_wali')->nullable();
             $table->string('status');
+            $table->string('foto')->nullable();
         });
     }
 
@@ -32,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_dosen');
+        Schema::dropIfExists('tb_mahasiswas');
     }
 };

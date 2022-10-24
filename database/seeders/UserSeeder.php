@@ -110,7 +110,7 @@ class UserSeeder extends Seeder
             ]
         ]);
 
-        DB::table('tb_mahasiswa')->insert([
+        DB::table('tb_mahasiswas')->insert([
             [
                 'nim' => '24060120120120',
                 'nama' => 'Mahasiswa 20',
@@ -169,7 +169,7 @@ class UserSeeder extends Seeder
             ]
         ]);
 
-        DB::table('tb_dosen')->insert(
+        DB::table('tb_dosens')->insert(
             [
                 'nip' => 'H.1.299112052022042000',
                 'nama' => 'Dosen if',
