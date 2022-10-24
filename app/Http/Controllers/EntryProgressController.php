@@ -33,7 +33,11 @@ class EntryProgressController extends Controller
         $kode_wali = M_Mahasiswa::where('nim', $nim)->first()->kode_wali;
 
         // user memilih semseter 2, tetapi belum memilih semster 1 maka akan muncul error
-        if ($semester_aktif > 1) {
+        if ($semester_aktif < 1) {
+            // error
+            Alert::error('Error', 'Silahkan pilih semester 1 terlebih dahulu');
+            return redirect()->back();
+        } else if ($semester_aktif > 1) {
             $semester_aktif_sebelumnya = $semester_aktif - 1;
             if (!M_EntryProgress::where('semester_aktif', $semester_aktif_sebelumnya)->where('nim', $nim)->where('is_skripsi', 1)->exists()) {
                 return redirect()->back()->withErrors(['semester_aktif' => 'Entry progress semester sebelumnya belum diselesaikan']);

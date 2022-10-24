@@ -31,9 +31,9 @@
                             <!-- Avatar -->
                             <div class="avatar avatar-xxl mt-n5 mb-1">
                                 @if (Auth::user()->role == 'mahasiswa')
-                                <a href="#"><img class="avatar-img rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/03.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/default.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
                                 @else
-                                <a href="#"><img class="avatar-img rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ asset('assets/images/avatar/default.jpg') }}" alt=""></a>
                                 @endif
                             </div>
                             <!-- Info -->
@@ -113,25 +113,15 @@
                                         @endif
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa')? 'active' : '' }}" href="/dosen/data_mahasiswa">
-                                    <i class="bi bi-file-earmark-text"></i><span> Data Mahasiswa</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa PKL')? 'active' : '' }}" href="/dosen/data_mahasiswa_pkl">
-                                    <i class="bi bi-building"></i><span> Data Mahasiswa PKL</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa Skripsi')? 'active' : '' }}" href="/dosen/data_mahasiswa_skripsi">
-                                    <i class="bi bi-mortarboard"></i><span> Data Mahasiswa Skripsi</span>
-                                </a>
-                            </li>
                             @elseif (Auth::user()->role == 'department')
                             <li class="nav-item">
                                 <a style="font-size: 14px;" class="nav-link {{ ($title == 'Progress Studi Mahasiswa')? 'active' : '' }}" href="/department/progress_studi_mahasiswa">
                                     <i class="bi bi-clipboard2-data"></i><span> Progress Studi Mahasiswa</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Dosen')? 'active' : '' }}" href="/department/data_dosen">
+                                    <i class="bi bi-file-earmark-text"></i><span> Data Dosen</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -140,8 +130,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Dosen')? 'active' : '' }}" href="/department/data_dosen">
-                                    <i class="bi bi-file-earmark-text"></i><span> Data Dosen</span>
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa PKL')? 'active' : '' }}" href="/department/data_mahasiswa_pkl">
+                                    <i class="bi bi-building"></i><span> Data Mahasiswa PKL</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa Skripsi')? 'active' : '' }}" href="/department/data_mahasiswa_skripsi">
+                                    <i class="bi bi-mortarboard"></i><span> Data Mahasiswa Skripsi</span>
                                 </a>
                             </li>
                             @endif

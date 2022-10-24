@@ -176,7 +176,7 @@ class MahasiswaController extends Controller
     public function data_mahasiswa()
     {
         $mahasiswaAll = M_Mahasiswa::all();
-        return view('dosen.data_mhs.index', [
+        return view('department.data_mhs.index', [
             'title' => 'Data Mahasiswa',
         ])->with(compact('mahasiswaAll'));
     }
@@ -187,8 +187,8 @@ class MahasiswaController extends Controller
         if ($mahasiswa->kode_kab != null or $mahasiswa->kode_prov != null) {
             $kabupaten = DB::table('tb_kabupaten')->where('kode_kab', $mahasiswa->kode_kab)->first();
             $provinsi = DB::table('tb_provinsi')->where('kode_prov', $mahasiswa->kode_prov)->first();
-            return view('dosen.data_mhs.detail', [
-                'title' => 'Data Mahasiswa',
+            return view('department.data_mhs.detail', [
+                'title' => 'Data Mahasiswa Detail',
             ])->with(compact('mahasiswa', 'kabupaten', 'provinsi'));
         } else {
             Alert::error('Error!', 'Data Mahasiswa tidak lengkap');
@@ -204,26 +204,37 @@ class MahasiswaController extends Controller
             ->join('tb_pkl', function ($join) {
                 $join->on('tb_mahasiswa.nim', '=', 'tb_pkl.nim')
                     ->where('tb_pkl.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_pkl where nim = tb_mahasiswa.nim)'));
+            })->join('tb_entry_progress', function ($join) {
+                $join->on('tb_pkl.nim', '=', 'tb_entry_progress.nim')
+                    ->where('tb_entry_progress.is_pkl', '=', 1)
+                    ->where('tb_entry_progress.is_verifikasi', '=', '1')
+                    ->where('tb_entry_progress.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_pkl where nim = tb_entry_progress.nim)'));
             })
             ->select('tb_mahasiswa.nim', 'tb_mahasiswa.nama', 'tb_mahasiswa.angkatan', 'tb_pkl.semester_aktif', 'tb_pkl.nilai', 'tb_pkl.status')
             ->get();
 
-        return view('dosen.data_pkl.index', [
+        return view('department.data_pkl.index', [
             'title' => 'Data Mahasiswa PKL',
         ])->with(compact('mahasiswaAll', 'mahasiswaPKL'));
     }
 
-    public function data_skripi()
+    public function data_skripsi()
     {
         $mahasiswaAll = M_Mahasiswa::orderBy('angkatan', 'asc')->get();
         $mahasiswaSkripsi = DB::table('tb_mahasiswa')
             ->join('tb_skripsi', function ($join) {
                 $join->on('tb_mahasiswa.nim', '=', 'tb_skripsi.nim')
                     ->where('tb_skripsi.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_skripsi where nim = tb_mahasiswa.nim)'));
+            })->join('tb_entry_progress', function ($join) {
+                $join->on('tb_skripsi.nim', '=', 'tb_entry_progress.nim')
+                    ->where('tb_entry_progress.is_skripsi', '=', 1)
+                    ->where('tb_entry_progress.is_verifikasi', '=', '1')
+                    ->where('tb_entry_progress.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_skripsi where nim = tb_entry_progress.nim)'));
             })
             ->select('tb_mahasiswa.nim', 'tb_mahasiswa.nama', 'tb_mahasiswa.angkatan', 'tb_skripsi.semester_aktif', 'tb_skripsi.nilai', 'tb_skripsi.status')
             ->get();
-        return view('dosen.data_skripsi.index', [
+
+        return view('department.data_skripsi.index', [
             'title' => 'Data Mahasiswa Skripsi',
         ])->with(compact('mahasiswaAll', 'mahasiswaSkripsi'));
     }

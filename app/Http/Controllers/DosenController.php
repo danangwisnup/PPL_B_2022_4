@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\M_Dosen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DosenController extends Controller
@@ -150,9 +151,17 @@ class DosenController extends Controller
      */
     public function data_dosen()
     {
-        $dosen = M_Dosen::all();
-        return view('department.data_dosen', [
+        $dosenAll = M_Dosen::all();
+        return view('department.data_dosen.index', [
             'title' => 'Data Dosen',
-        ])->with('dosen', $dosen);
+        ])->with(compact('dosenAll'));
+    }
+
+    public function data_dosen_detail(Request $request)
+    {
+        $dosen = M_Dosen::where('nip', $request->nip)->first();
+        return view('department.data_dosen.detail', [
+            'title' => 'Data Dosen Detail',
+        ])->with(compact('dosen'));
     }
 }

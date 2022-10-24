@@ -33,7 +33,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row g-3 mb-4">
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div id="filter_col3" data-column="3">
                                             <label class="form-label text-dark">Pilih Angkatan</label>
                                             <select class="form-select column_filter" id="col3_filter">
@@ -64,7 +64,7 @@
                                                     <td>{{ $data->email }}</td>
                                                     <td>{{ $data->angkatan }}</td>
                                                     <td>
-                                                        <form action="{{ route('progress_detail', $data->nim) }}" method="GET">
+                                                        <form action="{{ route('progress_detail') }}" method="GET">
                                                             @csrf
                                                             <input type="hidden" name="nim" value="{{ $data->nim }}">
                                                             <button class="btn btn-primary btn-sm"><i class="bi bi-eye"></i> Detail</button>

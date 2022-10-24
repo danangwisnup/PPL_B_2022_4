@@ -37,7 +37,9 @@
                                 <div class="col-11">
                                     <table cellpadding="5" width="100%">
                                         <tr>
-                                            <td class="col-2 mb-3"> <strong> Nama: </strong> </td>
+                                            <td class="col-2 mb-3">
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> Nama: </strong> </p>
+                                            </td>
                                             <td width="550px">
                                                 <p class="mb-3 border-bottom border-2"> {{ $mahasiswa->nama }} </p>
                                             </td>
@@ -48,19 +50,25 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="col-2 mb-3"> <strong> NIM: </strong> </td>
+                                            <td class="col-2 mb-3">
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> NIM: </strong> </p>
+                                            </td>
                                             <td>
                                                 <p class="mb-3 border-bottom border-2"> {{ $mahasiswa->nim }} </p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="col-2 mb-3"> <strong> Angkatan: </strong> </td>
+                                            <td class="col-2 mb-3">
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> Angkatan: </strong> </p>
+                                            </td>
                                             <td>
                                                 <p class="mb-3 border-bottom border-2"> {{ $mahasiswa->angkatan }} </p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="col-2 mb-3"> <strong> Dosen Wali: </strong> </td>
+                                            <td class="col-2 mb-3">
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> Dosen Wali: </strong> </p>
+                                            </td>
                                             <td>
                                                 <p class="mb-3 border-bottom border-2"> {{ $dosen->nama }} </p>
                                             </td>
@@ -168,6 +176,7 @@
                                     </table>
                                 </div>
                             </div>
+                            @if (Auth::user()->role == 'dosen')
                             <div class="text-end">
                                 <form action="{{ route('verifikasi_update') }}" method="POST">
                                     @csrf
@@ -186,6 +195,7 @@
                                     @endif
                                 </form>
                             </div>
+                            @endif
                         </div>
                         <!-- Card body END -->
                     </div>

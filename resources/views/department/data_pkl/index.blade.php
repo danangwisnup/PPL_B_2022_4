@@ -139,14 +139,14 @@
                                                         }
                                                     },
                                                     series: [{
-                                                        name: 'Lulus',
-                                                        data: lulus
+                                                        name: 'Belum Ambil',
+                                                        data: belum
                                                     }, {
                                                         name: 'Sedang Ambil',
                                                         data: sedang
                                                     }, {
-                                                        name: 'Belum Ambil',
-                                                        data: belum
+                                                        name: 'Lulus',
+                                                        data: lulus
                                                     }]
                                                 });
                                             });
@@ -193,13 +193,24 @@
                                             <div id="table_wrapper"></div>
                                         </div>
                                         <div class="row g-3 mb-4">
-                                            <div class="col-4">
-                                                <div id="filter_col3" data-column="3">
+                                            <div class="col-6">
+                                                <div id="filter_col2" data-column="2">
                                                     <label class="form-label text-dark">Pilih Angkatan</label>
-                                                    <select class="form-select column_filter" id="col3_filter">
+                                                    <select class="form-select column_filter" id="col2_filter">
                                                         <option value="">Semua</option>
                                                         @for ($i = 2015; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
                                                             @endfor
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div id="filter_col4" data-column="4">
+                                                    <label class="form-label text-dark">Pilih Status</label>
+                                                    <select class="form-select column_filter" id="col4_filter">
+                                                        <option value="">Semua</option>
+                                                        <option value="Belum Ambil">Belum Ambil</option>
+                                                        <option value="Sedang Ambil">Sedang Ambil</option>
+                                                        <option value="Lulus">Lulus</option>
                                                     </select>
                                                 </div>
                                             </div>

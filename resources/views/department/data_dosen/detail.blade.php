@@ -22,7 +22,7 @@
                                 Kembali
                             </a>
                         </div>
-                        <div class="text-center h5 mt-3">Detail Data Mahasiswa</div>
+                        <div class="text-center h5 mt-3">Detail Data Dosen</div>
                         <div class="card-body">
                             <div class="row g-3 mb-3 table-responsive">
                                 <div class="col-2">
@@ -30,69 +30,49 @@
                                 <div class="col-8">
                                     <div class="text-center">
                                         <div class="avatar avatar-xxxl mb-3">
-                                            <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                            <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/default.jpg') }}" alt=""></a>
                                         </div>
                                     </div>
 
                                     <table width="100%">
                                         <tr>
-                                            <td class="col-2"> <strong> Nama: </strong> </td>
+                                            <td width="160px">
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> Nama: </strong></p>
+                                            </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->nama }} </p>
+                                                <p class="border-bottom border-2"> {{ $dosen->nama }} </p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="col-2"> <strong> NIM: </strong> </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->nim }} </p>
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> NIP: </strong></p>
+                                            </td>
+                                            <td>
+                                                <p class="border-bottom border-2"> {{ $dosen->nip }} </p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="col-2"> <strong> Angkatan: </strong> </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->angkatan }} </p>
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> Alamat: </strong></p>
+                                            </td>
+                                            <td>
+                                                <p class="border-bottom border-2"> {{ $dosen->alamat != null ? $dosen->alamat : '-' }} </p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="col-2"> <strong> Dosen Wali: </strong> </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->kode_wali }} </p>
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> No Handphone: </strong></p>
+                                            </td>
+                                            <td>
+                                                <p class="border-bottom border-2"> {{ $dosen->handphone != null ? $dosen->handphone : '-' }} </p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="col-2"> <strong> Alamat: </strong> </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->alamat }} </p>
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> Status: </strong></p>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-2"> <strong> Kota/Kabupaten: </strong> </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $kabupaten->nama_kab }} </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-2"> <strong> Provinsi: </strong> </td>
-                                            <td>
-                                                <p class="border-bottom border-2"> {{ $provinsi->nama_prov }} </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-2"> <strong> Jalur Masuk: </strong> </td>
-                                            <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->jalur_masuk }} </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-2"> <strong> No Handphone: </strong> </td>
-                                            <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->handphone }} </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-2"> <strong> Status: </strong> </td>
-                                            <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->status }} </p>
+                                                <p class="border-bottom border-2"> {{ $dosen->status }} </p>
                                             </td>
                                         </tr>
                                     </table>

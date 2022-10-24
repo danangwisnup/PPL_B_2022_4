@@ -103,9 +103,9 @@ class EditProfileController extends Controller
                 'required', 'email', 'max:255', Rule::unique('users')->ignore($id, 'nim_nip'),
             ],
             'alamat' => 'required',
-            'provinsi' => 'required',
-            'kabupatenkota' => 'required',
-            'dosen_wali' => 'required',
+            'provinsi' => 'required|exists:tb_provinsi,kode_prov',
+            'kabupatenkota' => 'required|exists:tb_kabupaten,kode_kab',
+            'dosen_wali' => 'required|exists:tb_dosen,nip',
         ]);
 
         $temp = M_TempFile::where('path', $request->fileProfile)->first();

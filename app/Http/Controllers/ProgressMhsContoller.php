@@ -55,9 +55,15 @@ class ProgressMhsContoller extends Controller
             }
         }
 
-        return view('dosen.progress.detail', [
-            'title' => 'Progress Studi Mahasiswa',
-        ])->with(compact('mahasiswa', 'dosen', 'semester'));
+        if (Auth::user()->role == 'dosen') {
+            return view('dosen.progress.detail', [
+                'title' => 'Progress Studi Mahasiswa',
+            ])->with(compact('mahasiswa', 'dosen', 'semester'));
+        } else {
+            return view('department.progress.detail', [
+                'title' => 'Progress Studi Mahasiswa',
+            ])->with(compact('mahasiswa', 'dosen', 'semester'));
+        }
     }
 
     public function show_semester(Request $request)
@@ -66,6 +72,11 @@ class ProgressMhsContoller extends Controller
         $khs = M_KHS::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
         $pkl = M_PKL::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
         $skripsi = M_Skripsi::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
-        return view('dosen.progress.modal', compact('request', 'irs', 'khs', 'pkl', 'skripsi'));
+
+        if (Auth::user()->role == 'dosen') {
+            return view('dosen.progress.modal', compact('request', 'irs', 'khs', 'pkl', 'skripsi'));
+        } else {
+            return view('department.progress.modal', compact('request', 'irs', 'khs', 'pkl', 'skripsi'));
+        }
     }
 }

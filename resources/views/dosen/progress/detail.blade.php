@@ -39,34 +39,41 @@
                                 <div class="col-11">
                                     <table cellpadding="5" width="100%">
                                         <tr>
-                                            <td class="mb-3"><strong> Nama: </strong></td>
-                                            <td>
+                                            <td class="mb-3">
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> Nama: </strong></p>
+                                            </td>
+                                            <td width="400px">
                                                 <p class="mb-3 border-bottom border-2"> {{ $mahasiswa->nama }} </p>
                                             </td>
                                             <td rowspan="5">
                                                 <div class="avatar avatar-xxxl">
-                                                    <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                                    <a href="#!">
+                                                        <img class="avatar-img border border-white border-3 rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/default.jpg') : asset($mahasiswa->foto) }}" alt="">
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="mb-3"><strong> NIM: </strong></td>
+                                            <td class="mb-3">
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> NIM: </strong></p>
+                                            </td>
                                             <td>
-
                                                 <p class="mb-3 border-bottom border-2"> {{ $mahasiswa->nim }} </p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="mb-3"><strong> Angkatan: </strong></td>
+                                            <td class="mb-3">
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> Angkatan: </strong></p>
+                                            </td>
                                             <td>
-
                                                 <p class="mb-3 border-bottom border-2"> {{ $mahasiswa->angkatan }} </p>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="mb-3"><strong> Dosen Wali: </strong></td>
+                                            <td class="mb-3">
+                                                <p class="mb-3 border-bottom border-2 border-white"> <strong> Dosen Wali: </strong></p>
+                                            </td>
                                             <td>
-
                                                 <p class="mb-3 border-bottom border-2"> {{ $dosen->nama }} </p>
                                             </td>
                                         </tr>
