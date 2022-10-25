@@ -93,10 +93,10 @@ class IRSController extends Controller
 
         if ($temp) {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
-                'upload_irs' => 'files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_irs' => 'files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
         }
@@ -155,11 +155,11 @@ class IRSController extends Controller
 
         if ($temp && $request->confirm == 'on') {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             tb_irs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'sks' => $request->jumlah_sks,
-                'upload_irs' => 'files/irs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_irs' => 'files/irs/' . $db->nim . '_' . $db->semester_aktif  . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
             unlink(public_path($db->upload_irs));

@@ -108,7 +108,11 @@ $(document).ready(function () {
             {
                 extend: "print",
                 title: function () {
-                    return "<h5><center>Data PKL - Informatika</center></h5><br/>";
+                    return (
+                        "<h5><center>Data " +
+                        title_2 +
+                        " - Informatika</center></h5><br/>"
+                    );
                 },
                 className: "btn btn-primary btn-sm",
                 text: '<i class="bi bi-printer"></i> Print',
@@ -117,7 +121,7 @@ $(document).ready(function () {
             {
                 extend: "excel",
                 title: function () {
-                    return "Data PKL - Informatika";
+                    return "Data " + title_2 + " - Informatika";
                 },
                 className: "btn btn-primary btn-sm",
                 text: '<i class="fas fa-file-excel"></i> Excel',

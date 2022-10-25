@@ -99,10 +99,10 @@ class KHSController extends Controller
 
         if ($temp) {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
-                'upload_khs' => 'files/khs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_khs' => 'files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
         }
@@ -164,14 +164,14 @@ class KHSController extends Controller
 
         if ($temp && $request->confirm == 'on') {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             tb_khs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'sks' => $request->sks_semester,
                 'sks_kumulatif' => $request->sks_kumulatif,
                 'ip' => $request->ip_semester,
                 'ip_kumulatif' => $request->ip_kumulatif,
-                'upload_khs' => 'files/khs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_khs' => 'files/khs/' . $db->nim . '_' . $db->semester_aktif  . '_' . $uniq . '.pdf'
             ]);
             unlink(public_path($db->upload_khs));
         } else {

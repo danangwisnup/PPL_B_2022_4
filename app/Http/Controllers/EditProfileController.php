@@ -135,9 +135,9 @@ class EditProfileController extends Controller
         }
         if ($temp && $request->fileProfile != null) {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $uniq . '_' . $id . '.jpg'));
+            rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $id . '_' . $uniq . '.jpg'));
             tb_mahasiswa::where('nim', $id)->update([
-                'foto' => 'files/profile/' . $uniq . '_' . $id . '.jpg',
+                'foto' => 'files/profile/' . $id . '_' . $uniq . '.jpg',
             ]);
             $temp->delete();
         }

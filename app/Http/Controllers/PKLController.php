@@ -114,10 +114,10 @@ class PKLController extends Controller
 
         if ($temp) {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/pkl/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/pkl/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
-                'upload_pkl' => 'files/pkl/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_pkl' => 'files/pkl/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
         }
@@ -184,12 +184,12 @@ class PKLController extends Controller
                 unlink(public_path($db->upload_pkl));
             }
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/pkl/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/pkl/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             tb_pkl::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'status' => $request->status_pkl,
                 'nilai' => $request->nilai_pkl,
-                'upload_pkl' => 'files/pkl/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_pkl' => 'files/pkl/' . $db->nim . '_' . $db->semester_aktif  . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
         } else {
