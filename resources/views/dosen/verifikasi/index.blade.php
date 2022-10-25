@@ -36,7 +36,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row g-3 mb-4">
-                                <div class="col-4">
+                                <div class="col-6">
                                     <div id="filter_col0" data-column="0">
                                         <label class="form-label text-dark">Pilih Semester</label>
                                         <select class="form-select column_filter" id="col0_filter">
@@ -46,7 +46,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-6">
                                     <div id="filter_col3" data-column="3">
                                         <label class="form-label text-dark">Pilih Angkatan</label>
                                         <select class="form-select column_filter" id="col3_filter">
@@ -57,41 +57,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <div class="table-responsive justify-content-center">
-                                        <table class="table table-bordered" id="table_1">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th>Semester</th>
-                                                    <th>Nama</th>
-                                                    <th>NIM</th>
-                                                    <th>Angkatan</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($progress as $data)
-                                                <tr>
-                                                    <td>{{ $data->semester_aktif }}</td>
-                                                    <td>{{ $mahasiswa->where('nim', $data->nim)->first()->nama }}</td>
-                                                    <td>{{ $mahasiswa->where('nim', $data->nim)->first()->nim }}</td>
-                                                    <td>{{ $mahasiswa->where('nim', $data->nim)->first()->angkatan }}</td>
-                                                    <td>
-                                                        <form action="{{ route('berkas_detail') }}" method="GET">
-                                                            @csrf
-                                                            <input type="hidden" name="nim" value="{{ $data->nim }}">
-                                                            <input type="hidden" name="semester" value="{{ $data->semester_aktif }}">
-                                                            <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i> Detail</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                            <form action="{{ route('berkas_detail') }}" method="GET">
+                                @csrf
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="table-responsive justify-content-center">
+                                            <table class="table table-bordered table-hover" id="table_1">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th>Semester</th>
+                                                        <th>Nama</th>
+                                                        <th>NIM</th>
+                                                        <th>Angkatan</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($progress as $data)
+                                                    <tr style="cursor: pointer;">
+                                                        <td>{{ $data->semester_aktif }}</td>
+                                                        <td>{{ $mahasiswa->where('nim', $data->nim)->first()->nama }}</td>
+                                                        <td>{{ $mahasiswa->where('nim', $data->nim)->first()->nim }}</td>
+                                                        <td>{{ $mahasiswa->where('nim', $data->nim)->first()->angkatan }}</td>
+                                                        <input type="hidden" name="nim" value="{{ $data->nim }}">
+                                                        <input type="hidden" name="semester" value="{{ $data->semester_aktif }}">
+                                                        <button type="submit" id="{{ $data->nim }}_{{ $data->semester_aktif }}" hidden>Detail</button>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <!-- Card body END -->
@@ -109,10 +106,18 @@
 
 @include('sweetalert::alert')
 
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src=" https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 <script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
 <script src="{{ asset('assets/js/data-table.js') }}"></script>
+<script>
+    $('#table_1 tbody').on('click', 'tr', function() {
+        var data = $('#table_1').DataTable().row(this).data();
+        var semester = data[0];
+        var nim = data[2];
+        document.getElementById(nim + '_' + semester).click();
+    });
+</script>
 
 @stop

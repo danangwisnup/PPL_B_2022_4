@@ -44,38 +44,35 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="table_1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nama</th>
-                                                    <th>NIM</th>
-                                                    <th>Email</th>
-                                                    <th>Angkatan</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($mahasiswa as $data)
-                                                <tr>
-                                                    <td>{{ $data->nama }}</td>
-                                                    <td>{{ $data->nim }}</td>
-                                                    <td>{{ $data->email }}</td>
-                                                    <td>{{ $data->angkatan }}</td>
-                                                    <td>
-                                                        <form action="{{ route('progress_detail') }}" method="GET">
-                                                            @csrf
-                                                            <input type="hidden" name="nim" value="{{ $data->nim }}">
-                                                            <button class="btn btn-primary btn-sm"><i class="bi bi-eye"></i> Detail</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+
+                                <form action="{{ route('progress_detail') }}" method="GET">
+                                    @csrf
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover" id="table_1">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nama</th>
+                                                        <th>NIM</th>
+                                                        <th>Email</th>
+                                                        <th>Angkatan</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($mahasiswa as $data)
+                                                    <tr style="cursor: pointer;">
+                                                        <td>{{ $data->nama }}</td>
+                                                        <td>{{ $data->nim }}</td>
+                                                        <td>{{ $data->email }}</td>
+                                                        <td>{{ $data->angkatan }}</td>
+                                                        <button type="submit" name="nim" id="{{ $data->nim }}" value="{{ $data->nim }}" hidden>Detail</button>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -94,5 +91,12 @@
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 <script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
 <script src="{{ asset('assets/js/data-table.js') }}"></script>
+<script>
+    $('#table_1 tbody').on('click', 'tr', function() {
+        var data = $('#table_1').DataTable().row(this).data();
+        var nim = data[1];
+        document.getElementById(nim).click();
+    });
+</script>
 
 @stop

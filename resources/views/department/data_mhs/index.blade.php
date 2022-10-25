@@ -65,26 +65,23 @@
                                 @csrf
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="table_1">
+                                        <table class="table table-bordered table-hover" id="table_1">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>Nama</th>
                                                     <th>NIM</th>
                                                     <th>Angkatan</th>
                                                     <th>Status</th>
-                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($mahasiswaAll as $mhs)
-                                                <tr>
+                                                <tr style="cursor: pointer;">
                                                     <td>{{ $mhs->nama }}</td>
                                                     <td>{{ $mhs->nim }}</td>
                                                     <td>{{ $mhs->angkatan }}</td>
                                                     <td>{{ $mhs->status }}</td>
-                                                    <td>
-                                                        <button type="submit" name="nim" value="{{ $mhs->nim }}" class="btn btn-primary btn-sm"><i class="bi bi-eye"></i> Detail</button>
-                                                    </td>
+                                                    <button type="submit" name="nim" id="{{ $mhs->nim }}" value="{{ $mhs->nim }}" hidden>Detail</button>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -127,6 +124,11 @@
 <script>
     $(document).ready(function() {
         $("#table_1").DataTable().buttons().container().appendTo("#table_wrapper");
+    });
+    $('#table_1 tbody').on('click', 'tr', function() {
+        var data = $('#table_1').DataTable().row(this).data();
+        var nim = data[1];
+        document.getElementById(nim).click();
     });
 </script>
 
