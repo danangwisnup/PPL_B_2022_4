@@ -29,7 +29,7 @@
 
                         </div>
                         <div class="text-center h5 mt-3">Berkas Mahasiswa</div>
-                        <div class="text-center h6">Semester {{ $request->semester }}</div>
+                        <div class="text-center h6">Semester {{ $progress->semester_aktif }}</div>
                         <div class="card-body">
                             <div class="row g-3 mb-3 table-responsive">
                                 <div class="col-1">

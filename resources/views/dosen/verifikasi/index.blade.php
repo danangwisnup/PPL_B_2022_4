@@ -78,9 +78,7 @@
                                                         <td>{{ $mahasiswa->where('nim', $data->nim)->first()->nama }}</td>
                                                         <td>{{ $mahasiswa->where('nim', $data->nim)->first()->nim }}</td>
                                                         <td>{{ $mahasiswa->where('nim', $data->nim)->first()->angkatan }}</td>
-                                                        <input type="hidden" name="nim" value="{{ $data->nim }}">
-                                                        <input type="hidden" name="semester" value="{{ $data->semester_aktif }}">
-                                                        <button type="submit" id="{{ $data->nim }}_{{ $data->semester_aktif }}" hidden>Detail</button>
+                                                        <button type="submit" id="{{ $data->nim }}_{{ $data->semester_aktif }}" name="nim_semester" value="{{ $data->nim }}_{{ $data->semester_aktif }}" hidden> Detail</button>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>

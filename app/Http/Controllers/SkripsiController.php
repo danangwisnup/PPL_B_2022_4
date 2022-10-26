@@ -73,10 +73,14 @@ class SkripsiController extends Controller
             'semester_aktif' => 'required|unique:tb_skripsis,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
             'confirm' => 'sometimes|accepted',
             'tanggal_sidang' => 'required_if:status_skripsi,Lulus',
-            'nilai_skripsi' => 'required_if:status_skripsi,Lulus',
-            'status_skripsi' => 'required_if:confirm,on',
+            'nilai_skripsi' => 'required_if:status_skripsi,Lulus|in:,A,B,C,D,E',
+            'status_skripsi' => 'required_if:confirm,on|in:,Lulus,Sedang Ambil,Belum Ambil',
             'file' => 'required_if:confirm,on',
         ]);
+        if ($request->status_skripsi != 'Lulus' && $request->nilai_skripsi != null) {
+            Alert::error('Gagal', 'Nilai Skripsi hanya bisa diisi jika status Skripsi adalah Lulus');
+            return redirect()->back();
+        }
 
         $temp = tb_temp_file::where('path', $request->file)->first();
 
@@ -89,7 +93,7 @@ class SkripsiController extends Controller
                 'status' => $request->status_skripsi,
                 'upload_skripsi' => $temp->path,
             ]);
-            if ($request->status_pkl == 'Lulus') {
+            if ($request->status_skripsi == 'Lulus') {
                 tb_skripsi::where('nim', Auth::user()->nim_nip)
                     ->where('semester_aktif', $request->semester_aktif)
                     ->update([
@@ -125,7 +129,7 @@ class SkripsiController extends Controller
             return redirect('/mahasiswa/entry');
         } else {
             Alert::error('Gagal', 'Data gagal disimpan');
-            return redirect()->route('pkl.index');
+            return redirect()->route('skripsi.index');
         }
     }
 
@@ -164,7 +168,8 @@ class SkripsiController extends Controller
         // Validate
         $request->validate([
             'confirm' => 'sometimes|accepted',
-            'status_skripsi' => 'required',
+            'status_skripsi' => 'required|in:Lulus,Sedang Ambil,Belum Ambil',
+            'nilai_skripsi' => 'required_if:status_skripsi,Lulus|in:,A,B,C,D,E',
             'fileEdit' => 'required_if:confirm,on',
         ]);
 
