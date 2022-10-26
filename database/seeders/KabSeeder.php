@@ -27,7 +27,7 @@ class KabSeeder extends Seeder
             $dataKab = $dataKab['kota_kabupaten'];
             // Insert ke database
             foreach ($dataKab as $d) {
-                DB::table('tb_kabupaten')->insert([
+                DB::table('tb_kabs')->insert([
                     'kode_kab' => $d['id'],
                     'nama_kab' => $d['nama'],
                     'kode_prov' => $idProv,

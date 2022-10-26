@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\M_Mahasiswa;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_kab;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class WilayahController extends Controller
 {
     public function index($provinsi)
     {
-        $kabupatenkota = DB::table('tb_kabupaten')->select('kode_kab', 'nama_kab')->where('kode_prov', $provinsi)->get();
-        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $kabupatenkota = tb_kab::where('kode_prov', $provinsi)->get();
+        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
 
         echo "<option value=''>Pilih Kabupaten/Kota</option>";
         foreach ($kabupatenkota as $kab) {

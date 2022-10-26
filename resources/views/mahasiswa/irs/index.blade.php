@@ -35,12 +35,11 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="table_1">
+                                <table class="table" id="table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Semester</th>
                                             <th>SKS</th>
-                                            <th>Status</th>
                                             <th>Scan IRS</th>
                                             <th>Action</th>
                                         </tr>
@@ -50,18 +49,16 @@
                                         <tr>
                                             <td>{{ $item->semester_aktif }}</td>
                                             <td>{{ $item->sks }}</td>
-                                            <td>
-                                                @if ($item->status == 'Belum Diverifikasi')
-                                                <span class="badge bg-warning">Belum Diverifikasi</span>
-                                                @elseif($item->status == 'Diverifikasi')
-                                                <span class="badge bg-success">Diverifikasi</span>
-                                                @endif
-                                            </td>
                                             <td><a href="{{ asset($item->upload_irs) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Lihat</a></td>
                                             <td>
+                                                @if ($progress->where('nim', Auth::User()->nim_nip)->where('semester_aktif', $item->semester_aktif)->first()->is_verifikasi == 1)
+                                                <small>Data telah diverifikasi</small>
+                                                @else
                                                 <a href="" class="btn btn-success btn-sm" id="buttonModalIRS" data-bs-toggle="modal" data-bs-target="#editIRS" data-attr="{{ route('irs.edit', [$item->semester_aktif, $item->nim]) }}">
                                                     <i class="bi bi-pencil-square"></i> Edit
                                                 </a>
+                                                @endif
+
                                             </td>
                                         </tr>
                                         @endforeach
@@ -70,66 +67,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Card START -->
-                    <div class="card">
-                        <!-- Card header START -->
-                        <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <h1 class="card-title h5">Input IRS</h1>
-                            <div class="text-dark small">Harap diisi dengan data yang benar.</div>
-                        </div>
-                        <div class="card-body">
-                            <form class="row g-3" action="{{ route('irs.store') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <!-- Pilih Semester START-->
-                                <div class="col-6">
-                                    <label class="form-label text-dark">Semester Aktif</label>
-                                    <select class="form-select" id="semester_aktif" name="semester_aktif" required>
-                                        <option value="">Pilih Semester</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                    </select>
-                                </div>
-                                <!-- Pilih Semester END -->
-
-                                <!-- Input Jumlah SKS START -->
-                                <div class="col-6">
-                                    <label class="form-label text-dark">Jumlah SKS</label>
-                                    <input type="text" class="form-control" id="jumlah_sks" name="jumlah_sks" placeholder="Jumlah SKS" required>
-                                </div>
-                                <!-- Input Jumlah SKS END-->
-
-                                <!-- Dropzone START-->
-                                <div class="col-12">
-                                    <label class="form-label">Scan IRS</label>
-                                    <div class="dropzone">
-                                        <input type="file" class="filepond" id="file" name="file" data-allow-reorder="true">
-                                    </div>
-                                </div>
-
-                                <!-- Dropzone END -->
-                                <div class="text-danger small fst-italic">*Format file [.pdf], pastikan file yang diupload benar.</div>
-
-                                <div class="col-12 text-end">
-                                    <button type="submit" class="btn btn-sm btn-primary mb-0">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- Card body END -->
-                    </div>
-                    <!-- Card END -->
                 </div>
 
             </div> <!-- Row END -->

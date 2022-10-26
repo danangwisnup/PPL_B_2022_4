@@ -2,9 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\M_TempFile;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UploadController extends Controller
 {
@@ -16,7 +25,7 @@ class UploadController extends Controller
             $folder = uniqid() . '-' . now()->timestamp;
             $file->move('files/temp/' . $folder, $name);
 
-            M_TempFile::create([
+            tb_temp_file::create([
                 'folder' => $folder,
                 'path' => $name,
             ]);
@@ -30,7 +39,7 @@ class UploadController extends Controller
             $folder = uniqid() . '-' . now()->timestamp;
             $file->move('files/temp/' . $folder, $name);
 
-            M_TempFile::create([
+            tb_temp_file::create([
                 'folder' => $folder,
                 'path' => $name,
             ]);
@@ -44,7 +53,7 @@ class UploadController extends Controller
             $folder = '';
             $file->move('files/temp/' . $folder, $name);
 
-            M_TempFile::create([
+            tb_temp_file::create([
                 'folder' => $folder,
                 'path' => $name,
             ]);
