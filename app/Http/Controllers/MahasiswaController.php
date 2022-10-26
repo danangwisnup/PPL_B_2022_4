@@ -57,6 +57,8 @@ class MahasiswaController extends Controller
         ]);
 
         // Angkatan Mahasiswa
+        // 24060120120120
+        // 01234567890123
         $angkatan = 20 . substr($request->nim, 6, 2);
 
         // 12 = SNMPTN

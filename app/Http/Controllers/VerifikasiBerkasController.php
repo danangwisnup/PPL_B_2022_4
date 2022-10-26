@@ -30,13 +30,21 @@ class VerifikasiBerkasController extends Controller
 
     public function show(Request $request)
     {
-        $mahasiswa = tb_mahasiswa::where('nim', $request->nim)->first();
+        if ($request->nim_semester != null) {
+            $nim = explode('_', $request->nim_semester)[0];
+            $semester = explode('_', $request->nim_semester)[1];
+        } else {
+            $nim = $request->nim;
+            $semester = $request->semester;
+        }
+
+        $mahasiswa = tb_mahasiswa::where('nim', $nim)->first();
         $dosen = tb_dosen::where('nip', $mahasiswa->kode_wali)->first();
-        $progress = tb_entry_progress::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
-        $irs = tb_irs::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
-        $khs = tb_khs::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
-        $pkl = tb_pkl::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
-        $skripsi = tb_skripsi::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
+        $progress = tb_entry_progress::where('nim', $nim)->where('semester_aktif', $semester)->first();
+        $irs = tb_irs::where('nim', $nim)->where('semester_aktif', $semester)->first();
+        $khs = tb_khs::where('nim', $nim)->where('semester_aktif', $semester)->first();
+        $pkl = tb_pkl::where('nim', $nim)->where('semester_aktif', $semester)->first();
+        $skripsi = tb_skripsi::where('nim', $nim)->where('semester_aktif', $semester)->first();
 
         if ($progress == null) {
             return redirect()->back()->with('error', 'Data tidak ditemukan');
@@ -45,7 +53,7 @@ class VerifikasiBerkasController extends Controller
         } else {
             return view('dosen.verifikasi.berkas', [
                 'title' => 'Verifikasi Berkas Mahasiswa',
-            ])->with(compact('mahasiswa', 'dosen', 'progress', 'irs', 'khs', 'pkl', 'skripsi', 'request'));
+            ])->with(compact('mahasiswa', 'dosen', 'progress', 'irs', 'khs', 'pkl', 'skripsi'));
         }
     }
 
