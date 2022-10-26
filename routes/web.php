@@ -18,6 +18,7 @@ use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\EntryProgressController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\VerifikasiBerkasController;
+use App\Http\Controllers\EditProfileDosenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('editprofile')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('editprofiledosen')->name('dashboard');
 
     // Fiture Operator
     Route::group(['middleware' => ['operator']], function () {
@@ -79,7 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     // Fiture Dosen
-    Route::group(['middleware' => ['dosen']], function () {
+    Route::group(['middleware' => ['dosen', 'editprofiledosen']], function () {
         // progress studi mahasiswa
         Route::get('/dosen/progress_studi_mahasiswa', [ProgressMhsContoller::class, 'dosen']);
         Route::get('/dosen/progress_studi_mahasiswa/detail', [ProgressMhsContoller::class, 'show'])->name('progress_detail');
@@ -90,6 +92,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/dosen/verifikasi_berkas_mahasiswa/detail', [VerifikasiBerkasController::class, 'show'])->name('berkas_detail');
         Route::post('/dosen/verifikasi_berkas_mahasiswa/update', [VerifikasiBerkasController::class, 'update'])->name('verifikasi_update');
     });
+
+    //edit profil
+    Route::resource('/dosen/edit_profile_dosen', EditProfileDosenController::class)->middleware('dosen');
 
     // Fiture Mahasiswa
     Route::group(['middleware' => ['mahasiswa', 'editprofile']], function () {
