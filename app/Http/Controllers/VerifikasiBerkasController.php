@@ -21,11 +21,12 @@ class VerifikasiBerkasController extends Controller
     public function index()
     {
         $mahasiswa = tb_mahasiswa::where('kode_wali', Auth::user()->nim_nip)->get();
+        $dosen = tb_dosen::where('nip', Auth::user()->nim_nip)->first();
         $progress = tb_entry_progress::where('nip', Auth::user()->nim_nip)->where('is_irs', 1)->where('is_khs', 1)->where('is_pkl', 1)->where('is_skripsi', 1)->where('is_verifikasi', '0')->get();
 
         return view('dosen.verifikasi.index', [
             'title' => 'Verifikasi Berkas Mahasiswa',
-        ])->with(compact('mahasiswa', 'progress'));
+        ])->with(compact('mahasiswa', 'progress', 'dosen'));
     }
 
     public function show(Request $request)

@@ -17,7 +17,7 @@
                     <!-- Card START -->
                     <div class="card">
                         <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-primary">
+                            <a href="/department/data_mahasiswa" class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-backspace"></i>
                                 Kembali
                             </a>
@@ -64,7 +64,7 @@
                                                 <p class="mb-3 border-bottom border-2 border-white"> <strong> Dosen Wali: </strong></p>
                                             </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->kode_wali }} </p>
+                                                <p class="border-bottom border-2"> {{ $mahasiswa->kode_wali != null ? $mahasiswa->kode_wali : '-' }} </p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -72,7 +72,7 @@
                                                 <p class="mb-3 border-bottom border-2 border-white"> <strong> Alamat: </strong></p>
                                             </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->alamat }} </p>
+                                                <p class="border-bottom border-2"> {{ $mahasiswa->alamat != null ? $mahasiswa->alamat : '-' }} </p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -80,7 +80,7 @@
                                                 <p class="mb-3 border-bottom border-2 border-white"> <strong> Kota/Kabupaten: </strong></p>
                                             </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $kabupaten->nama_kab }} </p>
+                                                <p class="border-bottom border-2"> {{ $mahasiswa->kode_kab != null ? $kabupaten->nama_kab : '-' }} </p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -88,7 +88,7 @@
                                                 <p class="mb-3 border-bottom border-2 border-white"> <strong> Provinsi: </strong></p>
                                             </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $provinsi->nama_prov }} </p>
+                                                <p class="border-bottom border-2"> {{ $mahasiswa->kode_prov != null ? $provinsi->nama_prov : '-' }} </p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -104,7 +104,7 @@
                                                 <p class="mb-3 border-bottom border-2 border-white"> <strong> No Handphone: </strong></p>
                                             </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->handphone }} </p>
+                                                <p class="border-bottom border-2"> {{ $mahasiswa->handphone != null ? $mahasiswa->handphone : '-' }} </p>
                                             </td>
                                         </tr>
                                         <tr>

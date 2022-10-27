@@ -44,7 +44,7 @@
                                             <div class="avatar avatar-xxxl">
                                                 <img class="avatar-img border border-white border-3 rounded-circle" src="{{ $dosen->foto == null ? asset('assets/images/avatar/default.jpg') : asset($dosen->foto) }}" alt="...">
                                             </div>
-                                            <input type="file" class="filepond" id="fileProfileDosen" name="fileProfileDosen" data-allow-reorder="true">
+                                            <input type="file" class="filepond" id="fileProfile" name="fileProfile" data-allow-reorder="true">
                                         </div>
                                     </div>
                                 </div>
@@ -56,11 +56,35 @@
                                     </div>
                                 </div>
 
-                                {{-- Form NIM --}}
+                                {{-- Form nip --}}
                                 <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">NIM :</label>
+                                    <label class="col-sm-2 col-form-label text-dark">NIP :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nip" name="nip" placeholder="NIP" value="{{ $dosen->nip }}" readonly>
+                                        <input type="text" class="form-control" id="nip" name="nip" placeholder="nip" value="{{ $dosen->nip }}" readonly>
+                                    </div>
+                                </div>
+
+                                {{-- Form Status --}}
+                                <div class="row mb-1">
+                                    <label class="col-sm-2 col-form-label text-dark">Status :</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{ $dosen->status }}" readonly>
+                                    </div>
+                                </div>
+
+                                {{-- Form Nomor HP --}}
+                                <div class="row mb-1">
+                                    <label class="col-sm-2 col-form-label text-dark">Nomor HP :</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="handphone" name="handphone" placeholder="Nomor HP" value="{{ $dosen->handphone }}" required>
+                                    </div>
+                                </div>
+
+                                {{-- Form Email SSO --}}
+                                <div class="row mb-1">
+                                    <label class="col-sm-2 col-form-label text-dark">Email SSO :</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $dosen->email }}" required>
                                     </div>
                                 </div>
 
@@ -68,52 +92,39 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Alamat :</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" rows="3" required>{{ $dosen->alamat }}</textarea>
+                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" required>{{ $dosen->alamat }}</textarea>
                                     </div>
                                 </div>
-                                {{-- Form Email --}}
+
+                                {{-- Select Provinsi --}}
                                 <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">Email :</label>
+                                    <label class="col-sm-2 col-form-label text-dark">Provinsi :</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $dosen->email }}" required>
+                                        <select class="form-select" id="provinsi" name="provinsi" required>
+                                            <option value="">Pilih Provinsi</option>
+                                            @foreach ($provinsi as $prov)
+                                            <option value="{{ $prov->kode_prov }}" {{ $dosen->kode_prov == $prov->kode_prov ? 'selected="true"' : '' }}>{{ $prov->nama_prov }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                </div>
 
-                                    {{-- Form Headphone --}}
-                                    <div class="row mb-1">
-                                        <label class="col-sm-2 col-form-label text-dark">Headphone :</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="headphone" name="headphone" placeholder="Headphone" value="{{ $dosen->headphone }}" required>
-                                        </div>
+                                {{-- Select Kota/Kab --}}
+                                <div class="row mb-1">
+                                    <label class="col-sm-2 col-form-label text-dark">Kabupaten/Kota :</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" id="kabupatenkota" name="kabupatenkota" required>
+                                            <option value="">Pilih Kabupaten/Kota</option>
+                                            @foreach ($kabupaten as $kab)
+                                            <option value="{{ $kab->kode_kab }}" {{ $dosen->kode_kab == $kab->kode_kab ? 'selected="true"' : '' }}>{{ $kab->nama_kab }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                </div>
 
-                                    {{-- Select Provinsi --}}
-                                    <div class="row mb-1">
-                                        <label class="col-sm-2 col-form-label text-dark">Provinsi :</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-select" id="provinsi" name="provinsi" required>
-                                                <option value="">Pilih Provinsi</option>
-                                                @foreach ($provinsi as $prov)
-                                                <option value="{{ $prov->kode_prov }}" {{ $dosen->kode_prov == $prov->kode_prov ? 'selected="true"' : '' }}>{{ $prov->nama_prov }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    {{-- Select Kota/Kab --}}
-                                    <div class="row mb-1">
-                                        <label class="col-sm-2 col-form-label text-dark">Kabupaten/Kota :</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-select" id="kabupatenkota" name="kabupatenkota" required>
-                                                <option value="">Pilih Kabupaten/Kota</option>
-                                                @foreach ($kabupaten as $kab)
-                                                <option value="{{ $kab->kode_kab }}" {{ $dosen->kode_kab == $kab->kode_kab ? 'selected="true"' : '' }}>{{ $kab->nama_kab }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 text-end">
-                                        <button type="submit" class="btn btn-sm btn-primary mt-2 mb-0">Save</button>
-                                    </div>
+                                <div class="col-12 text-end">
+                                    <button type="submit" class="btn btn-sm btn-primary mt-2 mb-0">Save</button>
+                                </div>
                             </form>
                         </div>
                         <!-- Card body END -->
@@ -161,9 +172,9 @@
 
 <!-- Turn all file input elements into ponds -->
 <script>
-    var fileProfileDosen = document.getElementById('fileProfileDosen');
+    var fileProfile = document.getElementById('fileProfile');
     FilePond.registerPlugin(FilePondPluginFileValidateType, FilePondPluginFileValidateSize);
-    var pondProfile = FilePond.create(fileProfileDosen, {
+    var pondProfile = FilePond.create(fileProfile, {
         labelIdle: '<span class="link small text-dark"><i class="bi bi-pencil-square"></i> Perbarui Foto Profil</span>',
         acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
         allowFileSizeValidation: true,

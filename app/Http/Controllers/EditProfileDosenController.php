@@ -25,8 +25,8 @@ class EditProfileDosenController extends Controller
         $provinsi = tb_prov::all();
         $kabupaten = tb_kab::where('kode_prov', $dosen->kode_prov)->get();
 
-        return view('dosen.edit_profile_dosen', [
-            'title' => 'Edit Profile Dosen',
+        return view('dosen.edit_profile', [
+            'title' => 'Edit Profile',
         ])->with(compact('dosen', 'provinsi', 'kabupaten'));
     }
 
@@ -92,7 +92,7 @@ class EditProfileDosenController extends Controller
                 }),
             ],
             'nama' => 'required|string',
-            'nim' => 'required',
+            'nip' => 'required',
             'status' => 'required',
             'handphone' => 'required|numeric',
             'email' =>
@@ -104,7 +104,7 @@ class EditProfileDosenController extends Controller
             'kabupatenkota' => 'required|exists:tb_kabs,kode_kab',
         ]);
 
-        $temp = tb_temp_file::where('path', $request->fileProfileDosen)->first();
+        $temp = tb_temp_file::where('path', $request->fileProfile)->first();
 
         // Update to DB
         tb_dosen::where('nip', $id)->update([
@@ -122,7 +122,7 @@ class EditProfileDosenController extends Controller
         if ($request->fileProfile != null && tb_dosen::where('nip', $id)->first()->foto != null) {
             unlink(tb_dosen::where('nip', $id)->first()->foto);
         }
-        if ($temp && $request->fileProfileDosen != null) {
+        if ($temp && $request->fileProfile != null) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $id . '_' . $uniq . '.jpg'));
             tb_dosen::where('nip', $id)->update([

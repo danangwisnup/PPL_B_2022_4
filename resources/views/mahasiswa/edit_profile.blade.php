@@ -35,7 +35,7 @@
                             <div class="small italic text-danger">Lengkapi data diri anda dengan benar</div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('edit_profile.update', $mahasiswa->nim) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('edit_profile_mahasiswa.update', $mahasiswa->nim) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row mt-1 mb-1">
