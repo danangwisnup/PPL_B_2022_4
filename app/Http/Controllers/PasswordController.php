@@ -15,6 +15,7 @@ use App\Models\tb_skripsi;
 use App\Models\tb_temp_file;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PasswordController extends Controller
@@ -28,9 +29,10 @@ class PasswordController extends Controller
     {
         $user = User::where('nim_nip',  Auth::user()->nim_nip)->first();
         $dosen = tb_dosen::where('nip',  Auth::user()->nim_nip)->first();
+        $mahasiswa = tb_mahasiswa::where('nim',  Auth::user()->nim_nip)->first();
         return view('change_password.index', [
             'title' => 'Change Password',
-        ])->with(compact('user', 'dosen'));
+        ])->with(compact('user', 'dosen', 'mahasiswa'));
     }
 
     /**
@@ -85,7 +87,27 @@ class PasswordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validate
+        $request->validate([
+            // olf password must same with password in database
+            'old_password' => [
+                'required', function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Auth::user()->password)) {
+                        $fail('Old Password didn\'t match');
+                    } 
+                },
+            ],
+            'new_password' => 'required|string',
+            'ver_password' => 'required|string|same:new_password',
+        ]);
+
+        
+        User::where('nim_nip', $id)->update([
+            'password' => bcrypt($request->new_password),
+        ]);
+        
+        Alert::success('Berhasil', 'Data berhasil disimpan');
+        return redirect()->route('change_password.index');
     }
 
     /**
