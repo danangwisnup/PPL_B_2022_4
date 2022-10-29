@@ -17,7 +17,7 @@
                     <!-- Card START -->
                     <div class="card">
                         <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-primary">
+                            <a href="/department/data_dosen" class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-backspace"></i>
                                 Kembali
                             </a>
@@ -30,7 +30,7 @@
                                 <div class="col-8">
                                     <div class="text-center">
                                         <div class="avatar avatar-xxxl mb-3">
-                                            <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/default.jpg') }}" alt=""></a>
+                                            <a href="#!"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ $dosen->foto != null ? asset($dosen->foto) : asset('assets/images/avatar/default.jpg') }}" alt=""></a>
                                         </div>
                                     </div>
 

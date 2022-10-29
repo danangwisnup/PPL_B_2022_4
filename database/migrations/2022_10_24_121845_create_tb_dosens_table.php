@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('kode_prov')->nullable();
             $table->string('handphone')->nullable();
             $table->string('status');
+            $table->string('foto')->nullable();
         });
     }
 

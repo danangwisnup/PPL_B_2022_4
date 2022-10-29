@@ -18,6 +18,7 @@ use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\EntryProgressController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\VerifikasiBerkasController;
+use App\Http\Controllers\EditProfileDosenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,7 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     // Fiture Dosen
-    Route::group(['middleware' => ['dosen']], function () {
+    Route::group(['middleware' => ['dosen', 'editprofile']], function () {
         // progress studi mahasiswa
         Route::get('/dosen/progress_studi_mahasiswa', [ProgressMhsContoller::class, 'dosen']);
         Route::get('/dosen/progress_studi_mahasiswa/detail', [ProgressMhsContoller::class, 'show'])->name('progress_detail');
@@ -123,8 +124,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/mahasiswa/skripsi/{semester}/{nim}/edit', [SkripsiController::class, 'edit'])->name('skripsi.edit');
     });
 
-    // edit profile
-    Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('mahasiswa');
+    //edit profile
+    Route::resource('/dosen/edit_profile', EditProfileDosenController::class)->middleware('dosen')->names('edit_profile_dosen');
+    Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('mahasiswa')->names('edit_profile_mahasiswa');
 
     // Wilayah Indonesia
     Route::get('/wilayah/{provinsi}', [WilayahController::class, 'index'])->name('wilayah');
