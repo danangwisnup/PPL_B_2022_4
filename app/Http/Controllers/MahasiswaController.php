@@ -191,16 +191,11 @@ class MahasiswaController extends Controller
     public function data_mahasiswa_detail(Request $request)
     {
         $mahasiswa = tb_mahasiswa::where('nim', $request->nim)->first();
-        if ($mahasiswa->kode_kab != null or $mahasiswa->kode_prov != null) {
-            $kabupaten = tb_kab::where('kode_kab', $mahasiswa->kode_kab)->first();
-            $provinsi = tb_prov::where('kode_prov', $mahasiswa->kode_prov)->first();
-            return view('department.data_mhs.detail', [
-                'title' => 'Data Mahasiswa Detail',
-            ])->with(compact('mahasiswa', 'kabupaten', 'provinsi'));
-        } else {
-            Alert::error('Error!', 'Data Mahasiswa tidak lengkap');
-            return redirect()->back();
-        }
+        $kabupaten = tb_kab::where('kode_kab', $mahasiswa->kode_kab)->first();
+        $provinsi = tb_prov::where('kode_prov', $mahasiswa->kode_prov)->first();
+        return view('department.data_mhs.detail', [
+            'title' => 'Data Mahasiswa Detail',
+        ])->with(compact('mahasiswa', 'kabupaten', 'provinsi'));
     }
 
     public function data_pkl()

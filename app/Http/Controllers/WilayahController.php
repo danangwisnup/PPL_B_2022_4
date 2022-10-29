@@ -20,12 +20,30 @@ class WilayahController extends Controller
 {
     public function index($provinsi)
     {
-        $kabupatenkota = tb_kab::where('kode_prov', $provinsi)->get();
-        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        // if User is Mahasiswa
+        if (Auth::user()->role == 'mahasiswa') {
+            $kabupatenkota = tb_kab::where('kode_prov', $provinsi)->get();
+            $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
 
-        echo "<option value=''>Pilih Kabupaten/Kota</option>";
-        foreach ($kabupatenkota as $kab) {
-            echo "<option value='" . $kab->kode_kab . "' " . ($mahasiswa->kode_kab == $kab->kode_kab ? 'selected="true"' : '') . ">" . $kab->nama_kab . "</option>";
+            echo "<option value=''>Pilih Kabupaten/Kota</option>";
+            foreach ($kabupatenkota as $kab) {
+                echo "<option value='" . $kab->kode_kab . "' " . ($mahasiswa->kode_kab == $kab->kode_kab ? 'selected="true"' : '') . ">" . $kab->nama_kab . "</option>";
+            }
+        } else if (Auth::user()->role == 'dosen') {
+            $kabupatenkota = tb_kab::where('kode_prov', $provinsi)->get();
+            $dosen = tb_dosen::where('nip', Auth::user()->nim_nip)->first();
+
+            echo "<option value=''>Pilih Kabupaten/Kota</option>";
+            foreach ($kabupatenkota as $kab) {
+                echo "<option value='" . $kab->kode_kab . "' " . ($dosen->kode_kab == $kab->kode_kab ? 'selected="true"' : '') . ">" . $kab->nama_kab . "</option>";
+            }
+        } else {
+            $kabupatenkota = tb_kab::where('kode_prov', $provinsi)->get();
+
+            echo "<option value=''>Pilih Kabupaten/Kota</option>";
+            foreach ($kabupatenkota as $kab) {
+                echo "<option value='" . $kab->kode_kab . "'>" . $kab->nama_kab . "</option>";
+            }
         }
     }
 }

@@ -23,10 +23,11 @@ class DashboardController extends Controller
         $skripsi = tb_skripsi::where('nim', Auth::user()->nim_nip)->orderBy('semester_aktif', 'desc')->first();
         $khs = tb_khs::where('nim', Auth::user()->nim_nip)->orderBy('semester_aktif', 'desc')->first();
         $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $dosen = tb_dosen::where('nip', Auth::user()->nim_nip)->first();
         $mahasiswaAll = tb_mahasiswa::all();
         $dosenAll = tb_dosen::all();
         return view('dashboard.index', [
             'title' => 'Dashboard',
-        ])->with(compact('mahasiswa', 'mahasiswaAll', 'dosenAll', 'pkl', 'skripsi', 'khs'));
+        ])->with(compact('mahasiswa', 'mahasiswaAll', 'dosenAll', 'pkl', 'skripsi', 'khs', 'dosen'));
     }
 }
