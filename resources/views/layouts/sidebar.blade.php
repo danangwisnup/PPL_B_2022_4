@@ -32,6 +32,8 @@
                             <div class="avatar avatar-xxl mt-n5 mb-1">
                                 @if (Auth::user()->role == 'mahasiswa')
                                 <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/default.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
+                                @elseif (Auth::user()->role == 'dosen')
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ $dosen->foto == null ? asset('assets/images/avatar/default.jpg') : asset($dosen->foto) }}" alt=""></a>
                                 @else
                                 <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ asset('assets/images/avatar/default.jpg') }}" alt=""></a>
                                 @endif
@@ -163,9 +165,9 @@
                             <i class="bi bi-house-door"></i><span> Dashboard</span>
                         </a>
                     </div>
-                    @elseif (Auth::user()->role == 'mahasiswa')
+                    @else
                     <div class="card-footer text-center py-2">
-                        <a class="btn btn-link btn-sm bold" style="font-size: 14px;" href="/mahasiswa/edit_profile">Edit Profile </a>
+                        <a class="btn btn-link btn-sm bold" style="font-size: 14px;" href="/{{ Auth::user()->role }}/edit_profile">Edit Profile </a>
                     </div>
                     @endif
                 </div>

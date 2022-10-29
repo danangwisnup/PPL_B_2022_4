@@ -21,9 +21,10 @@ class ProgressMhsContoller extends Controller
     public function dosen()
     {
         $mahasiswa = tb_mahasiswa::where('kode_wali', Auth::user()->nim_nip)->get();
+        $dosen = tb_dosen::where('nip', Auth::user()->nim_nip)->first();
         return view('dosen.progress.index', [
             'title' => 'Progress Studi Mahasiswa',
-        ])->with(compact('mahasiswa'));
+        ])->with(compact('mahasiswa', 'dosen'));
     }
 
     public function department()
