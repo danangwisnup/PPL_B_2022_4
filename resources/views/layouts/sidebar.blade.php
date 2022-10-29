@@ -49,7 +49,7 @@
                             </div>
                         </div>
 
-                        @if ($title != 'Edit Profile')
+                        @if ($title != 'Edit Profile' && $title != 'Change Password')
 
                         <!-- Divider -->
                         <hr>
@@ -157,12 +157,19 @@
                     </div>
                     <!-- Card body END -->
                     <!-- Card footer -->
-                    @if ($title == 'Edit Profile')
+                    @if ($title == 'Edit Profile' || $title == 'Change Password')
                     <div class="card-footer text-center py-2">
                         Informatika S1 <br />
                         Fakultas Sains dan Matematika
                         <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="/">
                             <i class="bi bi-house-door"></i><span> Dashboard</span>
+                        </a>
+                        <hr />
+                        <a style="font-size: 14px;" class="nav-link {{ ($title == 'Edit Profile')? 'active' : '' }}" href="/{{ Auth::User()->role }}/edit_profile">
+                            <i class="bi bi-mortarboard"></i><span> Edit Profile</span>
+                        </a>
+                        <a style="font-size: 14px;" class="nav-link {{ ($title == 'Change Password') ? 'active' : '' }}" href="/{{ Auth::User()->role }}/change_password">
+                            <i class="bi bi-key"></i><span> Change Password</span>
                         </a>
                     </div>
                     @else

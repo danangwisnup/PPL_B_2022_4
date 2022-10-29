@@ -19,6 +19,8 @@ use App\Http\Controllers\EntryProgressController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\VerifikasiBerkasController;
 use App\Http\Controllers\EditProfileDosenController;
+use App\Http\Controllers\EditProfileOperatorController;
+use App\Http\Controllers\PasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,12 +129,22 @@ Route::group(['middleware' => ['auth']], function () {
     //edit profile
     Route::resource('/dosen/edit_profile', EditProfileDosenController::class)->middleware('dosen')->names('edit_profile_dosen');
     Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('mahasiswa')->names('edit_profile_mahasiswa');
+    Route::resource('/operator/edit_profile', EditProfileOperatorController::class)->middleware('operator')->names('edit_profile_operator');
+    // Route::resource('/operator/edit_profile', EditProfileController::class)->middleware('operator')->names('edit_profile_operator');
+    // Route::resource('/department/edit_profile', EditProfileController::class)->middleware('department')->names('edit_profile_department');
+
+    // Change Password
+    Route::resource('/dosen/change_password', PasswordController::class);
+    Route::resource('/mahasiswa/change_password', PasswordController::class);
+    Route::resource('/operator/change_password', PasswordController::class);
+    Route::resource('/department/change_password', PasswordController::class);
 
     // Wilayah Indonesia
     Route::get('/wilayah/{provinsi}', [WilayahController::class, 'index'])->name('wilayah');
 
     // Upload File
     Route::post('/upload', [UploadController::class, 'upload']);
+
 });
 
 // Login & Logout [Done]
