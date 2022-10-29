@@ -19,8 +19,8 @@ use App\Http\Controllers\EntryProgressController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\VerifikasiBerkasController;
 use App\Http\Controllers\EditProfileDosenController;
+use App\Http\Controllers\EditProfileOperatorController;
 use App\Http\Controllers\PasswordController;
-use App\Http\Middleware\EditProfile;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,6 +129,7 @@ Route::group(['middleware' => ['auth']], function () {
     //edit profile
     Route::resource('/dosen/edit_profile', EditProfileDosenController::class)->middleware('dosen')->names('edit_profile_dosen');
     Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('mahasiswa')->names('edit_profile_mahasiswa');
+    Route::resource('/operator/edit_profile', EditProfileOperatorController::class)->middleware('operator')->names('edit_profile_operator');
     // Route::resource('/operator/edit_profile', EditProfileController::class)->middleware('operator')->names('edit_profile_operator');
     // Route::resource('/department/edit_profile', EditProfileController::class)->middleware('department')->names('edit_profile_department');
 
