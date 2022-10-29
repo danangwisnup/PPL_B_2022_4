@@ -42,7 +42,7 @@
                                     <div class="form-group">
                                         <div class="text-center">
                                             <div class="avatar avatar-xxxl">
-                                                <img class="avatar-img border border-white border-3 rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/03.jpg') : asset($mahasiswa->foto) }}" alt="...">
+                                                <img class="avatar-img border border-white border-3 rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/default.jpg') : asset($mahasiswa->foto) }}" alt="...">
                                             </div>
                                             <input type="file" class="filepond" id="fileProfile" name="fileProfile" data-allow-reorder="true">
                                         </div>
@@ -96,9 +96,9 @@
                                     </div>
                                 </div>
 
-                                {{-- Form Email Pribadi --}}
+                                {{-- Form Email SSO --}}
                                 <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">Email Pribadi :</label>
+                                    <label class="col-sm-2 col-form-label text-dark">Email SSO :</label>
                                     <div class="col-sm-10">
                                         <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $mahasiswa->email }}" required>
                                     </div>

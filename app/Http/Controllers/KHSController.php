@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\M_EntryProgress;
 use Illuminate\Http\Request;
-use App\Models\M_KHS;
-use App\Models\M_Mahasiswa;
-use App\Models\M_TempFile;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_entry_progress;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Unique;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class KHSController extends Controller
@@ -20,11 +25,11 @@ class KHSController extends Controller
      */
     public function index()
     {
-        $countSemsester = M_EntryProgress::where('nim', Auth::user()->nim_nip)->count();
-        $progress = M_EntryProgress::where('nim', Auth::user()->nim_nip)
+        $countSemsester = tb_entry_progress::where('nim', Auth::user()->nim_nip)->count();
+        $progress = tb_entry_progress::where('nim', Auth::user()->nim_nip)
             ->where('semester_aktif', $countSemsester)->first();
-        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
-        $khs = M_KHS::where('nim', Auth::user()->nim_nip)->get();
+        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $khs = tb_khs::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.khs.entry', [
             'title' => 'Entry KHS',
         ])->with(compact('mahasiswa', 'khs', 'progress'));
@@ -37,11 +42,12 @@ class KHSController extends Controller
      */
     public function data()
     {
-        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
-        $khs = M_KHS::where('nim', Auth::user()->nim_nip)->get();
+        $progress = tb_entry_progress::where('nim', Auth::user()->nim_nip)->first();
+        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $khs = tb_khs::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.khs.index', [
             'title' => 'KHS',
-        ])->with(compact('mahasiswa', 'khs'));
+        ])->with(compact('mahasiswa', 'khs', 'progress'));
     }
 
     /**
@@ -72,10 +78,10 @@ class KHSController extends Controller
             'file' => 'required',
         ]);
 
-        $temp = M_TempFile::where('path', $request->file)->first();
+        $temp = tb_temp_file::where('path', $request->file)->first();
 
         // Insert to DB
-        $db = M_KHS::create([
+        $db = tb_khs::create([
             'nim' => Auth::user()->nim_nip,
             'semester_aktif' => $request->semester_aktif,
             'sks' => $request->sks_semester,
@@ -85,7 +91,7 @@ class KHSController extends Controller
             'upload_khs' => $temp->path,
         ]);
 
-        M_EntryProgress::where('nim', Auth::user()->nim_nip)
+        tb_entry_progress::where('nim', Auth::user()->nim_nip)
             ->where('semester_aktif', $request->semester_aktif)
             ->update([
                 'is_khs' => 1,
@@ -93,10 +99,10 @@ class KHSController extends Controller
 
         if ($temp) {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
-                'upload_khs' => 'files/khs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_khs' => 'files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
         }
@@ -129,7 +135,7 @@ class KHSController extends Controller
      */
     public function edit($semester_aktif, $nim)
     {
-        $data = M_KHS::where('nim', $nim)->where('semester_aktif', $semester_aktif)->first();
+        $data = tb_khs::where('nim', $nim)->where('semester_aktif', $semester_aktif)->first();
         return view('mahasiswa.khs.modal', compact('data'));
     }
 
@@ -152,24 +158,24 @@ class KHSController extends Controller
             'fileEdit' => 'required_if:confirm,on',
         ]);
 
-        $db = M_KHS::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();
+        $db = tb_khs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();
 
-        $temp = M_TempFile::where('path', $request->fileEdit)->first();
+        $temp = tb_temp_file::where('path', $request->fileEdit)->first();
 
         if ($temp && $request->confirm == 'on') {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
-            M_KHS::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
+            tb_khs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'sks' => $request->sks_semester,
                 'sks_kumulatif' => $request->sks_kumulatif,
                 'ip' => $request->ip_semester,
                 'ip_kumulatif' => $request->ip_kumulatif,
-                'upload_khs' => 'files/khs/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_khs' => 'files/khs/' . $db->nim . '_' . $db->semester_aktif  . '_' . $uniq . '.pdf'
             ]);
             unlink(public_path($db->upload_khs));
         } else {
-            M_KHS::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
+            tb_khs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'sks' => $request->sks_semester,
                 'sks_kumulatif' => $request->sks_kumulatif,
                 'ip' => $request->ip_semester,

@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\M_EntryProgress;
 use Illuminate\Http\Request;
-use App\Models\M_Skripsi;
-use App\Models\M_Mahasiswa;
-use App\Models\M_TempFile;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_entry_progress;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Unique;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SkripsiController extends Controller
@@ -20,11 +25,11 @@ class SkripsiController extends Controller
      */
     public function index()
     {
-        $countSemsester = M_EntryProgress::where('nim', Auth::user()->nim_nip)->count();
-        $progress = M_EntryProgress::where('nim', Auth::user()->nim_nip)
+        $countSemsester = tb_entry_progress::where('nim', Auth::user()->nim_nip)->count();
+        $progress = tb_entry_progress::where('nim', Auth::user()->nim_nip)
             ->where('semester_aktif', $countSemsester)->first();
-        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
-        $skripsi = M_Skripsi::where('nim', Auth::user()->nim_nip)->get();
+        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $skripsi = tb_skripsi::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.skripsi.entry', [
             'title' => 'Entry Skripsi',
         ])->with(compact('mahasiswa', 'skripsi', 'progress'));
@@ -37,11 +42,12 @@ class SkripsiController extends Controller
      */
     public function data()
     {
-        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
-        $skripsi = M_Skripsi::where('nim', Auth::user()->nim_nip)->get();
+        $progress = tb_entry_progress::where('nim', Auth::user()->nim_nip)->first();
+        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $skripsi = tb_skripsi::where('nim', Auth::user()->nim_nip)->get();
         return view('mahasiswa.skripsi.index', [
             'title' => 'Skripsi',
-        ])->with(compact('mahasiswa', 'skripsi'));
+        ])->with(compact('mahasiswa', 'skripsi', 'progress'));
     }
 
     /**
@@ -64,41 +70,45 @@ class SkripsiController extends Controller
     {
         // Validate
         $request->validate([
-            'semester_aktif' => 'required|unique:tb_skripsi,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
+            'semester_aktif' => 'required|unique:tb_skripsis,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
             'confirm' => 'sometimes|accepted',
-            'tanggal_sidang' => 'required_if:confirm,on',
-            'nilai_skripsi' => 'required_if:status_skripsi,Lulus',
-            'status_skripsi' => 'required_if:confirm,on',
+            'tanggal_sidang' => 'required_if:status_skripsi,Lulus',
+            'nilai_skripsi' => 'required_if:status_skripsi,Lulus|in:,A,B,C,D,E',
+            'status_skripsi' => 'required_if:confirm,on|in:,Lulus,Sedang Ambil,Belum Ambil',
             'file' => 'required_if:confirm,on',
         ]);
+        if ($request->status_skripsi != 'Lulus' && $request->nilai_skripsi != null) {
+            Alert::error('Gagal', 'Nilai Skripsi hanya bisa diisi jika status Skripsi adalah Lulus');
+            return redirect()->back();
+        }
 
-        $temp = M_TempFile::where('path', $request->file)->first();
+        $temp = tb_temp_file::where('path', $request->file)->first();
 
         // Insert to DB
         if ($request->confirm == 'on') {
-            $db = M_Skripsi::create([
+            $db = tb_skripsi::create([
                 'nim' => Auth::user()->nim_nip,
                 'semester_aktif' => $request->semester_aktif,
                 'tanggal_sidang' => $request->tanggal_sidang,
                 'status' => $request->status_skripsi,
                 'upload_skripsi' => $temp->path,
             ]);
-            if ($request->status_pkl == 'Lulus') {
-                M_Skripsi::where('nim', Auth::user()->nim_nip)
+            if ($request->status_skripsi == 'Lulus') {
+                tb_skripsi::where('nim', Auth::user()->nim_nip)
                     ->where('semester_aktif', $request->semester_aktif)
                     ->update([
                         'nilai' => $request->nilai_skripsi,
                     ]);
             }
         } else {
-            $db = M_Skripsi::create([
+            $db = tb_skripsi::create([
                 'nim' => Auth::user()->nim_nip,
                 'semester_aktif' => $request->semester_aktif,
                 'status' => 'Belum Ambil',
             ]);
         }
 
-        M_EntryProgress::where('nim', Auth::user()->nim_nip)
+        tb_entry_progress::where('nim', Auth::user()->nim_nip)
             ->where('semester_aktif', $request->semester_aktif)
             ->update([
                 'is_skripsi' => 1,
@@ -106,10 +116,10 @@ class SkripsiController extends Controller
 
         if ($temp) {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/skripsi/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/skripsi/'  . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
-                'upload_skripsi' => 'files/skripsi/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_skripsi' => 'files/skripsi/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
         }
@@ -119,7 +129,7 @@ class SkripsiController extends Controller
             return redirect('/mahasiswa/entry');
         } else {
             Alert::error('Gagal', 'Data gagal disimpan');
-            return redirect()->route('pkl.index');
+            return redirect()->route('skripsi.index');
         }
     }
 
@@ -142,7 +152,7 @@ class SkripsiController extends Controller
      */
     public function edit($semester_aktif, $nim)
     {
-        $data = M_Skripsi::where('nim', $nim)->where('semester_aktif', $semester_aktif)->first();
+        $data = tb_skripsi::where('nim', $nim)->where('semester_aktif', $semester_aktif)->first();
         return view('mahasiswa.skripsi.modal', compact('data'));
     }
 
@@ -158,30 +168,31 @@ class SkripsiController extends Controller
         // Validate
         $request->validate([
             'confirm' => 'sometimes|accepted',
-            'status_skripsi' => 'required',
+            'status_skripsi' => 'required|in:Lulus,Sedang Ambil,Belum Ambil',
+            'nilai_skripsi' => 'required_if:status_skripsi,Lulus|in:,A,B,C,D,E',
             'fileEdit' => 'required_if:confirm,on',
         ]);
 
-        $db = M_Skripsi::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();
+        $db = tb_skripsi::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();
 
-        $temp = M_TempFile::where('path', $request->fileEdit)->first();
+        $temp = tb_temp_file::where('path', $request->fileEdit)->first();
 
         if ($temp && $request->confirm == 'on') {
-            if (M_Skripsi::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->where('upload_skripsi', '!=', null)->first()) {
+            if (tb_skripsi::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->where('upload_skripsi', '!=', null)->first()) {
                 unlink(public_path($db->upload_skripsi));
             }
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/skripsi/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'));
+            rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/skripsi/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
             rmdir(public_path('files/temp/' . $temp->folder));
-            M_Skripsi::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
+            tb_skripsi::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'tanggal_sidang' => $request->tanggal_sidang,
                 'status' => $request->status_skripsi,
                 'nilai' => $request->nilai_skripsi,
-                'upload_skripsi' => 'files/skripsi/' . $uniq . '_' . $db->nim . '_' . $db->semester_aktif . '.pdf'
+                'upload_skripsi' => 'files/skripsi/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
         } else {
-            M_Skripsi::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
+            tb_skripsi::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'tanggal_sidang' => $request->tanggal_sidang,
                 'status' => $request->status_skripsi,
                 'nilai' => $request->nilai_skripsi,

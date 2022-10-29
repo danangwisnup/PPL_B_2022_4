@@ -128,17 +128,6 @@
                                             }
                                         }
                                     },
-                                    legend: {
-                                        align: 'left',
-                                        x: 70,
-                                        verticalAlign: 'top',
-                                        y: 70,
-                                        floating: true,
-                                        backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                                        borderColor: '#CCC',
-                                        borderWidth: 1,
-                                        shadow: false
-                                    },
                                     tooltip: {
                                         headerFormat: '<b>{point.x}</b><br/>',
                                         pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'

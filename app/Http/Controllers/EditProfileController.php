@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\M_Dosen;
-use App\Models\M_Mahasiswa;
-use App\Models\M_TempFile;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_kab;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_prov;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -21,10 +27,10 @@ class EditProfileController extends Controller
      */
     public function index()
     {
-        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
-        $provinsi = DB::table('tb_provinsi')->get();
-        $kabupaten = DB::table('tb_kabupaten')->where('kode_prov', $mahasiswa->kode_prov)->get();
-        $dosen_wali = M_Dosen::all();
+        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $provinsi = tb_prov::all();
+        $kabupaten = tb_kab::where('kode_prov', $mahasiswa->kode_prov)->get();
+        $dosen_wali = tb_dosen::all();
 
         return view('mahasiswa.edit_profile', [
             'title' => 'Edit Profile',
@@ -87,8 +93,9 @@ class EditProfileController extends Controller
         $request->validate([
             'fileProfile' =>
             [
+                // required if fileProfile null
                 Rule::requiredIf(function () {
-                    return M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first()->foto == null;
+                    return tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first()->foto == null;
                 }),
             ],
             'nama' => 'required|string',
@@ -102,15 +109,15 @@ class EditProfileController extends Controller
                 'required', 'email', 'max:255', Rule::unique('users')->ignore($id, 'nim_nip'),
             ],
             'alamat' => 'required',
-            'provinsi' => 'required',
-            'kabupatenkota' => 'required',
-            'dosen_wali' => 'required',
+            'provinsi' => 'required|exists:tb_provs,kode_prov',
+            'kabupatenkota' => 'required|exists:tb_kabs,kode_kab',
+            'dosen_wali' => 'required|exists:tb_dosens,nip',
         ]);
 
-        $temp = M_TempFile::where('path', $request->fileProfile)->first();
+        $temp = tb_temp_file::where('path', $request->fileProfile)->first();
 
         // Update to DB
-        M_Mahasiswa::where('nim', $id)->update([
+        tb_mahasiswa::where('nim', $id)->update([
             'nama' => $request->nama,
             'handphone' => $request->handphone,
             'email' => $request->email,
@@ -123,21 +130,20 @@ class EditProfileController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
         ]);
-        if (M_Mahasiswa::where('nim', $id)->first()->foto != null) {
-            unlink(M_Mahasiswa::where('nim', $id)->first()->foto);
+        if ($request->fileProfile != null && tb_mahasiswa::where('nim', $id)->first()->foto != null) {
+            unlink(tb_mahasiswa::where('nim', $id)->first()->foto);
         }
-        if ($temp) {
+        if ($temp && $request->fileProfile != null) {
             $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $uniq . '_' . $id . '.jpg'));
-            //rmdir(public_path('files/temp/' . $temp->folder));
-            M_Mahasiswa::where('nim', $id)->update([
-                'foto' => 'files/profile/' . $uniq . '_' . $id . '.jpg',
+            rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $id . '_' . $uniq . '.jpg'));
+            tb_mahasiswa::where('nim', $id)->update([
+                'foto' => 'files/profile/' . $id . '_' . $uniq . '.jpg',
             ]);
             $temp->delete();
         }
 
         Alert::success('Berhasil', 'Data berhasil disimpan');
-        return redirect()->route('edit_profile.index');
+        return redirect()->route('home');
     }
 
     /**

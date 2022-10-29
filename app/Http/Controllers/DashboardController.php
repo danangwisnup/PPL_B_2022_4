@@ -3,24 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\M_Mahasiswa;
-use App\Models\M_Dosen;
-use App\Models\M_IRS;
-use App\Models\M_KHS;
-use App\Models\M_PKL;
-use App\Models\M_Skripsi;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $pkl = M_PKL::where('nim', Auth::user()->nim_nip)->orderBy('semester_aktif', 'desc')->first();
-        $skripsi = M_Skripsi::where('nim', Auth::user()->nim_nip)->orderBy('semester_aktif', 'desc')->first();
-        $khs = M_KHS::where('nim', Auth::user()->nim_nip)->orderBy('semester_aktif', 'desc')->first();
-        $mahasiswa = M_Mahasiswa::where('nim', Auth::user()->nim_nip)->first();
-        $mahasiswaAll = M_Mahasiswa::all();
-        $dosenAll = M_Dosen::all();
+        $pkl = tb_pkl::where('nim', Auth::user()->nim_nip)->orderBy('semester_aktif', 'desc')->first();
+        $skripsi = tb_skripsi::where('nim', Auth::user()->nim_nip)->orderBy('semester_aktif', 'desc')->first();
+        $khs = tb_khs::where('nim', Auth::user()->nim_nip)->orderBy('semester_aktif', 'desc')->first();
+        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $mahasiswaAll = tb_mahasiswa::all();
+        $dosenAll = tb_dosen::all();
         return view('dashboard.index', [
             'title' => 'Dashboard',
         ])->with(compact('mahasiswa', 'mahasiswaAll', 'dosenAll', 'pkl', 'skripsi', 'khs'));

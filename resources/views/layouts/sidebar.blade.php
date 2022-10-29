@@ -23,16 +23,17 @@
                 <!-- Card START -->
                 <div class="card overflow-hidden">
                     <!-- Cover image -->
-                    <div class="h-90px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/Widya-Puraya-1.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                    <div class="h-90px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/informatika.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    </div>
                     <!-- Card body START -->
                     <div class="card-body pt-0">
                         <div class="text-center">
                             <!-- Avatar -->
                             <div class="avatar avatar-xxl mt-n5 mb-1">
                                 @if (Auth::user()->role == 'mahasiswa')
-                                <a href="#"><img class="avatar-img rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/03.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/default.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
                                 @else
-                                <a href="#"><img class="avatar-img rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ asset('assets/images/avatar/default.jpg') }}" alt=""></a>
                                 @endif
                             </div>
                             <!-- Info -->
@@ -100,24 +101,16 @@
                                     <i class="bi bi-clipboard2-data"></i><span> Progress Studi Mahasiswa</span>
                                 </a>
                             </li>
+                            <?php
+                            $progress = App\Models\tb_entry_progress::where('nip', Auth::user()->nim_nip)->where('is_irs', 1)->where('is_khs', 1)->where('is_pkl', 1)->where('is_skripsi', 1)->where('is_verifikasi', '0')->get();
+                            $count = count($progress);
+                            ?>
                             <li class="nav-item">
                                 <a style="font-size: 14px;" class="nav-link {{ ($title == 'Verifikasi Berkas Mahasiswa')? 'active' : '' }}" href="/dosen/verifikasi_berkas_mahasiswa">
-                                    <i class="bi bi-clipboard2-check"></i><span> Verifikasi Berkas Mahasiswa</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa')? 'active' : '' }}" href="/dosen/data_mahasiswa">
-                                    <i class="bi bi-file-earmark-text"></i><span> Data Mahasiswa</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa PKL')? 'active' : '' }}" href="/dosen/data_mahasiswa_pkl">
-                                    <i class="bi bi-building"></i><span> Data Mahasiswa PKL</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa Skripsi')? 'active' : '' }}" href="/dosen/data_mahasiswa_skripsi">
-                                    <i class="bi bi-mortarboard"></i><span> Data Mahasiswa Skripsi</span>
+                                    <i class="bi bi-clipboard2-check"></i><span> Verifikasi Berkas Mahasiswa
+                                        @if ($count > 0)
+                                        <span class="badge bg-danger">{{ $count }}</span>
+                                        @endif
                                 </a>
                             </li>
                             @elseif (Auth::user()->role == 'department')
@@ -127,13 +120,23 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Dosen')? 'active' : '' }}" href="/department/data_dosen">
+                                    <i class="bi bi-file-earmark-text"></i><span> Data Dosen</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa')? 'active' : '' }}" href="/department/data_mahasiswa">
                                     <i class="bi bi-file-earmark-text"></i><span> Data Mahasiswa</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Dosen')? 'active' : '' }}" href="/department/data_dosen">
-                                    <i class="bi bi-file-earmark-text"></i><span> Data Dosen</span>
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa PKL')? 'active' : '' }}" href="/department/data_mahasiswa_pkl">
+                                    <i class="bi bi-building"></i><span> Data Mahasiswa PKL</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa Skripsi')? 'active' : '' }}" href="/department/data_mahasiswa_skripsi">
+                                    <i class="bi bi-mortarboard"></i><span> Data Mahasiswa Skripsi</span>
                                 </a>
                             </li>
                             @endif

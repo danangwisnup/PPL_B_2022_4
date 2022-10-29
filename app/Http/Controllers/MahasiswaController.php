@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\M_Mahasiswa;
-use App\Models\M_PKL;
-use App\Models\M_Skripsi;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_kab;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_prov;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
-
 
 class MahasiswaController extends Controller
 {
@@ -19,7 +26,7 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $mahasiswa = M_Mahasiswa::latest()->paginate(5);
+        $mahasiswa = tb_mahasiswa::latest()->paginate(5);
         return view('operator.manajemen_user', compact('mahasiswa'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -50,6 +57,8 @@ class MahasiswaController extends Controller
         ]);
 
         // Angkatan Mahasiswa
+        // 24060120120120
+        // 01234567890123
         $angkatan = 20 . substr($request->nim, 6, 2);
 
         // 12 = SNMPTN
@@ -66,7 +75,7 @@ class MahasiswaController extends Controller
         }
 
         // Insert to table mahasiswa & users
-        M_Mahasiswa::insert([
+        tb_mahasiswa::insert([
             'nim' => $request->nim,
             'nama' => $request->nama,
             'angkatan' => $angkatan,
@@ -109,7 +118,7 @@ class MahasiswaController extends Controller
     public function edit($id)
     {
         // find where nim table mahasiswa
-        $mahasiswa = M_Mahasiswa::where('nim', $id)->first();
+        $mahasiswa = tb_mahasiswa::where('nim', $id)->first();
         $user = User::where('nim_nip', $id)->first();
         return view('operator.manajemen_user.modal.edit_mahasiswa', compact('mahasiswa'), compact('user'));
     }
@@ -138,7 +147,7 @@ class MahasiswaController extends Controller
             ]);
             $data = $request->except(['_token', '_method', 'password']);
         }
-        M_Mahasiswa::where('nim', $id)->update($data);
+        tb_mahasiswa::where('nim', $id)->update($data);
 
         if ($request->password == '') {
             $data = $request->only(['nama', 'email']);
@@ -163,7 +172,7 @@ class MahasiswaController extends Controller
     public function destroy($id)
     {
         // Delete to table mahasiswa & users
-        M_Mahasiswa::where('nim', $id)->delete();
+        tb_mahasiswa::where('nim', $id)->delete();
         User::where('nim_nip', $id)->delete();
 
         // Alert success
@@ -173,26 +182,62 @@ class MahasiswaController extends Controller
 
     public function data_mahasiswa()
     {
-        $mahasiswaAll = M_Mahasiswa::all();
-        return view('dosen.data_mhs.index', [
+        $mahasiswaAll = tb_mahasiswa::all();
+        return view('department.data_mhs.index', [
             'title' => 'Data Mahasiswa',
         ])->with(compact('mahasiswaAll'));
     }
 
+    public function data_mahasiswa_detail(Request $request)
+    {
+        $mahasiswa = tb_mahasiswa::where('nim', $request->nim)->first();
+        if ($mahasiswa->kode_kab != null or $mahasiswa->kode_prov != null) {
+            $kabupaten = tb_kab::where('kode_kab', $mahasiswa->kode_kab)->first();
+            $provinsi = tb_prov::where('kode_prov', $mahasiswa->kode_prov)->first();
+            return view('department.data_mhs.detail', [
+                'title' => 'Data Mahasiswa Detail',
+            ])->with(compact('mahasiswa', 'kabupaten', 'provinsi'));
+        } else {
+            Alert::error('Error!', 'Data Mahasiswa tidak lengkap');
+            return redirect()->back();
+        }
+    }
+
     public function data_pkl()
     {
-        $mahasiswaAll = M_Mahasiswa::all();
-        $mahasiswaPKL = M_PKL::all();
-        return view('dosen.data_pkl.index', [
+        // sort by nim
+        $mahasiswaAll = tb_mahasiswa::orderBy('angkatan', 'asc')->get();
+        $mahasiswaPKL = tb_mahasiswa::join('tb_pkls', function ($join) {
+            $join->on('tb_mahasiswas.nim', '=', 'tb_pkls.nim')
+                ->where('tb_pkls.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_pkls where nim = tb_mahasiswas.nim)'));
+        })->join('tb_entry_progresses', function ($join) {
+            $join->on('tb_pkls.nim', '=', 'tb_entry_progresses.nim')
+                ->where('tb_entry_progresses.is_pkl', '=', 1)
+                ->where('tb_entry_progresses.is_verifikasi', '=', '1')
+                ->where('tb_entry_progresses.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_pkls where nim = tb_entry_progresses.nim)'));
+        })->select('tb_mahasiswas.nim', 'tb_mahasiswas.nama', 'tb_mahasiswas.angkatan', 'tb_pkls.semester_aktif', 'tb_pkls.nilai', 'tb_pkls.status')
+            ->get();
+
+        return view('department.data_pkl.index', [
             'title' => 'Data Mahasiswa PKL',
         ])->with(compact('mahasiswaAll', 'mahasiswaPKL'));
     }
 
-    public function data_skripi()
+    public function data_skripsi()
     {
-        $mahasiswaAll = M_Mahasiswa::all();
-        $mahasiswaSkripsi = M_Skripsi::all();
-        return view('dosen.data_skripsi.index', [
+        $mahasiswaAll = tb_mahasiswa::orderBy('angkatan', 'asc')->get();
+        $mahasiswaSkripsi = tb_mahasiswa::join('tb_skripsis', function ($join) {
+            $join->on('tb_mahasiswas.nim', '=', 'tb_skripsis.nim')
+                ->where('tb_skripsis.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_skripsis where nim = tb_mahasiswas.nim)'));
+        })->join('tb_entry_progresses', function ($join) {
+            $join->on('tb_skripsis.nim', '=', 'tb_entry_progresses.nim')
+                ->where('tb_entry_progresses.is_skripsi', '=', 1)
+                ->where('tb_entry_progresses.is_verifikasi', '=', '1')
+                ->where('tb_entry_progresses.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_skripsis where nim = tb_entry_progresses.nim)'));
+        })->select('tb_mahasiswas.nim', 'tb_mahasiswas.nama', 'tb_mahasiswas.angkatan', 'tb_skripsis.semester_aktif', 'tb_skripsis.nilai', 'tb_skripsis.status')
+            ->get();
+
+        return view('department.data_skripsi.index', [
             'title' => 'Data Mahasiswa Skripsi',
         ])->with(compact('mahasiswaAll', 'mahasiswaSkripsi'));
     }

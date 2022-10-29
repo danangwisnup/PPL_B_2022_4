@@ -2,101 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\M_Mahasiswa;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_entry_progress;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProgressMhsContoller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function dosen()
     {
-        $mahasiswa = M_Mahasiswa::where('kode_wali', Auth::user()->nim_nip)->get();
+        $mahasiswa = tb_mahasiswa::where('kode_wali', Auth::user()->nim_nip)->get();
         return view('dosen.progress.index', [
             'title' => 'Progress Studi Mahasiswa',
         ])->with(compact('mahasiswa'));
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function department()
     {
-        $mahasiswa = M_Mahasiswa::all();
+        $mahasiswa = tb_mahasiswa::all();
         return view('department.progress.index', [
             'title' => 'Progress Studi Mahasiswa',
         ])->with(compact('mahasiswa'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show(Request $request)
     {
-        //
+        $mahasiswa = tb_mahasiswa::where('nim', $request->nim)->first();
+        $dosen = tb_dosen::where('nip', $mahasiswa->kode_wali)->first();
+        for ($i = 1; $i <= 14; $i++) {
+            $progress = tb_entry_progress::where('nim', $request->nim)->where('semester_aktif', $i)->where('is_verifikasi', '1')->first();
+            $pkl = tb_pkl::where('nim', $request->nim)->where('semester_aktif', $i)->first();
+            $skripsi = tb_skripsi::where('nim', $request->nim)->where('semester_aktif', $i)->first();
+            if ($progress != null) {
+                if ($progress->is_irs == 1 && $progress->is_khs == 1) {
+                    $semester[$i] = 'btn-info';
+                } else {
+                    $semester[$i] = 'btn-danger';
+                }
+                if ($progress->is_pkl == 1 && $pkl->status == 'Lulus') {
+                    $semester[$i] = 'btn-warning';
+                }
+                if ($progress->is_skripsi == 1 && $skripsi->status == 'Lulus') {
+                    $semester[$i] = 'btn-success';
+                }
+            } else {
+                $semester[$i] = 'btn-danger';
+            }
+        }
+
+        if (Auth::user()->role == 'dosen') {
+            return view('dosen.progress.detail', [
+                'title' => 'Progress Studi Mahasiswa',
+            ])->with(compact('mahasiswa', 'dosen', 'semester'));
+        } else {
+            return view('department.progress.detail', [
+                'title' => 'Progress Studi Mahasiswa',
+            ])->with(compact('mahasiswa', 'dosen', 'semester'));
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show_semester(Request $request)
     {
-        //
-    }
+        $irs = tb_irs::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
+        $khs = tb_khs::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
+        $pkl = tb_pkl::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
+        $skripsi = tb_skripsi::where('nim', $request->nim)->where('semester_aktif', $request->semester)->first();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if (Auth::user()->role == 'dosen') {
+            return view('dosen.progress.modal', compact('request', 'irs', 'khs', 'pkl', 'skripsi'));
+        } else {
+            return view('department.progress.modal', compact('request', 'irs', 'khs', 'pkl', 'skripsi'));
+        }
     }
 }

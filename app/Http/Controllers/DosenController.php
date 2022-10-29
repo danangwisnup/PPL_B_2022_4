@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\M_Dosen;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\tb_dosen;
+use App\Models\tb_mahasiswa;
+use App\Models\tb_irs;
+use App\Models\tb_khs;
+use App\Models\tb_pkl;
+use App\Models\tb_skripsi;
+use App\Models\tb_temp_file;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DosenController extends Controller
@@ -47,7 +55,7 @@ class DosenController extends Controller
         $data = $request->except(['_token']);
 
         // Insert to table dosen & users
-        M_Dosen::insert($data);
+        tb_dosen::insert($data);
         User::insert([
             'nim_nip' => $request->nip,
             'nama' => $request->nama,
@@ -67,10 +75,10 @@ class DosenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\M_Dosen  $m_Dosen
+     * @param  \App\Models\tb_dosen  $tb_dosen
      * @return \Illuminate\Http\Response
      */
-    public function show(M_Dosen $m_Dosen)
+    public function show(tb_dosen $tb_dosen)
     {
         //
     }
@@ -84,7 +92,7 @@ class DosenController extends Controller
     public function edit($id)
     {
         // find where nip table dosen
-        $dosen = M_Dosen::where('nip', $id)->first();
+        $dosen = tb_dosen::where('nip', $id)->first();
         $user = User::where('nim_nip', $id)->first();
         return view('operator.manajemen_user.modal.edit_dosen', compact('dosen'), compact('user'));
     }
@@ -105,7 +113,7 @@ class DosenController extends Controller
         ]);
 
         // Update to table dosen & users
-        M_Dosen::where('nip', $id)->update([
+        tb_dosen::where('nip', $id)->update([
             'nama' => $request->nama,
             'email' => $request->email,
             'status' => $request->status,
@@ -134,12 +142,33 @@ class DosenController extends Controller
     public function destroy($id)
     {
         // Delete to table Dosen & users
-        M_Dosen::where('nip', '=', $id)->delete();
+        tb_dosen::where('nip', '=', $id)->delete();
         User::where('nim_nip', '=', $id)->delete();
 
         // Alert success
         Alert::success('Success!', 'Data Dosen Berhasil Dihapus');
 
         return redirect()->route('user_manajemen');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function data_dosen()
+    {
+        $dosenAll = tb_dosen::all();
+        return view('department.data_dosen.index', [
+            'title' => 'Data Dosen',
+        ])->with(compact('dosenAll'));
+    }
+
+    public function data_dosen_detail(Request $request)
+    {
+        $dosen = tb_dosen::where('nip', $request->nip)->first();
+        return view('department.data_dosen.detail', [
+            'title' => 'Data Dosen Detail',
+        ])->with(compact('dosen'));
     }
 }

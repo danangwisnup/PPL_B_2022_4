@@ -49,7 +49,7 @@
                                             <div class="col-12">
                                                 <input class="form-check-input" type="checkbox" id="confirm" name="confirm">
                                                 <label class="form-check-label" for="confirm">
-                                                    Apakah anda sedang atau sudah mengambil PKL?
+                                                    Pilih jika sedang atau sudah mengambil PKL
                                                 </label>
                                                 <br />
                                                 <small class="form-text text-danger">*Biarkan jika belum mengambil PKL</small>
@@ -64,6 +64,7 @@
                                                             <option value="Sedang Ambil">Sedang Ambil</option>
                                                             <option value="Lulus">Lulus</option>
                                                         </select>
+                                                        <div class="text-danger small fst-italic">*Kosongkan jika status sedang ambil</div>
                                                     </div>
                                                     <!-- Input Pilih Status END -->
 
@@ -78,6 +79,7 @@
                                                             <option value="D">D</option>
                                                             <option value="E">E</option>
                                                         </select>
+                                                        <div class="text-danger small fst-italic">*Kosongkan jika status sedang ambil</div>
                                                     </div>
                                                     <!-- Pilih Nilai END -->
 
@@ -111,10 +113,6 @@
 @include('sweetalert::alert')
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-<script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
-<script src="{{ asset('assets/js/data-table.js') }}"></script>
 
 <!-- Load FilePond library -->
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>

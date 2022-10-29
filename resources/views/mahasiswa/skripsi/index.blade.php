@@ -35,7 +35,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" id="table_1">
+                                <table class="table" id="table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Semester</th>
@@ -50,8 +50,8 @@
                                         @foreach ($skripsi as $item)
                                         <tr>
                                             <td>{{$item->semester_aktif}}</td>
-                                            <td>{{$item->nilai}}</td>
-                                            <td>{{$item->tanggal_sidang}}</td>
+                                            <td>{{$item->nilai != null ? $item->nilai : '-'}}</td>
+                                            <td>{{$item->tanggal_sidang != null ? $item->tanggal_sidang : '-'}}</td>
                                             <td>@if ($item->status == 'Lulus')
                                                 <span class="badge bg-success">{{$item->status}}</span>
                                                 @elseif ($item->status == 'Sedang Ambil')
@@ -63,9 +63,13 @@
                                             <td><a href="{{ asset($item->upload_skripsi) }}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Lihat</a></td>
                                             </td>
                                             <td>
+                                                @if ($progress->where('nim', Auth::User()->nim_nip)->where('semester_aktif', $item->semester_aktif)->first()->is_verifikasi == 1)
+                                                <small>Data telah diverifikasi</small>
+                                                @else
                                                 <a href="" class="btn btn-success btn-sm" id="buttonModalSkripsi" data-bs-toggle="modal" data-bs-target="#editSkripsi" data-attr="{{ route('skripsi.edit', [$item->semester_aktif, $item->nim]) }}">
                                                     <i class="bi bi-pencil-square"></i> Edit
                                                 </a>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

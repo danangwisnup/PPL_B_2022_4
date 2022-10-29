@@ -2242,8 +2242,8 @@ progress {
   --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
   --bs-table-active-color: #212529;
   --bs-table-active-bg: rgba(0, 0, 0, 0.1);
-  --bs-table-hover-color: #212529;
-  --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+  --bs-table-hover-color: rgba(0, 132, 255, 0.894);
+  --bs-table-hover-bg: #f2f4ff;
   width: 100%;
   margin-bottom: 1rem;
   color: #212529;
@@ -18091,4 +18091,8 @@ html[data-theme=dark] .light-mode-item {
 
 .highcharts-data-table tr:hover {
   background: #f1f7ff;
+}
+
+a.disabled {
+    pointer-events: none;
 }
