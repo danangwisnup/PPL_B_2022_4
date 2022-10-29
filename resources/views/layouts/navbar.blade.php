@@ -53,6 +53,11 @@
                             </li>
                             <li class="dropdown-divider m-3"></li>
                             <li>
+                                <form action="" method="post">
+                                    <button class="dropdown-item bg-danger-soft-hover"><i class="bi bi-key fa-fw me-2"></i>Change Password</button>
+                                </form>
+                            </li>
+                            <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button class="dropdown-item bg-danger-soft-hover"><i class="bi bi-power fa-fw me-2"></i>Log Out</button>
