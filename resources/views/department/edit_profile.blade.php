@@ -31,34 +31,27 @@
                     <div class="card">
                         <!-- Card header START -->
                         <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <h1 class="card-title h5">Change Password</h1>
+                            <h1 class="card-title h5">Profile</h1>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('change_password.update', $user->nim_nip) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('edit_profile_department.update', $department->nim_nip) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-                                
-                                <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">Password Lama:</label>
+                                {{-- Form Nama --}}
+                                <div class="row mt-1 mb-1">
+                                    <label class="col-sm-2 col-form-label text-dark">Nama :</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Password Lama" required>
+                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ $department->nama }}" required>
                                     </div>
                                 </div>
 
+                                {{-- Form Email SSO --}}
                                 <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">Password Baru:</label>
+                                    <label class="col-sm-2 col-form-label text-dark">Email SSO :</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Password Baru" required>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $department->email }}" required>
                                     </div>
                                 </div>
-
-                                <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">Verifikasi Password Baru:</label>
-                                    <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="ver_password" name="ver_password" placeholder="Verifikasi Password Baru" required>
-                                    </div>
-                                </div>
-
                                 <div class="col-12 text-end">
                                     <button type="submit" class="btn btn-sm btn-primary mt-2 mb-0">Save</button>
                                 </div>

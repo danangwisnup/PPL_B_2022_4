@@ -32,7 +32,6 @@
                         <!-- Card header START -->
                         <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
                             <h1 class="card-title h5">Profile</h1>
-                            <div class="small italic text-danger">Lengkapi data diri anda dengan benar</div>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('edit_profile_operator.update', $operator->nim_nip) }}" method="POST" enctype="multipart/form-data">
