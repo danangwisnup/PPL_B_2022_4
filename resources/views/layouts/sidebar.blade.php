@@ -161,16 +161,24 @@
                     <div class="card-footer text-center py-2">
                         Informatika S1 <br />
                         Fakultas Sains dan Matematika
-                        <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="/">
-                            <i class="bi bi-house-door"></i><span> Dashboard</span>
-                        </a>
-                        <hr />
-                        <a style="font-size: 14px;" class="nav-link {{ ($title == 'Edit Profile')? 'active' : '' }}" href="/{{ Auth::User()->role }}/edit_profile">
-                            <i class="bi bi-mortarboard"></i><span> Edit Profile</span>
-                        </a>
-                        <a style="font-size: 14px;" class="nav-link {{ ($title == 'Change Password') ? 'active' : '' }}" href="/{{ Auth::User()->role }}/change_password">
-                            <i class="bi bi-key"></i><span> Change Password</span>
-                        </a>
+                        <ul class="nav nav-link-secondary flex-column gap-1">
+                            <li class="nav-item mt-2 mb-0">
+                                <a style="font-size: 14px;" class="nav-link" href="/">
+                                    <i class="bi bi-house-door"></i><span> Dashboard</span>
+                                </a>
+                            </li>
+                            <hr />
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Edit Profile')? 'active' : '' }}" href="/{{ Auth::User()->role }}/edit_profile">
+                                    <i class="bi bi-mortarboard"></i><span> Edit Profile</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Change Password') ? 'active' : '' }}" href="/{{ Auth::User()->role }}/change_password">
+                                    <i class="bi bi-key"></i><span> Change Password</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                     @else
                     <div class="card-footer text-center py-2">

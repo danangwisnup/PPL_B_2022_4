@@ -11,16 +11,17 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AddUserController;
 use App\Http\Controllers\SkripsiController;
 use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProgressMhsContoller;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\EntryProgressController;
 use App\Http\Controllers\ManajemenUserController;
-use App\Http\Controllers\VerifikasiBerkasController;
 use App\Http\Controllers\EditProfileDosenController;
+use App\Http\Controllers\VerifikasiBerkasController;
 use App\Http\Controllers\EditProfileOperatorController;
-use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\EditProfileDepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,8 +131,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/dosen/edit_profile', EditProfileDosenController::class)->middleware('dosen')->names('edit_profile_dosen');
     Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('mahasiswa')->names('edit_profile_mahasiswa');
     Route::resource('/operator/edit_profile', EditProfileOperatorController::class)->middleware('operator')->names('edit_profile_operator');
-    // Route::resource('/operator/edit_profile', EditProfileController::class)->middleware('operator')->names('edit_profile_operator');
-    // Route::resource('/department/edit_profile', EditProfileController::class)->middleware('department')->names('edit_profile_department');
+    Route::resource('/department/edit_profile', EditProfileDepartmentController::class)->middleware('department')->names('edit_profile_department');
 
     // Change Password
     Route::resource('/dosen/change_password', PasswordController::class);
