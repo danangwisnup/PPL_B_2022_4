@@ -47,6 +47,9 @@
                                 <!-- Tab Mahasiswa -->
                                 <div class="tab-pane fade show active" id="tab-1">
                                     <div class="row g-3">
+                                        <div class="d-flex flex-column align-items-end mb-4">
+                                            <div id="table_wrapper_1"></div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="table-responsive">
                                                 <table class="table" id="table_1">
@@ -54,8 +57,8 @@
                                                         <tr>
                                                             <th>NIM</th>
                                                             <th>Nama</th>
-                                                            <th>Email</th>
                                                             <th>Angkatan</th>
+                                                            <th>Status</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -64,8 +67,8 @@
                                                         <tr>
                                                             <td>{{$data->nim}}</td>
                                                             <td>{{$data->nama}}</td>
-                                                            <td>{{$data->email}}</td>
                                                             <td>{{$data->angkatan}}</td>
+                                                            <td>{{$data->status}}</td>
                                                             <td>
                                                                 <form action="{{ route('mahasiswa.destroy', $data->nim) }}" method="POST">
                                                                     <a class="btn btn-success-soft rounded-circle icon-md" id="buttonModalMahasiswa" data-bs-toggle="modal" data-bs-target="#mahasiswa_view" data-attr="{{ route('mahasiswa.edit', $data->nim) }}">
@@ -91,6 +94,9 @@
                                 <!-- Tab Dosen -->
                                 <div class="tab-pane fade" id="tab-2">
                                     <div class="row g-3">
+                                        <div class="d-flex flex-column align-items-end mb-4">
+                                            <div id="table_wrapper_2"></div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="table-responsive">
                                                 <table class="table" id="table_2">
@@ -98,6 +104,7 @@
                                                         <tr>
                                                             <th>NIP</th>
                                                             <th width="300px">Nama</th>
+                                                            <th>Status</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -106,6 +113,7 @@
                                                         <tr>
                                                             <td>{{$data->nip}}</td>
                                                             <td>{{$data->nama}}</td>
+                                                            <td>{{$data->status}}</td>
                                                             <td>
                                                                 <form action="{{ route('dosen.destroy', $data->nip) }}" method="POST">
                                                                     <a class="btn btn-success-soft rounded-circle icon-md" id="buttonModalDosen" data-bs-toggle="modal" data-bs-target="#dosen_view" data-attr="{{ route('dosen.edit', $data->nip) }}">

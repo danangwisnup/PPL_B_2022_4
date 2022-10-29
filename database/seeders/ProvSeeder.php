@@ -22,17 +22,17 @@ class ProvSeeder extends Seeder
 
         // Insert ke database
         foreach ($data as $d) {
-            DB::table('tb_provinsi')->insert([
+            DB::table('tb_provs')->insert([
                 'kode_prov' => $d['id'],
                 'nama_prov' => $d['nama'],
             ]);
         }
 
-        DB::table('tb_provinsi')->where('kode_prov', 31)->update([
+        DB::table('tb_provs')->where('kode_prov', 31)->update([
             'nama_prov' => 'DKI Jakarta',
         ]);
 
-        DB::table('tb_provinsi')->where('kode_prov', 34)->update([
+        DB::table('tb_provs')->where('kode_prov', 34)->update([
             'nama_prov' => 'Daerah Istimewa Yogyakarta',
         ]);
     }

@@ -13,8 +13,11 @@ use App\Http\Controllers\SkripsiController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\ProgressMhsContoller;
 use App\Http\Controllers\EditProfileController;
+use App\Http\Controllers\EntryProgressController;
 use App\Http\Controllers\ManajemenUserController;
+use App\Http\Controllers\VerifikasiBerkasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,99 +34,121 @@ use App\Http\Controllers\ManajemenUserController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Auth (login & logout)
-Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenticate']);
+Route::get('/login', [AuthController::class, 'index'])->middleware('guest');
+Route::post('/login', [AuthController::class, 'authenticate'])->middleware('guest')->name('login');
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
-// Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+// Middleware auth
+Route::group(['middleware' => ['auth']], function () {
 
-// Fiture Operator: Add User & Manajemen User
-Route::get('/operator/add_user', [AddUserController::class, 'index'])->middleware('auth', 'operator')->name('user_add');
-Route::get('/operator/manajemen_user', [ManajemenUserController::class, 'index'])->middleware('auth', 'operator')->name('user_manajemen');
-Route::resource('/operator/mahasiswa', MahasiswaController::class)->middleware('auth', 'operator');
-Route::resource('/operator/dosen', DosenController::class)->middleware('auth', 'operator');
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('editprofile')->name('dashboard');
 
-// Fiture Mahasiswa: edit profile
-Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('auth', 'mahasiswa');
+    // Fiture Operator
+    Route::group(['middleware' => ['operator']], function () {
+        // add user & manajamen user (CRUD User)
+        Route::get('/operator/add_user', [AddUserController::class, 'index'])->name('user_add');
+        Route::get('/operator/manajemen_user', [ManajemenUserController::class, 'index'])->name('user_manajemen');
+        Route::resource('/operator/mahasiswa', MahasiswaController::class);
+        Route::resource('/operator/dosen', DosenController::class);
+    });
 
-// Fiture Mahasiswa: irs
-Route::resource('/mahasiswa/irs', IRSController::class)->middleware('auth', 'mahasiswa');
-Route::get('/mahasiswa/irs/{semester}/{nim}/edit', [IRSController::class, 'edit'])->middleware('auth', 'mahasiswa')->name('irs.edit');
+    // Fiture Department
+    Route::group(['middleware' => ['department']], function () {
+        // progress studi mahasiswa
+        Route::get('/department/progress_studi_mahasiswa', [ProgressMhsContoller::class, 'department']);
+        Route::get('/department/progress_studi_mahasiswa/detail', [ProgressMhsContoller::class, 'show'])->name('department_progress_detail');
+        Route::get('/department/progress_studi_mahasiswa/semester', [ProgressMhsContoller::class, 'show_semester'])->name('department_progress_detail_semester');
 
-// Fiture Mahasiswa: khs
-Route::resource('/mahasiswa/khs', KHSController::class)->middleware('auth', 'mahasiswa');
-Route::get('/mahasiswa/khs/{semester}/{nim}/edit', [KHSController::class, 'edit'])->middleware('auth', 'mahasiswa')->name('khs.edit');
+        // berkas mahasiswa
+        Route::get('/department/berkas_mahasiswa/detail', [VerifikasiBerkasController::class, 'show'])->name('department_berkas_detail');
 
-// Fiture Mahasiswa: pkl
-Route::resource('/mahasiswa/pkl', PKLController::class)->middleware('auth', 'mahasiswa');
-Route::get('/mahasiswa/pkl/{semester}/{nim}/edit', [PKLController::class, 'edit'])->middleware('auth', 'mahasiswa')->name('pkl.edit');
+        // data dosen
+        Route::get('/department/data_dosen', [DosenController::class, 'data_dosen']);
+        Route::post('/department/data_dosen/detail', [DosenController::class, 'data_dosen_detail'])->name('data_dosen_detail');
 
-// Mahasiswa: skripsi
-Route::resource('/mahasiswa/skripsi', SkripsiController::class)->middleware('auth', 'mahasiswa');
-Route::get('/mahasiswa/skripsi/{semester}/{nim}/edit', [SkripsiController::class, 'edit'])->middleware('auth', 'mahasiswa')->name('skripsi.edit');
+        // data mahasiswa
+        Route::get('/department/data_mahasiswa', [MahasiswaController::class, 'data_mahasiswa']);
+        Route::post('/department/data_mahasiswa/detail', [MahasiswaController::class, 'data_mahasiswa_detail'])->name('data_mahasiswa_detail');
 
-// Fiture Department: progress studi mahasiswa
-Route::get('/department/progress_studi_mahasiswa', function () {
-    return view('department.progress.index', [
-        'title' => 'Progress Studi Mahasiswa',
-    ]);
+        // data mahasiswa pkl
+        Route::get('/department/data_mahasiswa_pkl', [MahasiswaController::class, 'data_pkl']);
+
+        // data mahasiswa skripsi
+        Route::get('/department/data_mahasiswa_skripsi', [MahasiswaController::class, 'data_skripsi']);
+    });
+
+    // Fiture Dosen
+    Route::group(['middleware' => ['dosen']], function () {
+        // progress studi mahasiswa
+        Route::get('/dosen/progress_studi_mahasiswa', [ProgressMhsContoller::class, 'dosen']);
+        Route::get('/dosen/progress_studi_mahasiswa/detail', [ProgressMhsContoller::class, 'show'])->name('progress_detail');
+        Route::get('/dosen/progress_studi_mahasiswa/semester', [ProgressMhsContoller::class, 'show_semester'])->name('progress_detail_semester');
+
+        // verifikasi berkas mahasiswa
+        Route::get('/dosen/verifikasi_berkas_mahasiswa', [VerifikasiBerkasController::class, 'index']);
+        Route::get('/dosen/verifikasi_berkas_mahasiswa/detail', [VerifikasiBerkasController::class, 'show'])->name('berkas_detail');
+        Route::post('/dosen/verifikasi_berkas_mahasiswa/update', [VerifikasiBerkasController::class, 'update'])->name('verifikasi_update');
+    });
+
+    // Fiture Mahasiswa
+    Route::group(['middleware' => ['mahasiswa', 'editprofile']], function () {
+        // entry progress
+        Route::get('/mahasiswa/entry', [EntryProgressController::class, 'index'])->middleware('entry_progress');
+        Route::post('/mahasiswa/entry', [EntryProgressController::class, 'entry_progress'])->name('entry_progress');
+
+        // irs
+        Route::resource('/mahasiswa/irs', IRSController::class);
+        Route::get('/mahasiswa/entry/irs', [IRSController::class, 'index'])->middleware('irs');
+        Route::get('/mahasiswa/data/irs', [IRSController::class, 'data'])->name('data_irs');
+        Route::get('/mahasiswa/irs/{semester}/{nim}/edit', [IRSController::class, 'edit'])->name('irs.edit');
+
+        // khs
+        Route::resource('/mahasiswa/khs', KHSController::class);
+        Route::get('/mahasiswa/entry/khs', [KHSController::class, 'index'])->middleware('khs');
+        Route::get('/mahasiswa/data/khs', [KHSController::class, 'data'])->name('data_khs');
+        Route::get('/mahasiswa/khs/{semester}/{nim}/edit', [KHSController::class, 'edit'])->name('khs.edit');
+
+        // pkl
+        Route::resource('/mahasiswa/pkl', PKLController::class);
+        Route::get('/mahasiswa/entry/pkl', [PKLController::class, 'index'])->middleware('pkl');
+        Route::get('/mahasiswa/data/pkl', [PKLController::class, 'data'])->name('data_pkl');
+        Route::get('/mahasiswa/pkl/{semester}/{nim}/edit', [PKLController::class, 'edit'])->name('pkl.edit');
+
+        // skripsi
+        Route::resource('/mahasiswa/skripsi', SkripsiController::class);
+        Route::get('/mahasiswa/entry/skripsi', [SkripsiController::class, 'index'])->middleware('skripsi');
+        Route::get('/mahasiswa/data/skripsi', [SkripsiController::class, 'data'])->name('data_skripsi');
+        Route::get('/mahasiswa/skripsi/{semester}/{nim}/edit', [SkripsiController::class, 'edit'])->name('skripsi.edit');
+    });
+
+    // edit profile
+    Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('mahasiswa');
+
+    // Wilayah Indonesia
+    Route::get('/wilayah/{provinsi}', [WilayahController::class, 'index'])->name('wilayah');
+
+    // Upload File
+    Route::post('/upload', [UploadController::class, 'upload']);
 });
-
-// Fiture Department: data mahasiswa
-Route::get('/department/data_mahasiswa', function () {
-    return view('department.data_mahasiswa', [
-        'title' => 'Data Mahasiswa',
-    ]);
-});
-
-// Fiture Department: data dosen
-Route::get('/department/data_dosen', function () {
-    return view('department.data_dosen', [
-        'title' => 'Data Dosen',
-    ]);
-});
-
-// Fiture Dosen: progress studi mahasiswa
-Route::get('/dosen/progress_studi_mahasiswa', function () {
-    return view('dosen.progress.index', [
-        'title' => 'Progress Studi Mahasiswa',
-    ]);
-});
-
-// Fiture Dosen: verifikasi berkas mahasiswa
-Route::get('/dosen/verifikasi_berkas_mahasiswa', function () {
-    return view('dosen.verifikasi.index', [
-        'title' => 'Verifikasi Berkas Mahasiswa',
-    ]);
-});
-
-// Wilayah Indonesia
-Route::get('/wilayah/{provinsi}', [WilayahController::class, 'index'])->middleware('auth')->name('wilayah');
-
-// Upload File
-Route::post('/upload', [UploadController::class, 'upload'])->middleware('auth');
 
 // Login & Logout [Done]
 // Dashboard [Done]
-
 // Fiture Operator: Add User [Done]
 // Fiture Operator: Manajemen User [Done]
 // Fiture Operator: CRUD Mahasiswa [Done]
 // Fiture Operator: CRUD Dosen [Done]
-
-// Fiture Mahasiswa: edit profile 
+// Fiture Department: Progress Studi Mahasiswa [Done]
+// Fiture Department: Data Mahasiswa [Done]
+// Fiture Department: Data Dosen [Done]
+// Fiture Dosen: Progress Studi Mahasiswa [Done]
+// Fiture Dosen: Verifikasi Berkas Mahasiswa [Done]
+// Fiture Dosen: Data Mahasiswa [Done]
+// Fiture Dosen: Data Mahasiswa PKL [Done]
+// Fiture Dosen: Data Mahsiswa Skripsi [Done]
+// Fiture Mahasiswa: edit profile [Done]
 // Fiture Mahasiswa: IRS [Done]
-// Fiture Mahasiswa: KHS
-// Fiture Mahasiswa: PKL
-// Fiture Mahasiswa: Skripsi
-
-// Fiture Dosen: Progress Studi Mahasiswa
-// Fiture Dosen: Verifikasi Berkas Mahasiswa
-// Fiture Dosen: Data Mahasiswa
-// Fiture Dosen: Data Mahasiswa PKL
-// Fiture Dosen: Data Mahsiswa Skripsi
-
-// Fiture Department: Progress Studi Mahasiswa
-// Fiture Department: Data Mahasiswa
-// Fiture Department: Data Dosen
+// Fiture Mahasiswa: KHS [Done]
+// Fiture Mahasiswa: PKL [Done]
+// Fiture Mahasiswa: Skripsi [Done]

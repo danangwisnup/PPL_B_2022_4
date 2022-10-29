@@ -23,22 +23,28 @@
                 <!-- Card START -->
                 <div class="card overflow-hidden">
                     <!-- Cover image -->
-                    <div class="h-80px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/Widya-Puraya-1.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                    <div class="h-90px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/informatika.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    </div>
                     <!-- Card body START -->
                     <div class="card-body pt-0">
                         <div class="text-center">
                             <!-- Avatar -->
                             <div class="avatar avatar-xxl mt-n5 mb-1">
                                 @if (Auth::user()->role == 'mahasiswa')
-                                <a href="#"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/03.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/default.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
                                 @else
-                                <a href="#"><img class="avatar-img border border-white border-3 rounded-circle" src="{{ asset('assets/images/avatar/03.jpg') }}" alt=""></a>
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ asset('assets/images/avatar/default.jpg') }}" alt=""></a>
                                 @endif
                             </div>
                             <!-- Info -->
-                            <h5 class="mb-0"> <a href="#!">{{ Auth::user()->nama }}</a> </h5>
-                            <div>{{ Auth::user()->nim_nip }}</div>
-                            <div class="mt-1 text-dark" style="font-size: 15px;">{{ Auth::user()->role }}</div>
+                            <h1 class="mb-0 mt-2 small bold"><a href=""><strong>{{ Auth::user()->nama }}</strong></a></h1>
+                            <div class="mt-1 small bold">{{ Auth::user()->nim_nip }}</div>
+                            <div class="mt-1 text-dark" style="font-size: 14px;">
+                                {{ Auth::user()->role == 'operator' ? 'Operator Department' : ''}}
+                                {{ Auth::user()->role == 'mahasiswa' ? 'Student' : ''}}
+                                {{ Auth::user()->role == 'dosen' ? 'Lecturer' : ''}}
+                                {{ Auth::user()->role == 'department' ? 'Department' : ''}}
+                            </div>
                         </div>
 
                         @if ($title != 'Edit Profile')
@@ -65,22 +71,27 @@
                             </li>
                             @elseif (Auth::user()->role == 'mahasiswa')
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/irs">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Entry Progress' || $title == 'Entry IRS' || $title == 'Entry KHS' || $title == 'Entry PKL' || $title == 'Entry Skripsi')? 'active' : '' }}" href="/mahasiswa/entry">
+                                    <i class="bi bi-bar-chart"></i><span> Entry Progress</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'IRS')? 'active' : '' }}" href="/mahasiswa/data/irs">
                                     <i class="bi bi-book"></i><span> IRS</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'KHS')? 'active' : '' }}" href="/mahasiswa/khs">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'KHS')? 'active' : '' }}" href="/mahasiswa/data/khs">
                                     <i class="bi bi-list-columns"></i><span> KHS</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'PKL')? 'active' : '' }}" href="/mahasiswa/pkl">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'PKL')? 'active' : '' }}" href="/mahasiswa/data/pkl">
                                     <i class="bi bi-building"></i><span> PKL</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Skripsi')? 'active' : '' }}" href="/mahasiswa/skripsi">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Skripsi')? 'active' : '' }}" href="/mahasiswa/data/skripsi">
                                     <i class="bi bi-mortarboard"></i><span> Skripsi</span>
                                 </a>
                             </li>
@@ -90,24 +101,16 @@
                                     <i class="bi bi-clipboard2-data"></i><span> Progress Studi Mahasiswa</span>
                                 </a>
                             </li>
+                            <?php
+                            $progress = App\Models\tb_entry_progress::where('nip', Auth::user()->nim_nip)->where('is_irs', 1)->where('is_khs', 1)->where('is_pkl', 1)->where('is_skripsi', 1)->where('is_verifikasi', '0')->get();
+                            $count = count($progress);
+                            ?>
                             <li class="nav-item">
                                 <a style="font-size: 14px;" class="nav-link {{ ($title == 'Verifikasi Berkas Mahasiswa')? 'active' : '' }}" href="/dosen/verifikasi_berkas_mahasiswa">
-                                    <i class="bi bi-clipboard2-check"></i><span> Verifikasi Berkas Mahasiswa</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa')? 'active' : '' }}" href="/dosen/data_mahasiswa">
-                                    <i class="bi bi-file-earmark-text"></i><span> Data Mahasiswa</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa PKL')? 'active' : '' }}" href="/dosen/data_mahasiswa_pkl">
-                                    <i class="bi bi-building"></i><span> Data Mahasiswa PKL</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa Skripsi')? 'active' : '' }}" href="/dosen/data_mahasiswa_skripsi">
-                                    <i class="bi bi-mortarboard"></i><span> Data Mahasiswa Skripsi</span>
+                                    <i class="bi bi-clipboard2-check"></i><span> Verifikasi Berkas Mahasiswa
+                                        @if ($count > 0)
+                                        <span class="badge bg-danger">{{ $count }}</span>
+                                        @endif
                                 </a>
                             </li>
                             @elseif (Auth::user()->role == 'department')
@@ -117,13 +120,23 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Dosen')? 'active' : '' }}" href="/department/data_dosen">
+                                    <i class="bi bi-file-earmark-text"></i><span> Data Dosen</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa')? 'active' : '' }}" href="/department/data_mahasiswa">
                                     <i class="bi bi-file-earmark-text"></i><span> Data Mahasiswa</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Dosen')? 'active' : '' }}" href="/department/data_dosen">
-                                    <i class="bi bi-file-earmark-text"></i><span> Data Dosen</span>
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa PKL')? 'active' : '' }}" href="/department/data_mahasiswa_pkl">
+                                    <i class="bi bi-building"></i><span> Data Mahasiswa PKL</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Data Mahasiswa Skripsi')? 'active' : '' }}" href="/department/data_mahasiswa_skripsi">
+                                    <i class="bi bi-mortarboard"></i><span> Data Mahasiswa Skripsi</span>
                                 </a>
                             </li>
                             @endif
@@ -146,8 +159,8 @@
                     <div class="card-footer text-center py-2">
                         Informatika S1 <br />
                         Fakultas Sains dan Matematika
-                        <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="{{ route('home') }}">
-                            <i class="bi bi-arrow-bar-left"></i> Kembali
+                        <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="/">
+                            <i class="bi bi-house-door"></i><span> Dashboard</span>
                         </a>
                     </div>
                     @elseif (Auth::user()->role == 'mahasiswa')

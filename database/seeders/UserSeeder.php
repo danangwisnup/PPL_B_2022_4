@@ -53,10 +53,64 @@ class UserSeeder extends Seeder
                 'role' => 'department',
                 'created_at' => now(),
                 'updated_at' => now(),
+            ],
+            [
+                'nim_nip' => '24060120140160',
+                'nama' => 'Danang Wisnu Prayoga ✨',
+                'email' => 'danang@if.com',
+                'password' => Hash::make('123'),
+                'role' => 'mahasiswa',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nim_nip' => '24060120120013',
+                'nama' => 'Zhuliana Melva Rey ✨',
+                'email' => 'zhuliana@if.com',
+                'password' => Hash::make('123'),
+                'role' => 'mahasiswa',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nim_nip' => '24060120120001',
+                'nama' => 'Rijal Kurniawan ✨',
+                'email' => 'rijal@if.com',
+                'password' => Hash::make('123'),
+                'role' => 'mahasiswa',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nim_nip' => '24060120140151',
+                'nama' => 'Annas Bachtiar ✨',
+                'email' => 'annas@if.com',
+                'password' => Hash::make('123'),
+                'role' => 'mahasiswa',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nim_nip' => '24060120120016',
+                'nama' => 'Agung Ramadhani ✨',
+                'email' => 'agung@if.com',
+                'password' => Hash::make('123'),
+                'role' => 'mahasiswa',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nim_nip' => '24060120130121',
+                'nama' => 'Farrel Samuel Nicholas ✨',
+                'email' => 'farrel@if.com',
+                'password' => Hash::make('123'),
+                'role' => 'mahasiswa',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ]);
 
-        DB::table('tb_mahasiswa')->insert(
+        DB::table('tb_mahasiswas')->insert([
             [
                 'nim' => '24060120120120',
                 'nama' => 'Mahasiswa 20',
@@ -64,10 +118,58 @@ class UserSeeder extends Seeder
                 'jalur_masuk' => 'SNMPTN',
                 'angkatan' => '2020',
                 'status' => 'Aktif',
+            ],
+            [
+                'nim' => '24060120140160',
+                'nama' => 'Danang Wisnu Prayoga ✨',
+                'email' => 'danang@if.com',
+                'jalur_masuk' => 'Ujian Mandiri',
+                'angkatan' => '2020',
+                'status' => 'Aktif',
+            ],
+            [
+                'nim' => '24060120120013',
+                'nama' => 'Zhuliana Melva Rey ✨',
+                'email' => 'zhuliana@if.com',
+                'jalur_masuk' => 'SNMPTN',
+                'angkatan' => '2020',
+                'status' => 'Aktif',
+            ],
+            [
+                'nim' => '24060120120001',
+                'nama' => 'Rijal Kurniawan ✨',
+                'email' => 'rijal@if.com',
+                'jalur_masuk' => 'SNMPTN',
+                'angkatan' => '2020',
+                'status' => 'Aktif',
+            ],
+            [
+                'nim' => '24060120140151',
+                'nama' => 'Annas Bachtiar ✨',
+                'email' => 'annas@if.com',
+                'jalur_masuk' => 'Ujian Mandiri',
+                'angkatan' => '2020',
+                'status' => 'Aktif',
+            ],
+            [
+                'nim' => '24060120120016',
+                'nama' => 'Agung Ramadhani ✨',
+                'email' => 'agung@if.com',
+                'jalur_masuk' => 'SNMPTN',
+                'angkatan' => '2020',
+                'status' => 'Aktif',
+            ],
+            [
+                'nim' => '24060120130121',
+                'nama' => 'Farrel Samuel Nicholas ✨',
+                'email' => 'farrel@if.com',
+                'jalur_masuk' => 'SBMPTN',
+                'angkatan' => '2020',
+                'status' => 'Aktif',
             ]
-        );
+        ]);
 
-        DB::table('tb_dosen')->insert(
+        DB::table('tb_dosens')->insert(
             [
                 'nip' => 'H.1.299112052022042000',
                 'nama' => 'Dosen if',
