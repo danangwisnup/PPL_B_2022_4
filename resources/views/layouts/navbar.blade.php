@@ -51,7 +51,7 @@
                                         <li>
                                             <a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 mb-1 p-3">
                                                 <div class="avatar text-center d-none d-sm-inline-block">
-                                                    <div class="avatar-img rounded-circle bg-success" src="assets/images/avatar/profile_department.jpg"><span class="text-white position-absolute top-50 start-50 translate-middle fw-bold">DP</span></div>
+                                                    <img class="avatar-img rounded-circle" src="assets/images/avatar/profile_department.jpg" alt="">
                                                 </div>
                                                 <div class="ms-sm-3">
                                                     <div class="d-flex">
