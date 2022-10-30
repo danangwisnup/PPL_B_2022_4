@@ -56,8 +56,8 @@
                                                 <div class="ms-sm-3">
                                                     <div class="d-flex">
                                                         <p class="small mb-2"><b>Department:</b> Silahkan mengisi progress Anda</p>
-                                                        <p class="small ms-3">1hr</p>
                                                     </div>
+                                                    <p class="small">{{ \Carbon\Carbon::createFromDate('2022-10-30')->diffForHumans() }}</p>
                                                 </div>
                                             </a>
                                         </li>
@@ -77,7 +77,8 @@
                             <li class="px-3">
                                 <div class="position-relative text-center">
                                     <div>
-                                        <h1 class="mt-3 mb-4 small bold"><a href=""><strong>{{ Auth::user()->nama }}</strong></a></h1>
+                                        <h1 class="mt-3 mb-4 small bold"><a href=""><strong>{{ Auth::user()->nama }}</strong>
+                                            </a></h1>
                                     </div>
                                 </div>
                                 <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href="javascript:;">View profile</a>
