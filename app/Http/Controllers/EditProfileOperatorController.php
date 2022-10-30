@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
 
-class EditProfileDosenController extends Controller
+class EditProfileOperatorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,13 +21,11 @@ class EditProfileDosenController extends Controller
      */
     public function index()
     {
-        $dosen = tb_dosen::where('nip', Auth::user()->nim_nip)->first();
-        $provinsi = tb_prov::all();
-        $kabupaten = tb_kab::where('kode_prov', $dosen->kode_prov)->get();
+        $operator = User::where('nim_nip', Auth::user()->nim_nip)->first();
 
-        return view('dosen.edit_profile', [
+        return view('operator.edit_profile', [
             'title' => 'Edit Profile',
-        ])->with(compact('dosen', 'provinsi', 'kabupaten'));
+        ])->with(compact('operator'));
     }
 
     /**
@@ -84,59 +82,21 @@ class EditProfileDosenController extends Controller
     {
         // Validate
         $request->validate([
-            'fileProfile' =>
-            [
-                // required if fileProfile null
-                Rule::requiredIf(function () {
-                    return tb_dosen::where('nip', Auth::user()->nim_nip)->first()->foto == null;
-                }),
-            ],
             'nama' => 'required|string',
-            'nip' => 'required',
-            'status' => 'required',
-            'handphone' => 'required|numeric',
             'email' =>
             [
                 'required', 'email', 'max:255', Rule::unique('users')->ignore($id, 'nim_nip'),
             ],
-            'alamat' => 'required',
-            'provinsi' => 'required|exists:tb_provs,kode_prov',
-            'kabupatenkota' => 'required|exists:tb_kabs,kode_kab',
         ]);
-
-        $temp = tb_temp_file::where('path', $request->fileProfile)->first();
 
         // Update to DB
-        tb_dosen::where('nip', $id)->update([
-            'nama' => $request->nama,
-            'handphone' => $request->handphone,
-            'email' => $request->email,
-            'alamat' => $request->alamat,
-            'kode_prov' => $request->provinsi,
-            'kode_kab' => $request->kabupatenkota,
-        ]);
         User::where('nim_nip', $id)->update([
             'nama' => $request->nama,
             'email' => $request->email,
         ]);
-        if ($request->fileProfile != null && tb_dosen::where('nip', $id)->first()->foto != null) {
-            unlink(tb_dosen::where('nip', $id)->first()->foto);
-        }
-        if ($temp && $request->fileProfile != null) {
-            $uniq = time() . uniqid();
-            rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $id . '_' . $uniq . '.jpg'));
-            tb_dosen::where('nip', $id)->update([
-                'foto' => 'files/profile/' . $id . '_' . $uniq . '.jpg',
-            ]);
-            $temp->delete();
-        }
 
         Alert::success('Berhasil', 'Data berhasil disimpan');
-        if ($request->fileProfile != null) {
-            return redirect()->route('home');
-        } else {
-            return redirect()->route('edit_profile_dosen.index');
-        }
+        return redirect('/operator/edit_profile');
     }
 
     /**

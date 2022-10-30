@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class ManajemenUserController extends Controller
+class ManageUsersController extends Controller
 {
     public function index()
     {
         $mahasiswa = tb_mahasiswa::all();
         $dosen = tb_dosen::all();
-        return view('operator.manajemen_user.index', [
-            'title' => 'Manajemen User',
+        return view('operator.manage_users.index', [
+            'title' => 'Manage Users',
         ])->with(compact('mahasiswa', 'dosen'));
     }
 }
