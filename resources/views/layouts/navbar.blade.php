@@ -53,7 +53,7 @@
                             </li>
                             <li class="dropdown-divider m-3"></li>
                             <li>
-                                <form action="" method="post">
+                                <form method="POST" action="/{{ Auth::user()->role }}/change_password/">
                                     <button class="dropdown-item bg-danger-soft-hover"><i class="bi bi-key fa-fw me-2"></i>Change Password</button>
                                 </form>
                             </li>

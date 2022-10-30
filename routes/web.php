@@ -17,7 +17,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProgressMhsContoller;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\EntryProgressController;
-use App\Http\Controllers\ManajemenUserController;
+use App\Http\Controllers\ManageUsersController;
 use App\Http\Controllers\EditProfileDosenController;
 use App\Http\Controllers\VerifikasiBerkasController;
 use App\Http\Controllers\EditProfileOperatorController;
@@ -52,10 +52,12 @@ Route::group(['middleware' => ['auth']], function () {
     // Fiture Operator
     Route::group(['middleware' => ['operator']], function () {
         // add user & manajamen user (CRUD User)
-        Route::get('/operator/add_user', [AddUserController::class, 'index'])->name('user_add');
-        Route::get('/operator/manajemen_user', [ManajemenUserController::class, 'index'])->name('user_manajemen');
+        Route::get('/operator/add_user', [AddUserController::class, 'index'])->name('add_user');
+        Route::get('/operator/manage_users', [ManageUsersController::class, 'index'])->name('manage_users');
         Route::resource('/operator/mahasiswa', MahasiswaController::class);
+        Route::post('/operator/mahasiswa/bulk', [MahasiswaController::class, 'bulk'])->name('mahasiswa.bulk');
         Route::resource('/operator/dosen', DosenController::class);
+        Route::post('/operator/dosen/bulk', [DosenController::class, 'bulk'])->name('dosen.bulk');
     });
 
     // Fiture Department
@@ -144,7 +146,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Upload File
     Route::post('/upload', [UploadController::class, 'upload']);
-
 });
 
 // Login & Logout [Done]

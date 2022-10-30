@@ -143,7 +143,11 @@ class EditProfileController extends Controller
         }
 
         Alert::success('Berhasil', 'Data berhasil disimpan');
-        return redirect()->route('home');
+        if ($request->fileProfile != null) {
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('edit_profile_mahasiswa.index');
+        }
     }
 
     /**
