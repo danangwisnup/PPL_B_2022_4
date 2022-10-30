@@ -46,7 +46,7 @@
                         <div class="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 shadow-lg border-0" aria-labelledby="notifDropdown">
                             <div class="card">
                                 <div class="card-body p-0">
-                                    <ul class="list-group list-group-flush list-unstyled p-2">
+                                    <ul class="list-group list-group-flush list-unstyled p-">
                                         <!-- Notif item -->
                                         <li>
                                             <a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 mb-1 p-3">
@@ -56,7 +56,7 @@
                                                 <div class="ms-sm-3">
                                                     <div class="d-flex">
                                                         <p class="small mb-2"><b>Department:</b> Silahkan mengisi progress Anda</p>
-                                                        <p class="small ms-3"> {{ \Carbon\Carbon::today()->setTimezone('Asia/Jakarta')->format('G\h') }}</p>
+                                                        <p class="small ms-3" style="font-size: 11px;"><?php \Carbon\Carbon::setLocale('id') ?> {{ \Carbon\Carbon::createFromDate('2022-10-30')->diffForHumans() }} </p>
                                                     </div>
                                                 </div>
                                             </a>
