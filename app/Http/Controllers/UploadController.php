@@ -24,10 +24,12 @@ class UploadController extends Controller
             $name = $file->getClientOriginalName();
             $file->move('files/temp/' . '', $name);
 
-            tb_temp_file::create([
-                'folder' => '',
-                'path' => $name,
-            ]);
+            if (tb_temp_file::where('path', $name)->first() == null) {
+                tb_temp_file::create([
+                    'folder' => '',
+                    'path' => $name,
+                ]);
+            }
 
             return $name;
         }
@@ -37,10 +39,12 @@ class UploadController extends Controller
             $name = $file->getClientOriginalName();
             $file->move('files/temp/' . '', $name);
 
-            tb_temp_file::create([
-                'folder' => '',
-                'path' => $name,
-            ]);
+            if (tb_temp_file::where('path', $name)->first() == null) {
+                tb_temp_file::create([
+                    'folder' => '',
+                    'path' => $name,
+                ]);
+            }
 
             return $name;
         }
@@ -50,10 +54,12 @@ class UploadController extends Controller
             $name = $file->getClientOriginalName();
             $file->move('files/temp/' . '', $name);
 
-            tb_temp_file::create([
-                'folder' => '',
-                'path' => $name,
-            ]);
+            if (tb_temp_file::where('path', $name)->first() == null) {
+                tb_temp_file::create([
+                    'folder' => '',
+                    'path' => $name,
+                ]);
+            }
 
             return $name;
         }
