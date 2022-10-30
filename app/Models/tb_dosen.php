@@ -18,6 +18,7 @@ class tb_dosen extends Model
         'kode_prov',
         'handphone',
         'status',
+        'foto',
     ];
 
     public $timestamps = false;

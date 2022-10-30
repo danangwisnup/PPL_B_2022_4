@@ -11,13 +11,17 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AddUserController;
 use App\Http\Controllers\SkripsiController;
 use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProgressMhsContoller;
 use App\Http\Controllers\EditProfileController;
 use App\Http\Controllers\EntryProgressController;
-use App\Http\Controllers\ManajemenUserController;
+use App\Http\Controllers\ManageUsersController;
+use App\Http\Controllers\EditProfileDosenController;
 use App\Http\Controllers\VerifikasiBerkasController;
+use App\Http\Controllers\EditProfileOperatorController;
+use App\Http\Controllers\EditProfileDepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,10 +52,12 @@ Route::group(['middleware' => ['auth']], function () {
     // Fiture Operator
     Route::group(['middleware' => ['operator']], function () {
         // add user & manajamen user (CRUD User)
-        Route::get('/operator/add_user', [AddUserController::class, 'index'])->name('user_add');
-        Route::get('/operator/manajemen_user', [ManajemenUserController::class, 'index'])->name('user_manajemen');
+        Route::get('/operator/add_user', [AddUserController::class, 'index'])->name('add_user');
+        Route::get('/operator/manage_users', [ManageUsersController::class, 'index'])->name('manage_users');
         Route::resource('/operator/mahasiswa', MahasiswaController::class);
+        Route::post('/operator/mahasiswa/bulk', [MahasiswaController::class, 'bulk'])->name('mahasiswa.bulk');
         Route::resource('/operator/dosen', DosenController::class);
+        Route::post('/operator/dosen/bulk', [DosenController::class, 'bulk'])->name('dosen.bulk');
     });
 
     // Fiture Department
@@ -80,7 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     // Fiture Dosen
-    Route::group(['middleware' => ['dosen']], function () {
+    Route::group(['middleware' => ['dosen', 'editprofile']], function () {
         // progress studi mahasiswa
         Route::get('/dosen/progress_studi_mahasiswa', [ProgressMhsContoller::class, 'dosen']);
         Route::get('/dosen/progress_studi_mahasiswa/detail', [ProgressMhsContoller::class, 'show'])->name('progress_detail');
@@ -123,8 +129,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/mahasiswa/skripsi/{semester}/{nim}/edit', [SkripsiController::class, 'edit'])->name('skripsi.edit');
     });
 
-    // edit profile
-    Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('mahasiswa');
+    //edit profile
+    Route::resource('/dosen/edit_profile', EditProfileDosenController::class)->middleware('dosen')->names('edit_profile_dosen');
+    Route::resource('/mahasiswa/edit_profile', EditProfileController::class)->middleware('mahasiswa')->names('edit_profile_mahasiswa');
+    Route::resource('/operator/edit_profile', EditProfileOperatorController::class)->middleware('operator')->names('edit_profile_operator');
+    Route::resource('/department/edit_profile', EditProfileDepartmentController::class)->middleware('department')->names('edit_profile_department');
+
+    // Change Password
+    Route::resource('/dosen/change_password', PasswordController::class);
+    Route::resource('/mahasiswa/change_password', PasswordController::class);
+    Route::resource('/operator/change_password', PasswordController::class);
+    Route::resource('/department/change_password', PasswordController::class);
 
     // Wilayah Indonesia
     Route::get('/wilayah/{provinsi}', [WilayahController::class, 'index'])->name('wilayah');

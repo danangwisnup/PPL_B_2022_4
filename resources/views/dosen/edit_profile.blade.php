@@ -35,14 +35,14 @@
                             <div class="small italic text-danger">Lengkapi data diri anda dengan benar</div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('edit_profile_mahasiswa.update', $mahasiswa->nim) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('edit_profile_dosen.update', $dosen->nip) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row mt-1 mb-1">
                                     <div class="form-group">
                                         <div class="text-center">
                                             <div class="avatar avatar-xxxl">
-                                                <img class="avatar-img border border-white border-3 rounded-circle" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/default.jpg') : asset($mahasiswa->foto) }}" alt="...">
+                                                <img class="avatar-img border border-white border-3 rounded-circle" src="{{ $dosen->foto == null ? asset('assets/images/avatar/default.jpg') : asset($dosen->foto) }}" alt="...">
                                             </div>
                                             <input type="file" class="filepond" id="fileProfile" name="fileProfile" data-allow-reorder="true">
                                         </div>
@@ -52,23 +52,15 @@
                                 <div class="row mt-1 mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nama :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ $mahasiswa->nama }}" required>
+                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ $dosen->nama }}" required>
                                     </div>
                                 </div>
 
-                                {{-- Form NIM --}}
+                                {{-- Form nip --}}
                                 <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">NIM :</label>
+                                    <label class="col-sm-2 col-form-label text-dark">NIP :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM" value="{{ $mahasiswa->nim }}" readonly>
-                                    </div>
-                                </div>
-
-                                {{-- Form Angkatan --}}
-                                <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">Angkatan :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="angkatan" name="angkatan" placeholder="Angkatan" value="{{ $mahasiswa->angkatan }}" readonly>
+                                        <input type="text" class="form-control" id="nip" name="nip" placeholder="nip" value="{{ $dosen->nip }}" readonly>
                                     </div>
                                 </div>
 
@@ -76,15 +68,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Status :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{ $mahasiswa->status }}" readonly>
-                                    </div>
-                                </div>
-
-                                {{-- Form Jalur Masuk --}}
-                                <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">Jalur Masuk :</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="jalur_masuk" name="jalur_masuk" placeholder="Jalur Masuk" value="{{ $mahasiswa->jalur_masuk }}" readonly>
+                                        <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{ $dosen->status }}" readonly>
                                     </div>
                                 </div>
 
@@ -92,7 +76,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nomor HP :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="handphone" name="handphone" placeholder="Nomor HP" value="{{ $mahasiswa->handphone }}" required>
+                                        <input type="text" class="form-control" id="handphone" name="handphone" placeholder="Nomor HP" value="{{ $dosen->handphone }}" required>
                                     </div>
                                 </div>
 
@@ -100,7 +84,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Email SSO :</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $mahasiswa->email }}" required>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $dosen->email }}" required>
                                     </div>
                                 </div>
 
@@ -108,7 +92,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Alamat :</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" required>{{ $mahasiswa->alamat }}</textarea>
+                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" required>{{ $dosen->alamat }}</textarea>
                                     </div>
                                 </div>
 
@@ -119,7 +103,7 @@
                                         <select class="form-select" id="provinsi" name="provinsi" required>
                                             <option value="">Pilih Provinsi</option>
                                             @foreach ($provinsi as $prov)
-                                            <option value="{{ $prov->kode_prov }}" {{ $mahasiswa->kode_prov == $prov->kode_prov ? 'selected="true"' : '' }}>{{ $prov->nama_prov }}</option>
+                                            <option value="{{ $prov->kode_prov }}" {{ $dosen->kode_prov == $prov->kode_prov ? 'selected="true"' : '' }}>{{ $prov->nama_prov }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -132,20 +116,7 @@
                                         <select class="form-select" id="kabupatenkota" name="kabupatenkota" required>
                                             <option value="">Pilih Kabupaten/Kota</option>
                                             @foreach ($kabupaten as $kab)
-                                            <option value="{{ $kab->kode_kab }}" {{ $mahasiswa->kode_kab == $kab->kode_kab ? 'selected="true"' : '' }}>{{ $kab->nama_kab }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                {{-- Select Dosen Wali --}}
-                                <div class="row mb-1">
-                                    <label class="col-sm-2 col-form-label text-dark">Dosen Wali :</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-select" id="dosen_wali" name="dosen_wali" required>
-                                            <option value="">Pilih Dosen Wali</option>
-                                            @foreach ($dosen_wali as $wali)
-                                            <option value="{{ $wali->nip }}" {{ $mahasiswa->kode_wali == $wali->nip ? 'selected="true"' : '' }}>{{ $wali->nama }}</option>
+                                            <option value="{{ $kab->kode_kab }}" {{ $dosen->kode_kab == $kab->kode_kab ? 'selected="true"' : '' }}>{{ $kab->nama_kab }}</option>
                                             @endforeach
                                         </select>
                                     </div>

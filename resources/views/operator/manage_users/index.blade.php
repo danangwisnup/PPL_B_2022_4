@@ -34,7 +34,7 @@
                     <div class="card">
                         <!-- Card header START -->
                         <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <h1 class="card-title h5">Manajemen User</h1>
+                            <h1 class="card-title h5">Manage Users</h1>
                         </div>
                         <div class="card-body">
                             <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
@@ -47,8 +47,14 @@
                                 <!-- Tab Mahasiswa -->
                                 <div class="tab-pane fade show active" id="tab-1">
                                     <div class="row g-3">
-                                        <div class="d-flex flex-column align-items-end mb-4">
-                                            <div id="table_wrapper_1"></div>
+                                        <div class="d-flex flex-column align-items-end">
+                                            <form action="{{ route('mahasiswa.destroy', 'all') }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" title="delete" class="btn btn-danger-soft btn-sm">
+                                                    <i class="bi bi-trash-fill"></i> Delete All
+                                                </button>
+                                            </form>
                                         </div>
                                         <div class="col-12">
                                             <div class="table-responsive">
@@ -94,8 +100,14 @@
                                 <!-- Tab Dosen -->
                                 <div class="tab-pane fade" id="tab-2">
                                     <div class="row g-3">
-                                        <div class="d-flex flex-column align-items-end mb-4">
-                                            <div id="table_wrapper_2"></div>
+                                        <div class="d-flex flex-column align-items-end">
+                                            <form action="{{ route('dosen.destroy', 'all') }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" title="delete" class="btn btn-danger-soft btn-sm">
+                                                    <i class="bi bi-trash-fill"></i> Delete All
+                                                </button>
+                                            </form>
                                         </div>
                                         <div class="col-12">
                                             <div class="table-responsive">

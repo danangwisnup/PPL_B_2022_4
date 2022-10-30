@@ -5,20 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\tb_dosen;
-use App\Models\tb_mahasiswa;
-use App\Models\tb_irs;
 use App\Models\tb_kab;
-use App\Models\tb_khs;
-use App\Models\tb_pkl;
 use App\Models\tb_prov;
-use App\Models\tb_skripsi;
 use App\Models\tb_temp_file;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
 
-class EditProfileController extends Controller
+class EditProfileDosenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,14 +21,13 @@ class EditProfileController extends Controller
      */
     public function index()
     {
-        $mahasiswa = tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first();
+        $dosen = tb_dosen::where('nip', Auth::user()->nim_nip)->first();
         $provinsi = tb_prov::all();
-        $kabupaten = tb_kab::where('kode_prov', $mahasiswa->kode_prov)->get();
-        $dosen_wali = tb_dosen::all();
+        $kabupaten = tb_kab::where('kode_prov', $dosen->kode_prov)->get();
 
-        return view('mahasiswa.edit_profile', [
+        return view('dosen.edit_profile', [
             'title' => 'Edit Profile',
-        ])->with(compact('mahasiswa', 'provinsi', 'kabupaten', 'dosen_wali'));
+        ])->with(compact('dosen', 'provinsi', 'kabupaten'));
     }
 
     /**
@@ -95,14 +88,12 @@ class EditProfileController extends Controller
             [
                 // required if fileProfile null
                 Rule::requiredIf(function () {
-                    return tb_mahasiswa::where('nim', Auth::user()->nim_nip)->first()->foto == null;
+                    return tb_dosen::where('nip', Auth::user()->nim_nip)->first()->foto == null;
                 }),
             ],
             'nama' => 'required|string',
-            'nim' => 'required',
-            'angkatan' => 'required',
+            'nip' => 'required',
             'status' => 'required',
-            'jalur_masuk' => 'required',
             'handphone' => 'required|numeric',
             'email' =>
             [
@@ -111,32 +102,30 @@ class EditProfileController extends Controller
             'alamat' => 'required',
             'provinsi' => 'required|exists:tb_provs,kode_prov',
             'kabupatenkota' => 'required|exists:tb_kabs,kode_kab',
-            'dosen_wali' => 'required|exists:tb_dosens,nip',
         ]);
 
         $temp = tb_temp_file::where('path', $request->fileProfile)->first();
 
         // Update to DB
-        tb_mahasiswa::where('nim', $id)->update([
+        tb_dosen::where('nip', $id)->update([
             'nama' => $request->nama,
             'handphone' => $request->handphone,
             'email' => $request->email,
             'alamat' => $request->alamat,
             'kode_prov' => $request->provinsi,
             'kode_kab' => $request->kabupatenkota,
-            'kode_wali' => $request->dosen_wali,
         ]);
         User::where('nim_nip', $id)->update([
             'nama' => $request->nama,
             'email' => $request->email,
         ]);
-        if ($request->fileProfile != null && tb_mahasiswa::where('nim', $id)->first()->foto != null) {
-            unlink(tb_mahasiswa::where('nim', $id)->first()->foto);
+        if ($request->fileProfile != null && tb_dosen::where('nip', $id)->first()->foto != null) {
+            unlink(tb_dosen::where('nip', $id)->first()->foto);
         }
         if ($temp && $request->fileProfile != null) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $id . '_' . $uniq . '.jpg'));
-            tb_mahasiswa::where('nim', $id)->update([
+            tb_dosen::where('nip', $id)->update([
                 'foto' => 'files/profile/' . $id . '_' . $uniq . '.jpg',
             ]);
             $temp->delete();
@@ -146,7 +135,7 @@ class EditProfileController extends Controller
         if ($request->fileProfile != null) {
             return redirect()->route('home');
         } else {
-            return redirect()->route('edit_profile_mahasiswa.index');
+            return redirect()->route('edit_profile_dosen.index');
         }
     }
 

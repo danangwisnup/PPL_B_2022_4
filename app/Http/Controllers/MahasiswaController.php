@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\tb_dosen;
-use App\Models\tb_mahasiswa;
 use App\Models\tb_irs;
 use App\Models\tb_kab;
 use App\Models\tb_khs;
 use App\Models\tb_pkl;
 use App\Models\tb_prov;
+use App\Models\tb_dosen;
 use App\Models\tb_skripsi;
+use App\Models\tb_mahasiswa;
 use App\Models\tb_temp_file;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\MahasiswaImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -27,7 +29,7 @@ class MahasiswaController extends Controller
     public function index()
     {
         $mahasiswa = tb_mahasiswa::latest()->paginate(5);
-        return view('operator.manajemen_user', compact('mahasiswa'))
+        return view('operator.manage_users', compact('mahasiswa'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -95,7 +97,7 @@ class MahasiswaController extends Controller
         // Alert success
         Alert::success('Success!', 'Data mahasiswa berhasil ditambahkan');
 
-        return redirect()->route('user_manajemen');
+        return redirect()->route('manage_users');
     }
 
     /**
@@ -120,7 +122,7 @@ class MahasiswaController extends Controller
         // find where nim table mahasiswa
         $mahasiswa = tb_mahasiswa::where('nim', $id)->first();
         $user = User::where('nim_nip', $id)->first();
-        return view('operator.manajemen_user.modal.edit_mahasiswa', compact('mahasiswa'), compact('user'));
+        return view('operator.manage_users.modal.edit_mahasiswa', compact('mahasiswa'), compact('user'));
     }
     /**
      * Update the specified resource in storage.
@@ -160,7 +162,7 @@ class MahasiswaController extends Controller
         // Alert success
         Alert::success('Success!', 'Data dosen berhasil diupdate');
 
-        return redirect()->route('user_manajemen');
+        return redirect()->route('manage_users');
     }
 
     /**
@@ -172,12 +174,31 @@ class MahasiswaController extends Controller
     public function destroy($id)
     {
         // Delete to table mahasiswa & users
-        tb_mahasiswa::where('nim', $id)->delete();
-        User::where('nim_nip', $id)->delete();
+        if ($id == 'all') {
+            User::where('role', 'mahasiswa')->delete();
+            tb_mahasiswa::truncate();
+        } else {
+            User::where('nim_nip', $id)->delete();
+            tb_mahasiswa::where('nim', $id)->delete();
+        }
 
         // Alert success
         Alert::success('Success!', 'Data mahasiswa berhasil dihapus');
-        return redirect()->route('user_manajemen');
+        return redirect()->route('manage_users');
+    }
+
+    // bulk
+    public function bulk(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new MahasiswaImport, $request->file('file'));
+
+        // Alert success
+        Alert::success('Success!', 'Data mahasiswa berhasil ditambahkan');
+        return redirect()->route('manage_users');
     }
 
     public function data_mahasiswa()
@@ -191,16 +212,11 @@ class MahasiswaController extends Controller
     public function data_mahasiswa_detail(Request $request)
     {
         $mahasiswa = tb_mahasiswa::where('nim', $request->nim)->first();
-        if ($mahasiswa->kode_kab != null or $mahasiswa->kode_prov != null) {
-            $kabupaten = tb_kab::where('kode_kab', $mahasiswa->kode_kab)->first();
-            $provinsi = tb_prov::where('kode_prov', $mahasiswa->kode_prov)->first();
-            return view('department.data_mhs.detail', [
-                'title' => 'Data Mahasiswa Detail',
-            ])->with(compact('mahasiswa', 'kabupaten', 'provinsi'));
-        } else {
-            Alert::error('Error!', 'Data Mahasiswa tidak lengkap');
-            return redirect()->back();
-        }
+        $kabupaten = tb_kab::where('kode_kab', $mahasiswa->kode_kab)->first();
+        $provinsi = tb_prov::where('kode_prov', $mahasiswa->kode_prov)->first();
+        return view('department.data_mhs.detail', [
+            'title' => 'Data Mahasiswa Detail',
+        ])->with(compact('mahasiswa', 'kabupaten', 'provinsi'));
     }
 
     public function data_pkl()

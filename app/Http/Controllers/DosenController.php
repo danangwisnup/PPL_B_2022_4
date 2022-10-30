@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\tb_dosen;
-use App\Models\tb_mahasiswa;
-use App\Models\tb_irs;
-use App\Models\tb_khs;
-use App\Models\tb_pkl;
 use App\Models\tb_skripsi;
+use App\Models\tb_mahasiswa;
 use App\Models\tb_temp_file;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\DosenImport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -69,7 +68,7 @@ class DosenController extends Controller
         // Alert success
         Alert::success('Success!', 'Data Dosen Berhasil Ditambahkan');
 
-        return redirect()->route('user_manajemen');
+        return redirect()->route('manage_users');
     }
 
     /**
@@ -94,7 +93,7 @@ class DosenController extends Controller
         // find where nip table dosen
         $dosen = tb_dosen::where('nip', $id)->first();
         $user = User::where('nim_nip', $id)->first();
-        return view('operator.manajemen_user.modal.edit_dosen', compact('dosen'), compact('user'));
+        return view('operator.manage_users.modal.edit_dosen', compact('dosen'), compact('user'));
     }
 
     /**
@@ -130,7 +129,7 @@ class DosenController extends Controller
         // Alert success
         Alert::success('Success!', 'Data Dosen Berhasil Diupdate');
 
-        return redirect()->route('user_manajemen');
+        return redirect()->route('manage_users');
     }
 
     /**
@@ -142,13 +141,31 @@ class DosenController extends Controller
     public function destroy($id)
     {
         // Delete to table Dosen & users
-        tb_dosen::where('nip', '=', $id)->delete();
-        User::where('nim_nip', '=', $id)->delete();
+        if ($id == 'all') {
+            User::where('role', 'dosen')->delete();
+            tb_dosen::truncate();
+        } else {
+            User::where('nim_nip', $id)->delete();
+            tb_dosen::where('nip', $id)->delete();
+        }
 
         // Alert success
         Alert::success('Success!', 'Data Dosen Berhasil Dihapus');
+        return redirect()->route('manage_users');
+    }
 
-        return redirect()->route('user_manajemen');
+    // bulk
+    public function bulk(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new DosenImport, $request->file('file'));
+
+        // Alert success
+        Alert::success('Success!', 'Data dosen berhasil ditambahkan');
+        return redirect()->route('manage_users');
     }
 
     /**

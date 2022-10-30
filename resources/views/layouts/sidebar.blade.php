@@ -23,7 +23,7 @@
                 <!-- Card START -->
                 <div class="card overflow-hidden">
                     <!-- Cover image -->
-                    <div class="h-90px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/informatika.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <div class="h-90px mb-2" style="background-image:url('/assets/images/bg/informatika.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
                     </div>
                     <!-- Card body START -->
                     <div class="card-body pt-0">
@@ -32,8 +32,10 @@
                             <div class="avatar avatar-xxl mt-n5 mb-1">
                                 @if (Auth::user()->role == 'mahasiswa')
                                 <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ $mahasiswa->foto == null ? asset('assets/images/avatar/default.jpg') : asset($mahasiswa->foto) }}" alt=""></a>
+                                @elseif (Auth::user()->role == 'dosen')
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ $dosen->foto == null ? asset('assets/images/avatar/default.jpg') : asset($dosen->foto) }}" alt=""></a>
                                 @else
-                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ asset('assets/images/avatar/default.jpg') }}" alt=""></a>
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ asset('assets/images/avatar/profile_department.jpg') }}" alt=""></a>
                                 @endif
                             </div>
                             <!-- Info -->
@@ -47,7 +49,7 @@
                             </div>
                         </div>
 
-                        @if ($title != 'Edit Profile')
+                        @if ($title != 'Edit Profile' && $title != 'Change Password')
 
                         <!-- Divider -->
                         <hr>
@@ -65,8 +67,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Manajemen User')? 'active' : '' }}" href="/operator/manajemen_user">
-                                    <i class="bi bi-people"></i><span> Manajemen User</span>
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Manage Users')? 'active' : '' }}" href="/operator/manage_users">
+                                    <i class="bi bi-people"></i><span> Manage Users</span>
                                 </a>
                             </li>
                             @elseif (Auth::user()->role == 'mahasiswa')
@@ -155,17 +157,34 @@
                     </div>
                     <!-- Card body END -->
                     <!-- Card footer -->
-                    @if ($title == 'Edit Profile')
+                    @if ($title == 'Edit Profile' || $title == 'Change Password')
                     <div class="card-footer text-center py-2">
-                        Informatika S1 <br />
-                        Fakultas Sains dan Matematika
-                        <a class="btn btn-link btn-sm bold mt-3" style="font-size: 14px;" href="/">
-                            <i class="bi bi-house-door"></i><span> Dashboard</span>
-                        </a>
+                        <div class="mt-3">
+                            Informatika S1 <br />
+                            Fakultas Sains dan Matematika
+                        </div>
+                        <ul class="nav nav-link-secondary flex-column">
+                            <li class="nav-item mt-2 mb-0">
+                                <a style="font-size: 14px;" class="nav-link" href="/">
+                                    <i class="bi bi-house-door"></i><span> Dashboard</span>
+                                </a>
+                            </li>
+                            <hr />
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Edit Profile')? 'active' : '' }}" href="/{{ Auth::User()->role }}/edit_profile">
+                                    <i class="bi bi-mortarboard"></i><span> Edit Profile</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Change Password') ? 'active' : '' }}" href="/{{ Auth::User()->role }}/change_password">
+                                    <i class="bi bi-key"></i><span> Change Password</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    @elseif (Auth::user()->role == 'mahasiswa')
+                    @else
                     <div class="card-footer text-center py-2">
-                        <a class="btn btn-link btn-sm bold" style="font-size: 14px;" href="/mahasiswa/edit_profile">Edit Profile </a>
+                        <a class="btn btn-link btn-sm bold" style="font-size: 14px;" href="/{{ Auth::user()->role }}/edit_profile">Edit Profile </a>
                     </div>
                     @endif
                 </div>

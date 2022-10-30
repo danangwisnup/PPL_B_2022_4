@@ -21,9 +21,10 @@ class ProgressMhsContoller extends Controller
     public function dosen()
     {
         $mahasiswa = tb_mahasiswa::where('kode_wali', Auth::user()->nim_nip)->get();
+        $dosen = tb_dosen::where('nip', Auth::user()->nim_nip)->first();
         return view('dosen.progress.index', [
             'title' => 'Progress Studi Mahasiswa',
-        ])->with(compact('mahasiswa'));
+        ])->with(compact('mahasiswa', 'dosen'));
     }
 
     public function department()
@@ -60,9 +61,14 @@ class ProgressMhsContoller extends Controller
         }
 
         if (Auth::user()->role == 'dosen') {
-            return view('dosen.progress.detail', [
-                'title' => 'Progress Studi Mahasiswa',
-            ])->with(compact('mahasiswa', 'dosen', 'semester'));
+            if ($mahasiswa->kode_wali == Auth::user()->nim_nip) {
+                return view('dosen.progress.detail', [
+                    'title' => 'Progress Studi Mahasiswa',
+                ])->with(compact('mahasiswa', 'dosen', 'semester'));
+            } else {
+                Alert::error('Error', 'Anda tidak memiliki akses ke halaman ini');
+                return redirect()->back();
+            }
         } else {
             return view('department.progress.detail', [
                 'title' => 'Progress Studi Mahasiswa',

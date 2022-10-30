@@ -115,7 +115,6 @@ class PKLController extends Controller
         if ($temp) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/pkl/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
                 'upload_pkl' => 'files/pkl/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
@@ -185,7 +184,6 @@ class PKLController extends Controller
             }
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/pkl/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            rmdir(public_path('files/temp/' . $temp->folder));
             tb_pkl::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'status' => $request->status_pkl,
                 'nilai' => $request->nilai_pkl,
