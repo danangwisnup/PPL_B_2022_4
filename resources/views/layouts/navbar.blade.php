@@ -56,8 +56,8 @@
                                                 <div class="ms-sm-3">
                                                     <div class="d-flex">
                                                         <p class="small mb-2"><b>Department:</b> Silahkan mengisi progress Anda</p>
+                                                        <p class="small ms-3"> {{ \Carbon\Carbon::today()->setTimezone('Asia/Jakarta')->format('G\h') }}</p>
                                                     </div>
-                                                    <p class="small"><?php \Carbon\Carbon::setLocale('id') ?> {{ \Carbon\Carbon::createFromDate('2022-10-30')->diffForHumans() }}</p>
                                                 </div>
                                             </a>
                                         </li>
