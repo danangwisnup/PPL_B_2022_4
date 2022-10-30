@@ -2,19 +2,6 @@
     @csrf
     @method('PUT')
     <input type="hidden" name="nim" value="{{ $data->nim }}">
-    <!-- Input Jumlah SKS Semester START -->
-    <div class="col-6">
-        <label class="form-label text-dark">SKS Semester</label>
-        <input type="number" class="form-control" id="sks_semester" name="sks_semester" placeholder="SKS Semester" value="{{ $data->sks }}" required>
-    </div>
-    <!-- Input Jumlah SKS Semester END -->
-
-    <!-- Input Jumlah SKS Kumulatif START -->
-    <div class="col-6">
-        <label class="form-label text-dark">SKS Kumulatif</label>
-        <input type="number" class="form-control" id="sks_kumulatif" name="sks_kumulatif" placeholder="SKS Kumulatif" value="{{ $data->sks_kumulatif }}" required>
-    </div>
-    <!-- Input Jumlah SKS Semester END -->
 
     <!-- Input IP Semester START -->
     <div class="col-6">

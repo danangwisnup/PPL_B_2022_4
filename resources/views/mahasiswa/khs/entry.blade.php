@@ -45,19 +45,6 @@
                                         <form class="row g-3" action="{{ route('khs.store') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="semester_aktif" value="{{ $progress != null ? $progress->semester_aktif : '' }}">
-                                            <!-- Input Jumlah SKS Semester START -->
-                                            <div class="col-6">
-                                                <label class="form-label text-dark">SKS Semester</label>
-                                                <input type="number" class="form-control" id="sks_semester" name="sks_semester" placeholder="SKS Semester" required>
-                                            </div>
-                                            <!-- Input Jumlah SKS Semester END -->
-
-                                            <!-- Input Jumlah SKS Kumulatif START -->
-                                            <div class="col-6">
-                                                <label class="form-label text-dark">SKS Kumulatif</label>
-                                                <input type="number" class="form-control" id="sks_kumulatif" name="sks_kumulatif" placeholder="SKS Kumulatif" required>
-                                            </div>
-                                            <!-- Input Jumlah SKS Semester END -->
 
                                             <!-- Input IP Semester START -->
                                             <div class="col-6">
