@@ -57,7 +57,7 @@
                                                     <div class="d-flex">
                                                         <p class="small mb-2"><b>Department:</b> Silahkan mengisi progress Anda</p>
                                                     </div>
-                                                    <p class="small">{{ \Carbon\Carbon::createFromDate('2022-10-30')->diffForHumans() }}</p>
+                                                    <p class="small"><?php \Carbon\Carbon::setLocale('id') ?> {{ \Carbon\Carbon::createFromDate('2022-10-30')->diffForHumans() }}</p>
                                                 </div>
                                             </a>
                                         </li>
