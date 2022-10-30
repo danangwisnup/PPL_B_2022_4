@@ -56,7 +56,7 @@
                                                 <div class="ms-sm-3">
                                                     <div class="d-flex">
                                                         <p class="small mb-2"><b>Department:</b> Silahkan mengisi progress Anda</p>
-                                                        <p class="small ms-3" style="font-size: 11px;"><?php \Carbon\Carbon::setLocale('id') ?> {{ \Carbon\Carbon::createFromDate('2022-10-30')->diffForHumans() }} </p>
+                                                        <p class="small ms-3" style="font-size: 11px;"><?php \Carbon\Carbon::setLocale('id')?> {{ \Carbon\Carbon::createFromDate('2022-10-30')->diffForHumans() }} </p>
                                                     </div>
                                                 </div>
                                             </a>
@@ -81,7 +81,7 @@
                                             </a></h1>
                                     </div>
                                 </div>
-                                <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href="javascript:;">View profile</a>
+                                <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href="/{{ Auth::User()->role }}/edit_profile">View profile</a>
                             </li>
                             <li class="dropdown-divider m-3"></li>
                             <li>
