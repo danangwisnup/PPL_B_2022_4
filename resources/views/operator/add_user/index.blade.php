@@ -172,9 +172,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-warning" role="alert">
-                    <i class="bi bi-exclamation-triangle"></i> <strong>Perhatian!</strong> Pastikan data <strong>nip, email dan status</strong> tidak mengandung whitespace (spasi) di awal dan akhir data.
-                </div>
                 <div class="col-12 mb-3">
                     <div class="text-center">
                         <img src="{{ asset('assets/images/bulk_dosen.png') }}" class="img-fluid" alt="Bulk Add Dosen">
@@ -204,3 +201,21 @@
 </div>
 
 @endsection
+
+@section('script')
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script>
+    // disable all input and button after submit
+    $('form').submit(function() {
+        // show spinner on button
+        $(this).find('button[type=submit]').html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...`
+        );
+        $('button').attr('disabled', 'disabled');
+    });
+</script>
+
+@stop

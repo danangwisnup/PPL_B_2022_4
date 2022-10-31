@@ -130,10 +130,11 @@ class EditProfileController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
         ]);
-        if ($request->fileProfile != null && tb_mahasiswa::where('nim', $id)->first()->foto != null) {
-            unlink(tb_mahasiswa::where('nim', $id)->first()->foto);
-        }
+
         if ($temp && $request->fileProfile != null) {
+            if (tb_mahasiswa::where('nim', $id)->first()->foto != null) {
+                unlink(tb_mahasiswa::where('nim', $id)->first()->foto);
+            }
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $id . '_' . $uniq . '.jpg'));
             tb_mahasiswa::where('nim', $id)->update([

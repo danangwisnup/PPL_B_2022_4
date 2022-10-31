@@ -37,7 +37,7 @@
                             <form action="{{ route('change_password.update', $user->nim_nip) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-                                
+
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Password Lama:</label>
                                     <div class="col-sm-10">
@@ -80,5 +80,19 @@
 @section('script')
 
 @include('sweetalert::alert')
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script>
+    // disable all input and button after submit
+    $('form').submit(function() {
+        // show spinner on button
+        $(this).find('button[type=submit]').html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...`
+        );
+        $('button').attr('disabled', 'disabled');
+    });
+</script>
 
 @stop

@@ -199,4 +199,11 @@
 <script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
 <script src="{{ asset('assets/js/data-table.js') }}"></script>
 
+<script>
+    // disable all input and button after submit
+    $('form').submit(function() {
+        $('button').attr('disabled', 'disabled');
+    });
+</script>
+
 @stop

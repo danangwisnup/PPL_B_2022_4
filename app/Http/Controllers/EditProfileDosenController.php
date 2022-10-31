@@ -119,10 +119,11 @@ class EditProfileDosenController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
         ]);
-        if ($request->fileProfile != null && tb_dosen::where('nip', $id)->first()->foto != null) {
-            unlink(tb_dosen::where('nip', $id)->first()->foto);
-        }
+
         if ($temp && $request->fileProfile != null) {
+            if (tb_dosen::where('nip', $id)->first()->foto != null) {
+                unlink(tb_dosen::where('nip', $id)->first()->foto);
+            }
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $id . '_' . $uniq . '.jpg'));
             tb_dosen::where('nip', $id)->update([
