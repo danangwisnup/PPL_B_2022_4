@@ -5,20 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\tb_dosen;
-use App\Models\tb_mahasiswa;
-use App\Models\tb_irs;
 use App\Models\tb_kab;
-use App\Models\tb_khs;
-use App\Models\tb_pkl;
 use App\Models\tb_prov;
-use App\Models\tb_skripsi;
 use App\Models\tb_temp_file;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Validation\Rule;
 
-class PasswordController extends Controller
+class EditProfileOperatorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,14 +21,11 @@ class PasswordController extends Controller
      */
     public function index()
     {
-        $user = User::where('nim_nip',  Auth::user()->nim_nip)->first();
-        $dosen = tb_dosen::where('nip',  Auth::user()->nim_nip)->first();
-        $mahasiswa = tb_mahasiswa::where('nim',  Auth::user()->nim_nip)->first();
-        $department = User::where('nim_nip',  Auth::user()->nim_nip)->first();
-        $operator = User::where('nim_nip',  Auth::user()->nim_nip)->first();
-        return view('change_password.index', [
-            'title' => 'Change Password',
-        ])->with(compact('user', 'dosen', 'mahasiswa', 'department', 'operator'));
+        $operator = User::where('nim_nip', Auth::user()->nim_nip)->first();
+
+        return view('operator.edit_profile', [
+            'title' => 'Edit Profile',
+        ])->with(compact('operator'));
     }
 
     /**
@@ -91,25 +82,21 @@ class PasswordController extends Controller
     {
         // Validate
         $request->validate([
-            // olf password must same with password in database
-            'old_password' => [
-                'required', function ($attribute, $value, $fail) {
-                    if (!Hash::check($value, Auth::user()->password)) {
-                        $fail('Old Password didn\'t match');
-                    } 
-                },
+            'nama' => 'required|string',
+            'email' =>
+            [
+                'required', 'email', 'max:255', Rule::unique('users')->ignore($id, 'nim_nip'),
             ],
-            'new_password' => 'required|string',
-            'ver_password' => 'required|string|same:new_password',
         ]);
 
-        
+        // Update to DB
         User::where('nim_nip', $id)->update([
-            'password' => bcrypt($request->new_password),
+            'nama' => $request->nama,
+            'email' => $request->email,
         ]);
-        
+
         Alert::success('Berhasil', 'Data berhasil disimpan');
-        return redirect()->route('change_password.index');
+        return redirect('/operator/edit_profile');
     }
 
     /**
