@@ -19,7 +19,7 @@
                     <span class="badge btn-warning-soft small">Mangkir</span>
                 </div>
                 <div>
-                    <h5 class="mb-0">{{ $mahasiswaAll->where('status', 'CO')->count() }}</h5>
+                    <h5 class="mb-0">{{ $mahasiswaAll->where('status', 'DO')->count() }}</h5>
                     <span class="badge btn-danger-soft small">DO</span>
                 </div>
             </div>

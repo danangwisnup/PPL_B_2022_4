@@ -54,7 +54,7 @@ class MahasiswaController extends Controller
     {
         // Validate the request...
         $request->validate([
-            'nim' => 'required|string|unique:users,nim_nip|min:14|max:14',
+            'nim' => 'required|numeric|unique:users,nim_nip|digits:14',
             'nama' => 'required|string',
             'status' => 'required',
         ]);

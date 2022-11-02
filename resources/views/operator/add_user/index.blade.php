@@ -50,7 +50,7 @@
                                         @csrf
                                         <div class="col-6">
                                             <label class="form-label text-dark">NIM</label>
-                                            <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM" value="{{ old('nim') }}" required>
+                                            <input type="number" class="form-control" id="nim" name="nim" placeholder="NIM" value="{{ old('nim') }}" required>
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">Nama Mahasiswa</label>
