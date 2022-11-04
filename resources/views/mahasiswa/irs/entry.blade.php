@@ -56,7 +56,7 @@
                                             <div class="col-12">
                                                 <label class="form-label">Scan IRS</label>
                                                 <div class="dropzone">
-                                                    <input type="file" class="filepond" id="file" name="file" data-allow-reorder="true">
+                                                    <input type="file" class="filepond" id="file" name="file" data-allow-reorder="true" required>
                                                 </div>
                                             </div>
 
@@ -64,7 +64,7 @@
                                             <div class="text-danger small fst-italic">*Format file [.pdf], pastikan file yang diupload benar.</div>
 
                                             <div class="col-12 text-end">
-                                                <button type="submit" class="btn btn-sm btn-primary mb-0">Submit</button>
+                                                <button type="submit" class="btn btn-sm btn-primary mb-0">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -72,6 +72,11 @@
                                 </div> <!-- Row END -->
                             </div>
                             <!-- Container END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 
@@ -98,6 +103,18 @@
 @include('sweetalert::alert')
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script>
+    // disable all input and button after submit
+    $('form').submit(function() {
+        // show spinner on button
+        $(this).find('button[type=submit]').html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...`
+        );
+        $('button').attr('disabled', 'disabled');
+    });
+</script>
 
 <!-- Load FilePond library -->
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
