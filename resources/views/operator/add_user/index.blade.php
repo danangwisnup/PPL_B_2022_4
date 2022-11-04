@@ -29,7 +29,7 @@
                         <!-- Card header START -->
                         <div class="card-body">
                             <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
-                                Password default user sesuai dengan nim/nip.
+                            <strong>Info!</strong> Password default user sama dengan nim/nip.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
