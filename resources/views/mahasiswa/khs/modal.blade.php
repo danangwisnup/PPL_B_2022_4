@@ -6,8 +6,8 @@
     <!-- Input IP Semester START -->
     <div class="col-6">
         <label class="form-label text-dark">IP Semester</label>
-        <input type="text" class="form-control" id="ip_semester" name="ip_semester" placeholder="IP Semester" value="{{ $data->ip }}" required>
-        <div class="small italic text-danger center mt-1">Contoh: 4.00</div>
+        <input type="number" step="0.01" class="form-control" id="ip_semester" name="ip_semester" placeholder="IP Semester" value="{{ $data->ip }}" required>
+        <div class="small italic text-danger center mt-1">Contoh: 3,99</div>
     </div>
 
     <!-- Input IP Semester END -->
@@ -15,8 +15,8 @@
     <!-- Input IP Kumulatif START -->
     <div class="col-6">
         <label class="form-label text-dark">IP Kumulatif</label>
-        <input type="text" class="form-control" id="ip_kumulatif" name="ip_kumulatif" placeholder="IP Kumulatif" value="{{ $data->ip_kumulatif }}" required>
-        <div class="small italic text-danger center mt-1">Contoh: 4.00</div>
+        <input type="number" step="0.01" class="form-control" id="ip_kumulatif" name="ip_kumulatif" placeholder="IP Kumulatif" value="{{ $data->ip_kumulatif }}" required>
+        <div class="small italic text-danger center mt-1">Contoh: 3,99</div>
     </div>
     <!-- Input IP Kumulatif END -->
 
@@ -39,6 +39,25 @@
         <button type="button" class="btn btn-sm btn-secondary mb-0" data-bs-dismiss="modal">Batal</button>
     </div>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script>
+    // disable all input and button after submit
+    $('form').submit(function() {
+        // show spinner on button
+        $(this).find('button[type=submit]').html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...`
+        );
+        $('button').attr('disabled', 'disabled');
+    });
+
+    // data-bs-dismiss="modal" click reload page
+    $('button[data-bs-dismiss="modal"]').click(function() {
+        location.reload();
+    });
+</script>
 
 <!-- Load FilePond library -->
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
