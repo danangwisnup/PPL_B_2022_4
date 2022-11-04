@@ -71,7 +71,11 @@ class IRSController extends Controller
         // Validate
         $request->validate([
             'semester_aktif' => 'required|unique:tb_irs,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
+<<<<<<< HEAD
             'jumlah_sks' => 'required|numeric|between:1,24',
+=======
+            'jumlah_sks' => 'required|numeric|min:0',
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
             'file' => 'required',
         ]);
 
@@ -143,7 +147,11 @@ class IRSController extends Controller
     {
         // Validate
         $request->validate([
+<<<<<<< HEAD
             'jumlah_sks' => 'required|numeric|between:1,24',
+=======
+            'jumlah_sks' => 'required|numeric|min:0',
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
             'confirm' => 'sometimes|accepted',
             'fileEdit' => 'required_if:confirm,on',
         ]);

@@ -15,7 +15,10 @@ use App\Models\tb_temp_file;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\MahasiswaImport;
+<<<<<<< HEAD
 use App\Models\tb_entry_progress;
+=======
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;

@@ -71,8 +71,14 @@ class KHSController extends Controller
         // Validate
         $request->validate([
             'semester_aktif' => 'required|unique:tb_khs,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
+<<<<<<< HEAD
             'ip_semester' => 'required|between:0,4|numeric',
             'ip_kumulatif' => 'required|between:0,4|numeric',
+=======
+            // ip_semester cannot negative
+            'ip_semester' => 'required|between:0,4.00|numeric',
+            'ip_kumulatif' => 'required|between:0,4.00|numeric',
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
             'file' => 'required',
         ]);
 
@@ -155,8 +161,13 @@ class KHSController extends Controller
     {
         // Validate
         $request->validate([
+<<<<<<< HEAD
             'ip_semester' => 'required|between:0,4|numeric',
             'ip_kumulatif' => 'required|between:0,4|numeric',
+=======
+            'ip_semester' => 'required|between:0,4.00',
+            'ip_kumulatif' => 'required|between:0,4.00',
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
             'confirm' => 'sometimes|accepted',
             'fileEdit' => 'required_if:confirm,on',
         ]);

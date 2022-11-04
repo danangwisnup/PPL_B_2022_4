@@ -172,6 +172,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+<<<<<<< HEAD
+=======
+                <div class="alert alert-warning" role="alert">
+                    <i class="bi bi-exclamation-triangle"></i> <strong>Perhatian!</strong> Pastikan data <strong>nip, email dan status</strong> tidak mengandung whitespace (spasi) di awal dan akhir data.
+                </div>
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
                 <div class="col-12 mb-3">
                     <div class="text-center">
                         <img src="{{ asset('assets/images/bulk_dosen.png') }}" class="img-fluid" alt="Bulk Add Dosen">
@@ -200,6 +206,7 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 @endsection
 
 @section('script')
@@ -219,3 +226,6 @@
 </script>
 
 @stop
+=======
+@endsection
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c

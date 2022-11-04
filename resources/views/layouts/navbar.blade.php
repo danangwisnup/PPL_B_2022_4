@@ -46,17 +46,29 @@
                         <div class="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 shadow-lg border-0" aria-labelledby="notifDropdown">
                             <div class="card">
                                 <div class="card-body p-0">
+<<<<<<< HEAD
                                     <ul class="list-group list-group-flush list-unstyled p-">
+=======
+                                    <ul class="list-group list-group-flush list-unstyled p-2">
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
                                         <!-- Notif item -->
                                         <li>
                                             <a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 mb-1 p-3">
                                                 <div class="avatar text-center d-none d-sm-inline-block">
+<<<<<<< HEAD
                                                     <img class="avatar-img rounded-circle" src="/assets/images/avatar/profile_department.jpg" alt="">
+=======
+                                                    <img class="avatar-img rounded-circle" src="assets/images/avatar/profile_department.jpg" alt="">
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
                                                 </div>
                                                 <div class="ms-sm-3">
                                                     <div class="d-flex">
                                                         <p class="small mb-2"><b>Department:</b> Silahkan mengisi progress Anda</p>
+<<<<<<< HEAD
                                                         <p class="small ms-3" style="font-size: 11px;"><?php \Carbon\Carbon::setLocale('id')?> {{ \Carbon\Carbon::createFromDate('2022-10-30')->diffForHumans() }} </p>
+=======
+                                                        <p class="small ms-3">1hr</p>
+>>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
                                                     </div>
                                                 </div>
                                             </a>
