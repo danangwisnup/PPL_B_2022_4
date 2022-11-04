@@ -71,21 +71,27 @@ class KHSController extends Controller
         // Validate
         $request->validate([
             'semester_aktif' => 'required|unique:tb_khs,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
-            'sks_semester' => 'required|numeric',
-            'sks_kumulatif' => 'required|numeric',
-            'ip_semester' => 'required|between:0,4.00',
-            'ip_kumulatif' => 'required|between:0,4.00',
+            'ip_semester' => 'required|between:0,4|numeric',
+            'ip_kumulatif' => 'required|between:0,4|numeric',
             'file' => 'required',
         ]);
 
         $temp = tb_temp_file::where('path', $request->file)->first();
+        $tb_irs = tb_irs::where('nim', Auth::user()->nim_nip)->where('semester_aktif', $request->semester_aktif)->first();
+        $sks = $tb_irs->sks;
+
+        // sum sks from 1 - semester aktif
+        $sumSks = DB::table('tb_irs')
+            ->where('nim', Auth::user()->nim_nip)
+            ->where('semester_aktif', '<=', $request->semester_aktif)
+            ->sum('sks');
 
         // Insert to DB
         $db = tb_khs::create([
             'nim' => Auth::user()->nim_nip,
             'semester_aktif' => $request->semester_aktif,
-            'sks' => $request->sks_semester,
-            'sks_kumulatif' => $request->sks_kumulatif,
+            'sks' => $sks,
+            'sks_kumulatif' => $sumSks,
             'ip' => $request->ip_semester,
             'ip_kumulatif' => $request->ip_kumulatif,
             'upload_khs' => $temp->path,
@@ -100,7 +106,6 @@ class KHSController extends Controller
         if ($temp) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
                 'upload_khs' => 'files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
@@ -150,10 +155,8 @@ class KHSController extends Controller
     {
         // Validate
         $request->validate([
-            'sks_semester' => 'required|numeric',
-            'sks_kumulatif' => 'required|numeric',
-            'ip_semester' => 'required|between:0,4.00',
-            'ip_kumulatif' => 'required|between:0,4.00',
+            'ip_semester' => 'required|between:0,4|numeric',
+            'ip_kumulatif' => 'required|between:0,4|numeric',
             'confirm' => 'sometimes|accepted',
             'fileEdit' => 'required_if:confirm,on',
         ]);
@@ -165,10 +168,7 @@ class KHSController extends Controller
         if ($temp && $request->confirm == 'on') {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            rmdir(public_path('files/temp/' . $temp->folder));
             tb_khs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
-                'sks' => $request->sks_semester,
-                'sks_kumulatif' => $request->sks_kumulatif,
                 'ip' => $request->ip_semester,
                 'ip_kumulatif' => $request->ip_kumulatif,
                 'upload_khs' => 'files/khs/' . $db->nim . '_' . $db->semester_aktif  . '_' . $uniq . '.pdf'
@@ -176,8 +176,6 @@ class KHSController extends Controller
             unlink(public_path($db->upload_khs));
         } else {
             tb_khs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
-                'sks' => $request->sks_semester,
-                'sks_kumulatif' => $request->sks_kumulatif,
                 'ip' => $request->ip_semester,
                 'ip_kumulatif' => $request->ip_kumulatif,
             ]);

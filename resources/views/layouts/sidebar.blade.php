@@ -23,7 +23,7 @@
                 <!-- Card START -->
                 <div class="card overflow-hidden">
                     <!-- Cover image -->
-                    <div class="h-90px mb-2" style="background-image:url(http://ppl-project.test/assets/images/bg/informatika.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <div class="h-90px mb-2" style="background-image:url('/assets/images/bg/informatika.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
                     </div>
                     <!-- Card body START -->
                     <div class="card-body pt-0">
@@ -35,7 +35,7 @@
                                 @elseif (Auth::user()->role == 'dosen')
                                 <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ $dosen->foto == null ? asset('assets/images/avatar/default.jpg') : asset($dosen->foto) }}" alt=""></a>
                                 @else
-                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ asset('assets/images/avatar/default.jpg') }}" alt=""></a>
+                                <a href="#"><img class="avatar-img rounded-circle border border-white border-5" src="{{ asset('assets/images/avatar/profile_department.jpg') }}" alt=""></a>
                                 @endif
                             </div>
                             <!-- Info -->
@@ -67,8 +67,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Manajemen User')? 'active' : '' }}" href="/operator/manajemen_user">
-                                    <i class="bi bi-people"></i><span> Manajemen User</span>
+                                <a style="font-size: 14px;" class="nav-link {{ ($title == 'Manage Users')? 'active' : '' }}" href="/operator/manage_users">
+                                    <i class="bi bi-people"></i><span> Manage Users</span>
                                 </a>
                             </li>
                             @elseif (Auth::user()->role == 'mahasiswa')
@@ -159,9 +159,11 @@
                     <!-- Card footer -->
                     @if ($title == 'Edit Profile' || $title == 'Change Password')
                     <div class="card-footer text-center py-2">
-                        Informatika S1 <br />
-                        Fakultas Sains dan Matematika
-                        <ul class="nav nav-link-secondary flex-column gap-1">
+                        <div class="mt-3">
+                            Informatika S1 <br />
+                            Fakultas Sains dan Matematika
+                        </div>
+                        <ul class="nav nav-link-secondary flex-column">
                             <li class="nav-item mt-2 mb-0">
                                 <a style="font-size: 14px;" class="nav-link" href="/">
                                     <i class="bi bi-house-door"></i><span> Dashboard</span>

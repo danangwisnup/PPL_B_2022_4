@@ -141,7 +141,11 @@
 </script>
 
 <script type="text/javascript">
-    // display a modal dosen
+    // data-bs-dismiss="modal" click reload page
+    $('button[data-bs-dismiss="modal"]').click(function() {
+        location.reload();
+    });
+
     $(document).on("click", "#buttonModalPKL", function() {
         event.preventDefault();
         let href = $(this).attr("data-attr");

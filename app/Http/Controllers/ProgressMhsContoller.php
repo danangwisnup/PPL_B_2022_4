@@ -61,9 +61,14 @@ class ProgressMhsContoller extends Controller
         }
 
         if (Auth::user()->role == 'dosen') {
-            return view('dosen.progress.detail', [
-                'title' => 'Progress Studi Mahasiswa',
-            ])->with(compact('mahasiswa', 'dosen', 'semester'));
+            if ($mahasiswa->kode_wali == Auth::user()->nim_nip) {
+                return view('dosen.progress.detail', [
+                    'title' => 'Progress Studi Mahasiswa',
+                ])->with(compact('mahasiswa', 'dosen', 'semester'));
+            } else {
+                Alert::error('Error', 'Anda tidak memiliki akses ke halaman ini');
+                return redirect()->back();
+            }
         } else {
             return view('department.progress.detail', [
                 'title' => 'Progress Studi Mahasiswa',

@@ -10,7 +10,7 @@
                         <div class="alert alert-info alert-message">
                             <strong>Operator</strong> : 123 | op@if.com | 123 <br />
                             <strong>Mahasiswa</strong> : 24060120120120 | mahasiswa20@if.com | 123 <br />
-                            <strong>Dosen</strong> : H.1.299112052022042000 | dosen@if.com | 123 <br />
+                            <strong>Dosen</strong> : H.1.289103252009131011 | dosen@if.com | 123 <br />
                             <strong>Department</strong> : 24060 | department@if.com | 123
                         </div>
                         @error('loginError')
@@ -67,4 +67,21 @@
 </main>
 @endsection
 
+@section('script')
+
 @include('sweetalert::alert')
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script>
+    // disable all input and button after submit
+    $('form').submit(function() {
+        // show spinner on button
+        $(this).find('button[type=submit]').html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...`
+        );
+        $('button').attr('disabled', 'disabled');
+    });
+</script>
+@stop

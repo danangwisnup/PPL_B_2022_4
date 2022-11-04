@@ -117,7 +117,6 @@ class SkripsiController extends Controller
         if ($temp) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/skripsi/'  . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
                 'upload_skripsi' => 'files/skripsi/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
@@ -170,6 +169,7 @@ class SkripsiController extends Controller
             'confirm' => 'sometimes|accepted',
             'status_skripsi' => 'required|in:Lulus,Sedang Ambil,Belum Ambil',
             'nilai_skripsi' => 'required_if:status_skripsi,Lulus|in:,A,B,C,D,E',
+            'tanggal_sidang' => 'required_if:status_skripsi,Lulus',
             'fileEdit' => 'required_if:confirm,on',
         ]);
 
@@ -183,7 +183,6 @@ class SkripsiController extends Controller
             }
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/skripsi/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            rmdir(public_path('files/temp/' . $temp->folder));
             tb_skripsi::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'tanggal_sidang' => $request->tanggal_sidang,
                 'status' => $request->status_skripsi,

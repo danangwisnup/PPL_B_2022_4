@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nim_nip' => 'H.1.299112052022042000',
+                'nim_nip' => 'H.1.289103252009131011',
                 'nama' => 'Dosen If',
                 'email' => 'dosen@if.com',
                 'password' => Hash::make('123'),
@@ -171,7 +171,7 @@ class UserSeeder extends Seeder
 
         DB::table('tb_dosens')->insert(
             [
-                'nip' => 'H.1.299112052022042000',
+                'nip' => 'H.1.289103252009131011',
                 'nama' => 'Dosen if',
                 'email' => 'dosen@if.com',
                 'status' => 'Aktif',

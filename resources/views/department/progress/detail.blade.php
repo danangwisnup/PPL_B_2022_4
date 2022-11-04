@@ -26,7 +26,7 @@
                     <div class="card">
                         <!-- Card header START -->
                         <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-primary">
+                            <a href="/department/progress_studi_mahasiswa" class="btn btn-sm btn-outline-primary">
                                 <i class="bi bi-backspace"></i>
                                 Kembali
                             </a>

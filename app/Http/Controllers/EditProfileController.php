@@ -130,10 +130,11 @@ class EditProfileController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
         ]);
-        if ($request->fileProfile != null && tb_mahasiswa::where('nim', $id)->first()->foto != null) {
-            unlink(tb_mahasiswa::where('nim', $id)->first()->foto);
-        }
+
         if ($temp && $request->fileProfile != null) {
+            if (tb_mahasiswa::where('nim', $id)->first()->foto != null) {
+                unlink(tb_mahasiswa::where('nim', $id)->first()->foto);
+            }
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->path), public_path('files/profile/' . $id . '_' . $uniq . '.jpg'));
             tb_mahasiswa::where('nim', $id)->update([
@@ -143,7 +144,11 @@ class EditProfileController extends Controller
         }
 
         Alert::success('Berhasil', 'Data berhasil disimpan');
-        return redirect()->route('home');
+        if ($request->fileProfile != null) {
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('edit_profile_mahasiswa.index');
+        }
     }
 
     /**

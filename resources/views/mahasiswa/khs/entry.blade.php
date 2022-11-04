@@ -45,25 +45,12 @@
                                         <form class="row g-3" action="{{ route('khs.store') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="semester_aktif" value="{{ $progress != null ? $progress->semester_aktif : '' }}">
-                                            <!-- Input Jumlah SKS Semester START -->
-                                            <div class="col-6">
-                                                <label class="form-label text-dark">SKS Semester</label>
-                                                <input type="number" class="form-control" id="sks_semester" name="sks_semester" placeholder="SKS Semester" required>
-                                            </div>
-                                            <!-- Input Jumlah SKS Semester END -->
-
-                                            <!-- Input Jumlah SKS Kumulatif START -->
-                                            <div class="col-6">
-                                                <label class="form-label text-dark">SKS Kumulatif</label>
-                                                <input type="number" class="form-control" id="sks_kumulatif" name="sks_kumulatif" placeholder="SKS Kumulatif" required>
-                                            </div>
-                                            <!-- Input Jumlah SKS Semester END -->
 
                                             <!-- Input IP Semester START -->
                                             <div class="col-6">
                                                 <label class="form-label text-dark">IP Semester</label>
-                                                <input type="text" class="form-control" id="ip_semester" name="ip_semester" placeholder="IP Semester" required>
-                                                <div class="small italic text-danger center mt-1">Contoh: 4.00</div>
+                                                <input type="number" step="0.01" class="form-control" id="ip_semester" name="ip_semester" placeholder="IP Semester" required>
+                                                <div class="small italic text-danger center mt-1">Contoh: 3,99</div>
                                             </div>
 
                                             <!-- Input IP Semester END -->
@@ -71,8 +58,8 @@
                                             <!-- Input IP Kumulatif START -->
                                             <div class="col-6">
                                                 <label class="form-label text-dark">IP Kumulatif</label>
-                                                <input type="text" class="form-control" id="ip_kumulatif" name="ip_kumulatif" placeholder="IP Kumulatif" required>
-                                                <div class="small italic text-danger center mt-1">Contoh: 4.00</div>
+                                                <input type="number" step="0.01" class="form-control" id="ip_kumulatif" name="ip_kumulatif" placeholder="IP Kumulatif" required>
+                                                <div class="small italic text-danger center mt-1">Contoh: 3,99</div>
                                             </div>
                                             <!-- Input IP Kumulatif END -->
 
@@ -87,7 +74,7 @@
                                             <div class="text-danger small fst-italic">*Format file [.pdf], pastikan file yang diupload benar.</div>
 
                                             <div class="col-12 text-end">
-                                                <button type="submit" class="btn btn-sm btn-primary mb-0">Submit</button>
+                                                <button type="submit" class="btn btn-sm btn-primary mb-0">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -95,6 +82,11 @@
                                 </div> <!-- Row END -->
                             </div>
                             <!-- Container END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 
@@ -105,6 +97,18 @@
 @include('sweetalert::alert')
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script>
+    // disable all input and button after submit
+    $('form').submit(function() {
+        // show spinner on button
+        $(this).find('button[type=submit]').html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...`
+        );
+        $('button').attr('disabled', 'disabled');
+    });
+</script>
 
 <!-- Load FilePond library -->
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>

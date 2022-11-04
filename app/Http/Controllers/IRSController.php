@@ -71,7 +71,7 @@ class IRSController extends Controller
         // Validate
         $request->validate([
             'semester_aktif' => 'required|unique:tb_irs,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
-            'jumlah_sks' => 'required|numeric',
+            'jumlah_sks' => 'required|numeric|between:1,24',
             'file' => 'required',
         ]);
 
@@ -94,7 +94,6 @@ class IRSController extends Controller
         if ($temp) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            rmdir(public_path('files/temp/' . $temp->folder));
             $db->where('semester_aktif', $request->semester_aktif)->update([
                 'upload_irs' => 'files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
@@ -144,7 +143,7 @@ class IRSController extends Controller
     {
         // Validate
         $request->validate([
-            'jumlah_sks' => 'required|numeric',
+            'jumlah_sks' => 'required|numeric|between:1,24',
             'confirm' => 'sometimes|accepted',
             'fileEdit' => 'required_if:confirm,on',
         ]);
@@ -156,17 +155,30 @@ class IRSController extends Controller
         if ($temp && $request->confirm == 'on') {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            rmdir(public_path('files/temp/' . $temp->folder));
             tb_irs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'sks' => $request->jumlah_sks,
                 'upload_irs' => 'files/irs/' . $db->nim . '_' . $db->semester_aktif  . '_' . $uniq . '.pdf'
             ]);
+            // update tb_khs all
+            for ($i = $semester_aktif; $i <= tb_khs::where('nim', $request->nim)->max('semester_aktif'); $i++) {
+                tb_khs::where('nim', $request->nim)->where('semester_aktif', $i)->update([
+                    'sks' => tb_irs::where('nim', $request->nim)->where('semester_aktif', $i)->first()->sks,
+                    'sks_kumulatif' => tb_khs::where('nim', $request->nim)->where('semester_aktif', $i)->first()->sks_kumulatif - $db->sks + $request->jumlah_sks,
+                ]);
+            }
             $temp->delete();
             unlink(public_path($db->upload_irs));
         } else {
             tb_irs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->update([
                 'sks' => $request->jumlah_sks,
             ]);
+            // update tb_khs all
+            for ($i = $semester_aktif; $i <= tb_khs::where('nim', $request->nim)->max('semester_aktif'); $i++) {
+                tb_khs::where('nim', $request->nim)->where('semester_aktif', $i)->update([
+                    'sks' => tb_irs::where('nim', $request->nim)->where('semester_aktif', $i)->first()->sks,
+                    'sks_kumulatif' => tb_khs::where('nim', $request->nim)->where('semester_aktif', $i)->first()->sks_kumulatif - $db->sks + $request->jumlah_sks,
+                ]);
+            }
         }
 
         if ($db->update()) {
