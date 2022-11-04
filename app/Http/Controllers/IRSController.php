@@ -19,6 +19,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 class IRSController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('irs', ['only' => ['index']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -71,7 +81,7 @@ class IRSController extends Controller
         // Validate
         $request->validate([
             'semester_aktif' => 'required|unique:tb_irs,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
-            'jumlah_sks' => 'required|numeric|min:0',
+            'jumlah_sks' => 'required|numeric|between:1,24',
             'file' => 'required',
         ]);
 
@@ -143,7 +153,7 @@ class IRSController extends Controller
     {
         // Validate
         $request->validate([
-            'jumlah_sks' => 'required|numeric|min:0',
+            'jumlah_sks' => 'required|numeric|between:1,24',
             'confirm' => 'sometimes|accepted',
             'fileEdit' => 'required_if:confirm,on',
         ]);

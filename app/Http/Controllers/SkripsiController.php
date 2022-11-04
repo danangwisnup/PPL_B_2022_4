@@ -19,6 +19,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 class SkripsiController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('skripsi', ['only' => ['index']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -169,6 +179,7 @@ class SkripsiController extends Controller
             'confirm' => 'sometimes|accepted',
             'status_skripsi' => 'required|in:Lulus,Sedang Ambil,Belum Ambil',
             'nilai_skripsi' => 'required_if:status_skripsi,Lulus|in:,A,B,C,D,E',
+            'tanggal_sidang' => 'required_if:status_skripsi,Lulus',
             'fileEdit' => 'required_if:confirm,on',
         ]);
 

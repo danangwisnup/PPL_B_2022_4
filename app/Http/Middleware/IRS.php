@@ -23,7 +23,7 @@ class IRS
             ->where('semester_aktif', $countSemsester)
             ->where('is_irs', 1)->exists()
         ) {
-            return redirect('mahasiswa/entry/khs');
+            return redirect()->route('khs.index');
         } else if (tb_entry_progress::where('nim', Auth::user()->nim_nip)->count() == 0) {
             return redirect('mahasiswa/entry');
         } else {

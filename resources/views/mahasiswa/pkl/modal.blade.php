@@ -48,6 +48,25 @@
     </div>
 </form>
 
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script>
+    // disable all input and button after submit
+    $('form').submit(function() {
+        // show spinner on button
+        $(this).find('button[type=submit]').html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...`
+        );
+        $('button').attr('disabled', 'disabled');
+    });
+
+    // data-bs-dismiss="modal" click reload page
+    $('button[data-bs-dismiss="modal"]').click(function() {
+        location.reload();
+    });
+</script>
+
 <!-- Load FilePond library -->
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
 <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>

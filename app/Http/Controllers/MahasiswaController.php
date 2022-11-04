@@ -15,6 +15,7 @@ use App\Models\tb_temp_file;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\MahasiswaImport;
+use App\Models\tb_entry_progress;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -53,7 +54,7 @@ class MahasiswaController extends Controller
     {
         // Validate the request...
         $request->validate([
-            'nim' => 'required|string|unique:users,nim_nip|min:14|max:14',
+            'nim' => 'required|numeric|unique:users,nim_nip|digits:14',
             'nama' => 'required|string',
             'status' => 'required',
         ]);
@@ -221,18 +222,15 @@ class MahasiswaController extends Controller
 
     public function data_pkl()
     {
-        // sort by nim
         $mahasiswaAll = tb_mahasiswa::orderBy('angkatan', 'asc')->get();
-        $mahasiswaPKL = tb_mahasiswa::join('tb_pkls', function ($join) {
-            $join->on('tb_mahasiswas.nim', '=', 'tb_pkls.nim')
-                ->where('tb_pkls.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_pkls where nim = tb_mahasiswas.nim)'));
-        })->join('tb_entry_progresses', function ($join) {
-            $join->on('tb_pkls.nim', '=', 'tb_entry_progresses.nim')
-                ->where('tb_entry_progresses.is_pkl', '=', 1)
-                ->where('tb_entry_progresses.is_verifikasi', '=', '1')
-                ->where('tb_entry_progresses.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_pkls where nim = tb_entry_progresses.nim)'));
-        })->select('tb_mahasiswas.nim', 'tb_mahasiswas.nama', 'tb_mahasiswas.angkatan', 'tb_pkls.semester_aktif', 'tb_pkls.nilai', 'tb_pkls.status')
-            ->get();
+        $mahasiswaPKL = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_pkls', 'tb_mahasiswas.nim', '=', 'tb_pkls.nim')
+            ->join('tb_entry_progresses', 'tb_pkls.nim', '=', 'tb_entry_progresses.nim')
+            ->where('tb_pkls.semester_aktif', '=', DB::raw('tb_entry_progresses.semester_aktif'))
+            ->where('tb_entry_progresses.is_pkl', '=', 1)
+            ->where('tb_entry_progresses.is_verifikasi', '=', '1')
+            ->select('tb_mahasiswas.*', 'tb_pkls.*', 'tb_entry_progresses.*')
+            ->get()
+            ->unique('nim');
 
         return view('department.data_pkl.index', [
             'title' => 'Data Mahasiswa PKL',
@@ -242,16 +240,14 @@ class MahasiswaController extends Controller
     public function data_skripsi()
     {
         $mahasiswaAll = tb_mahasiswa::orderBy('angkatan', 'asc')->get();
-        $mahasiswaSkripsi = tb_mahasiswa::join('tb_skripsis', function ($join) {
-            $join->on('tb_mahasiswas.nim', '=', 'tb_skripsis.nim')
-                ->where('tb_skripsis.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_skripsis where nim = tb_mahasiswas.nim)'));
-        })->join('tb_entry_progresses', function ($join) {
-            $join->on('tb_skripsis.nim', '=', 'tb_entry_progresses.nim')
-                ->where('tb_entry_progresses.is_skripsi', '=', 1)
-                ->where('tb_entry_progresses.is_verifikasi', '=', '1')
-                ->where('tb_entry_progresses.semester_aktif', '=', DB::raw('(select max(semester_aktif) from tb_skripsis where nim = tb_entry_progresses.nim)'));
-        })->select('tb_mahasiswas.nim', 'tb_mahasiswas.nama', 'tb_mahasiswas.angkatan', 'tb_skripsis.semester_aktif', 'tb_skripsis.nilai', 'tb_skripsis.status')
-            ->get();
+        $mahasiswaSkripsi = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_skripsis', 'tb_mahasiswas.nim', '=', 'tb_skripsis.nim')
+            ->join('tb_entry_progresses', 'tb_skripsis.nim', '=', 'tb_entry_progresses.nim')
+            ->where('tb_skripsis.semester_aktif', '=', DB::raw('tb_entry_progresses.semester_aktif'))
+            ->where('tb_entry_progresses.is_skripsi', '=', 1)
+            ->where('tb_entry_progresses.is_verifikasi', '=', '1')
+            ->select('tb_mahasiswas.*', 'tb_skripsis.*', 'tb_entry_progresses.*')
+            ->get()
+            ->unique('nim');
 
         return view('department.data_skripsi.index', [
             'title' => 'Data Mahasiswa Skripsi',

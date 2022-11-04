@@ -23,17 +23,17 @@ class Skripsi
             ->where('semester_aktif', $countSemsester)
             ->where('is_irs', 0)->exists()
         ) {
-            return redirect('mahasiswa/entry/irs');
+            return redirect()->route('irs.index');
         } else if (tb_entry_progress::where('nim', Auth::user()->nim_nip)
             ->where('semester_aktif', $countSemsester)
             ->where('is_khs', 0)->exists()
         ) {
-            return redirect('mahasiswa/entry/khs');
+            return redirect()->route('khs.index');
         } else if (tb_entry_progress::where('nim', Auth::user()->nim_nip)
             ->where('semester_aktif', $countSemsester)
             ->where('is_pkl', 0)->exists()
         ) {
-            return redirect('mahasiswa/entry/pkl');
+            return redirect()->route('pkl.index');
         } else if (tb_entry_progress::where('nim', Auth::user()->nim_nip)
             ->where('semester_aktif', $countSemsester)
             ->where('is_skripsi', 1)->exists()
