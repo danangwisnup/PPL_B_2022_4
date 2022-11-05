@@ -64,7 +64,7 @@
                                                 <p class="mb-3 border-bottom border-2 border-white"> <strong> Dosen Wali: </strong></p>
                                             </td>
                                             <td>
-                                                <p class="border-bottom border-2"> {{ $mahasiswa->kode_wali != null ? $mahasiswa->kode_wali : '-' }} </p>
+                                                <p class="border-bottom border-2"> {{ $mahasiswa->kode_wali != null ? $dosen->nama : '-' }} </p>
                                             </td>
                                         </tr>
                                         <tr>

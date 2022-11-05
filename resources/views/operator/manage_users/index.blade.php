@@ -199,7 +199,6 @@
 <script src="{{ asset('assets/js/javascript-ajax.js') }}"></script>
 <script src="{{ asset('assets/js/data-table.js') }}"></script>
 
-<<<<<<< HEAD
 <script>
     // disable all input and button after submit
     $('form').submit(function() {
@@ -207,6 +206,4 @@
     });
 </script>
 
-=======
->>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
 @stop

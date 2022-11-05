@@ -29,7 +29,7 @@
                         <!-- Card header START -->
                         <div class="card-body">
                             <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
-                                Password default user sesuai dengan nim/nip.
+                            <strong>Info!</strong> Password default user sama dengan nim/nip.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
@@ -50,7 +50,7 @@
                                         @csrf
                                         <div class="col-6">
                                             <label class="form-label text-dark">NIM</label>
-                                            <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM" value="{{ old('nim') }}" required>
+                                            <input type="number" class="form-control" id="nim" name="nim" placeholder="NIM" value="{{ old('nim') }}" required>
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label text-dark">Nama Mahasiswa</label>
@@ -172,12 +172,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-<<<<<<< HEAD
-=======
-                <div class="alert alert-warning" role="alert">
-                    <i class="bi bi-exclamation-triangle"></i> <strong>Perhatian!</strong> Pastikan data <strong>nip, email dan status</strong> tidak mengandung whitespace (spasi) di awal dan akhir data.
-                </div>
->>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
                 <div class="col-12 mb-3">
                     <div class="text-center">
                         <img src="{{ asset('assets/images/bulk_dosen.png') }}" class="img-fluid" alt="Bulk Add Dosen">
@@ -228,4 +222,21 @@
 @stop
 =======
 @endsection
->>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
+
+@section('script')
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+<script>
+    // disable all input and button after submit
+    $('form').submit(function() {
+        // show spinner on button
+        $(this).find('button[type=submit]').html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...`
+        );
+        $('button').attr('disabled', 'disabled');
+    });
+</script>
+
+@stop

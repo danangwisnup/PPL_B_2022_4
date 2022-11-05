@@ -15,10 +15,7 @@ use App\Models\tb_temp_file;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\MahasiswaImport;
-<<<<<<< HEAD
 use App\Models\tb_entry_progress;
-=======
->>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -57,7 +54,7 @@ class MahasiswaController extends Controller
     {
         // Validate the request...
         $request->validate([
-            'nim' => 'required|string|unique:users,nim_nip|min:14|max:14',
+            'nim' => 'required|numeric|unique:users,nim_nip|digits:14',
             'nama' => 'required|string',
             'status' => 'required',
         ]);
@@ -164,7 +161,7 @@ class MahasiswaController extends Controller
         User::where('nim_nip', $id)->update($data);
 
         // Alert success
-        Alert::success('Success!', 'Data dosen berhasil diupdate');
+        Alert::success('Success!', 'Data mahasiswa berhasil diupdate');
 
         return redirect()->route('manage_users');
     }
@@ -216,11 +213,12 @@ class MahasiswaController extends Controller
     public function data_mahasiswa_detail(Request $request)
     {
         $mahasiswa = tb_mahasiswa::where('nim', $request->nim)->first();
+        $dosen = tb_dosen::where('nip', $mahasiswa->kode_wali)->first();
         $kabupaten = tb_kab::where('kode_kab', $mahasiswa->kode_kab)->first();
         $provinsi = tb_prov::where('kode_prov', $mahasiswa->kode_prov)->first();
         return view('department.data_mhs.detail', [
             'title' => 'Data Mahasiswa Detail',
-        ])->with(compact('mahasiswa', 'kabupaten', 'provinsi'));
+        ])->with(compact('mahasiswa', 'dosen', 'kabupaten', 'provinsi'));
     }
 
     public function data_pkl()

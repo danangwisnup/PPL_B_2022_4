@@ -10,11 +10,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-<<<<<<< HEAD
         "maatwebsite/excel": "*",
-=======
-        "maatwebsite/excel": "^3.1",
->>>>>>> 866a6c53dda70f1d72bc0e59f73217a57117ed4c
         "psr/simple-cache": "2.0",
         "realrashid/sweet-alert": "^5.1"
     },
