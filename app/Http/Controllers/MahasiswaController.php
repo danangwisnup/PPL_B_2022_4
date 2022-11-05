@@ -161,7 +161,7 @@ class MahasiswaController extends Controller
         User::where('nim_nip', $id)->update($data);
 
         // Alert success
-        Alert::success('Success!', 'Data dosen berhasil diupdate');
+        Alert::success('Success!', 'Data mahasiswa berhasil diupdate');
 
         return redirect()->route('manage_users');
     }

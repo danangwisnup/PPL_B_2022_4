@@ -180,6 +180,12 @@
                                     <i class="bi bi-key"></i><span> Change Password</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                    <a style="font-size: 14px;" class="nav-link {{ ($title == 'Logout') ? 'active' : '' }}" href="{{ route('logout') }}">
+                                        <i class="bi bi-power"></i><span> Logout</span>
+                                    </a>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                     @else
