@@ -65,7 +65,7 @@
                                                 <select class="form-select" id="semester_aktif" name="semester_aktif" required>
                                                     <option value="">Pilih Semester</option>
                                                     {{ $progress == null ? $i = 1 : $i = $progress->semester_aktif + 1 }}
-                                                    @for ($i = $i; $i <= 14; $i++) <option value="{{ $i }}">Semseter {{ $i }}</option>
+                                                    @for ($i = $i; $i <= 14; $i++) <option value="{{ $i }}">Semester {{ $i }}</option>
                                                         @endfor
                                                 </select>
                                             </div>
