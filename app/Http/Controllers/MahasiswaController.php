@@ -161,7 +161,7 @@ class MahasiswaController extends Controller
         User::where('nim_nip', $id)->update($data);
 
         // Alert success
-        Alert::success('Success!', 'Data dosen berhasil diupdate');
+        Alert::success('Success!', 'Data mahasiswa berhasil diupdate');
 
         return redirect()->route('manage_users');
     }
@@ -213,11 +213,12 @@ class MahasiswaController extends Controller
     public function data_mahasiswa_detail(Request $request)
     {
         $mahasiswa = tb_mahasiswa::where('nim', $request->nim)->first();
+        $dosen = tb_dosen::where('nip', $mahasiswa->kode_wali)->first();
         $kabupaten = tb_kab::where('kode_kab', $mahasiswa->kode_kab)->first();
         $provinsi = tb_prov::where('kode_prov', $mahasiswa->kode_prov)->first();
         return view('department.data_mhs.detail', [
             'title' => 'Data Mahasiswa Detail',
-        ])->with(compact('mahasiswa', 'kabupaten', 'provinsi'));
+        ])->with(compact('mahasiswa', 'dosen', 'kabupaten', 'provinsi'));
     }
 
     public function data_pkl()
