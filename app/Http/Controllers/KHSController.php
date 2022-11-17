@@ -19,6 +19,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 class KHSController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('khs', ['only' => ['index']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

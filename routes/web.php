@@ -34,17 +34,19 @@ use App\Http\Controllers\EditProfileDepartmentController;
 |
 */
 
-// Home 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['prevent-back-history']], function () {
+    // Home 
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Auth (login & logout)
-Route::get('/login', [AuthController::class, 'index'])->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenticate'])->middleware('guest')->name('login');
-Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+    // Auth (login & logout)
+    Route::get('/login', [AuthController::class, 'index'])->middleware('guest');
+    Route::post('/login', [AuthController::class, 'authenticate'])->middleware('guest')->name('login');
+    Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+});
 
 // Middleware auth
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'prevent-back-history']], function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('editprofile')->name('dashboard');
@@ -106,25 +108,21 @@ Route::group(['middleware' => ['auth']], function () {
 
         // irs
         Route::resource('/mahasiswa/irs', IRSController::class);
-        Route::get('/mahasiswa/entry/irs', [IRSController::class, 'index'])->middleware('irs');
         Route::get('/mahasiswa/data/irs', [IRSController::class, 'data'])->name('data_irs');
         Route::get('/mahasiswa/irs/{semester}/{nim}/edit', [IRSController::class, 'edit'])->name('irs.edit');
 
         // khs
         Route::resource('/mahasiswa/khs', KHSController::class);
-        Route::get('/mahasiswa/entry/khs', [KHSController::class, 'index'])->middleware('khs');
         Route::get('/mahasiswa/data/khs', [KHSController::class, 'data'])->name('data_khs');
         Route::get('/mahasiswa/khs/{semester}/{nim}/edit', [KHSController::class, 'edit'])->name('khs.edit');
 
         // pkl
         Route::resource('/mahasiswa/pkl', PKLController::class);
-        Route::get('/mahasiswa/entry/pkl', [PKLController::class, 'index'])->middleware('pkl');
         Route::get('/mahasiswa/data/pkl', [PKLController::class, 'data'])->name('data_pkl');
         Route::get('/mahasiswa/pkl/{semester}/{nim}/edit', [PKLController::class, 'edit'])->name('pkl.edit');
 
         // skripsi
         Route::resource('/mahasiswa/skripsi', SkripsiController::class);
-        Route::get('/mahasiswa/entry/skripsi', [SkripsiController::class, 'index'])->middleware('skripsi');
         Route::get('/mahasiswa/data/skripsi', [SkripsiController::class, 'data'])->name('data_skripsi');
         Route::get('/mahasiswa/skripsi/{semester}/{nim}/edit', [SkripsiController::class, 'edit'])->name('skripsi.edit');
     });

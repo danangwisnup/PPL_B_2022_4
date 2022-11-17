@@ -19,6 +19,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 class IRSController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('irs', ['only' => ['index']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
