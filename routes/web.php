@@ -60,6 +60,9 @@ Route::group(['middleware' => ['auth', 'prevent-back-history']], function () {
         Route::post('/operator/mahasiswa/bulk', [MahasiswaController::class, 'bulk'])->name('mahasiswa.bulk');
         Route::resource('/operator/dosen', DosenController::class);
         Route::post('/operator/dosen/bulk', [DosenController::class, 'bulk'])->name('dosen.bulk');
+        // delete user
+        Route::get('/operator/delete_mahasiswa/{id}', [MahasiswaController::class, 'delete'])->name('delete_mahasiswa');
+        Route::get('/operator/delete_dosen/{id}', [DosenController::class, 'delete'])->name('delete_dosen');
     });
 
     // Fiture Department

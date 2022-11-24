@@ -133,6 +133,23 @@ class DosenController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        // find where nim table dosen
+        if ($id == 'all') {
+            return view('operator.manage_users.modal.delete_all_dosen');
+        } else {
+            $dosen = tb_dosen::where('nip', $id)->first();
+            return view('operator.manage_users.modal.delete_dosen', compact('dosen'));
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param string $id

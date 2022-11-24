@@ -167,6 +167,23 @@ class MahasiswaController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        // find where nim table mahasiswa
+        if ($id == 'all') {
+            return view('operator.manage_users.modal.delete_all_mahasiswa');
+        } else {
+            $mahasiswa = tb_mahasiswa::where('nim', $id)->first();
+            return view('operator.manage_users.modal.delete_mahasiswa', compact('mahasiswa'));
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
