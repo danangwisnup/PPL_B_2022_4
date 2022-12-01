@@ -27,18 +27,16 @@
                     <!-- Card START -->
                     <div class="card">
                         <!-- Card header START -->
-                        <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <h1 class="card-title h5">Dosen</h1>
-                        </div>
                         <div class="card-body">
+                            <h1 class="card-title h5">Dosen</h1>
                             <div class="d-flex flex-column align-items-end mb-4">
                                 <div id="table_wrapper"></div>
                             </div>
                             <div class="row g-3 mb-4">
                                 <div class="col-6">
-                                    <div id="filter_col3" data-column="3">
+                                    <div id="filter_col4" data-column="4">
                                         <label class="form-label text-dark">Pilih Status</label>
-                                        <select class="form-select column_filter" id="col3_filter">
+                                        <select class="form-select column_filter" id="col4_filter">
                                             <option value="">Semua</option>
                                             <option value="Aktif">Aktif</option>
                                             <option value="Cuti">Cuti</option>
@@ -53,6 +51,7 @@
                                         <table class="table table-bordered table-hover" id="table_1">
                                             <thead class="thead-dark">
                                                 <tr>
+                                                    <th>No</th>
                                                     <th>Nama</th>
                                                     <th>NIP</th>
                                                     <th>Email</th>
@@ -62,6 +61,7 @@
                                             <tbody>
                                                 @foreach ($dosenAll as $dosen)
                                                 <tr style="cursor: pointer;">
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $dosen->nama }}</td>
                                                     <td>{{ $dosen->nip }}</td>
                                                     <td>{{ $dosen->email }}</td>
@@ -114,6 +114,18 @@
         var data = $('#table_1').DataTable().row(this).data();
         var nip = data[1];
         document.getElementById(nip).click();
+    });
+
+    // change no from 1 if filter
+    $('#table_1').on('draw.dt', function() {
+        var info = $('#table_1').DataTable().page.info();
+        $('#table_1').DataTable().column(0, {
+            search: 'applied',
+            order: 'applied',
+            page: 'applied'
+        }).nodes().each(function(cell, i) {
+            cell.innerHTML = i + 1 + info.start;
+        });
     });
 </script>
 

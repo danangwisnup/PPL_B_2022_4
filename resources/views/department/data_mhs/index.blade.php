@@ -27,18 +27,16 @@
                     <!-- Card START -->
                     <div class="card">
                         <!-- Card header START -->
-                        <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
-                            <h1 class="card-title h5">Mahasiswa</h1>
-                        </div>
                         <div class="card-body">
+                            <h1 class="card-title h5">Mahasiswa</h1>
                             <div class="d-flex flex-column align-items-end mb-4">
                                 <div id="table_wrapper"></div>
                             </div>
                             <div class="row g-3 mb-4">
                                 <div class="col-6">
-                                    <div id="filter_col2" data-column="2">
+                                    <div id="filter_col3" data-column="3">
                                         <label class="form-label text-dark">Pilih Angkatan</label>
-                                        <select class="form-select column_filter" id="col2_filter">
+                                        <select class="form-select column_filter" id="col3_filter">
                                             <option value="">Semua</option>
                                             @for ($i = 2015; $i <= date('Y'); $i++) <option value="{{ $i }}">{{ $i }}</option>
                                                 @endfor
@@ -46,9 +44,9 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div id="filter_col3" data-column="3">
+                                    <div id="filter_col4" data-column="4">
                                         <label class="form-label text-dark">Pilih Status</label>
-                                        <select class="form-select column_filter" id="col3_filter">
+                                        <select class="form-select column_filter" id="col4_filter">
                                             <option value="">Semua</option>
                                             <option value="Aktif">Aktif</option>
                                             <option value="Cuti">Cuti</option>
@@ -68,6 +66,7 @@
                                         <table class="table table-bordered table-hover" id="table_1">
                                             <thead class="thead-dark">
                                                 <tr>
+                                                    <th>No</th>
                                                     <th>Nama</th>
                                                     <th>NIM</th>
                                                     <th>Angkatan</th>
@@ -77,6 +76,7 @@
                                             <tbody>
                                                 @foreach ($mahasiswaAll as $mhs)
                                                 <tr style="cursor: pointer;">
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $mhs->nama }}</td>
                                                     <td>{{ $mhs->nim }}</td>
                                                     <td>{{ $mhs->angkatan }}</td>
@@ -129,6 +129,18 @@
         var data = $('#table_1').DataTable().row(this).data();
         var nim = data[1];
         document.getElementById(nim).click();
+    });
+
+    // change no from 1 if filter
+    $('#table_1').on('draw.dt', function() {
+        var info = $('#table_1').DataTable().page.info();
+        $('#table_1').DataTable().column(0, {
+            search: 'applied',
+            order: 'applied',
+            page: 'applied'
+        }).nodes().each(function(cell, i) {
+            cell.innerHTML = i + 1 + info.start;
+        });
     });
 </script>
 
