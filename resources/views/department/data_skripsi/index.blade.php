@@ -178,13 +178,12 @@
 
                                     // change no from 1 if filter
                                     $('#table_1').on('draw.dt', function() {
-                                        var info = $('#table_1').DataTable().page.info();
                                         $('#table_1').DataTable().column(0, {
                                             search: 'applied',
                                             order: 'applied',
                                             page: 'applied'
                                         }).nodes().each(function(cell, i) {
-                                            cell.innerHTML = i + 1 + info.start;
+                                            cell.innerHTML = i + 1;
                                         });
                                     });
                                 </script>
