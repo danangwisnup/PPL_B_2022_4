@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('kode_kab')->primary();
             $table->string('kode_prov');
             $table->string('nama_kab');
+            $table->foreign('kode_prov')->references('kode_prov')->on('tb_provs');
         });
     }
 

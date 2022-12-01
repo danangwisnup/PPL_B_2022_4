@@ -47,11 +47,13 @@
                                 <!-- Tab Mahasiswa -->
                                 <div class="tab-pane fade show active" id="tab-1">
                                     <div class="row g-3">
+                                        @if ($mahasiswa->count() > 0)
                                         <div class="d-flex flex-column align-items-end">
                                             <a class="btn btn-danger-soft btn-sm" id="buttonConfirmDelete_Mhs" data-bs-toggle="modal" data-bs-target="#confirm_delete_mhs" data-attr="{{ route('delete_mahasiswa', 'all') }}">
                                                 <i class="bi bi-trash-fill"></i> Delete All
                                             </a>
                                         </div>
+                                        @endif
                                         <div class="col-12">
                                             <div class="table-responsive">
                                                 <table class="table" id="table_1">
@@ -92,11 +94,13 @@
                                 <!-- Tab Dosen -->
                                 <div class="tab-pane fade" id="tab-2">
                                     <div class="row g-3">
+                                        @if ($dosen->count() > 0)
                                         <div class="d-flex flex-column align-items-end">
                                             <a class="btn btn-danger-soft btn-sm" id="buttonConfirmDelete_dsn" data-bs-toggle="modal" data-bs-target="#confirm_delete_dsn" data-attr="{{ route('delete_dosen', 'all') }}">
                                                 <i class="bi bi-trash-fill"></i> Delete All
                                             </a>
                                         </div>
+                                        @endif
                                         <div class="col-12">
                                             <div class="table-responsive">
                                                 <table class="table" id="table_2">

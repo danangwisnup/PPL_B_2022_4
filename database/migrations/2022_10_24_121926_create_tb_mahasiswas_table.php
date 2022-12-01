@@ -26,6 +26,10 @@ return new class extends Migration
             $table->string('kode_wali')->nullable();
             $table->string('status');
             $table->string('foto')->nullable();
+            $table->foreign('nim')->references('nim_nip')->on('users')->onDelete('cascade');
+            $table->foreign('kode_kab')->references('kode_kab')->on('tb_kabs');
+            $table->foreign('kode_prov')->references('kode_prov')->on('tb_provs');
+            $table->foreign('kode_wali')->references('nip')->on('tb_dosens')->nullOnDelete();
         });
     }
 

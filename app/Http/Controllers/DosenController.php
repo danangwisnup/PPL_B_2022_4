@@ -61,6 +61,8 @@ class DosenController extends Controller
 
         $data = $request->except(['_token']);
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         // Insert to table dosen & users
         tb_dosen::insert($data);
         User::insert([
@@ -72,6 +74,8 @@ class DosenController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Alert success
         Alert::success('Success!', 'Data Dosen Berhasil Ditambahkan');
@@ -174,7 +178,7 @@ class DosenController extends Controller
         // Delete to table Dosen & users
         if ($id == 'all') {
             User::where('role', 'dosen')->delete();
-            tb_dosen::truncate();
+            tb_dosen::where('nip', '!=', '')->delete();
         } else {
             User::where('nim_nip', $id)->delete();
             tb_dosen::where('nip', $id)->delete();

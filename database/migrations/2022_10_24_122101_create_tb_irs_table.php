@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('sks');
             $table->string('upload_irs');
             $table->unique(['nim', 'semester_aktif']);
+            $table->foreign('nim')->references('nim')->on('tb_entry_progresses')->onDelete('cascade');
         });
     }
 

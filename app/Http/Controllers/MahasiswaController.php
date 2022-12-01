@@ -83,6 +83,8 @@ class MahasiswaController extends Controller
             $jalur_masuk = 'SBUB';
         }
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         // Insert to table mahasiswa & users
         tb_mahasiswa::insert([
             'nim' => $request->nim,
@@ -100,6 +102,8 @@ class MahasiswaController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Alert success
         Alert::success('Success!', 'Data mahasiswa berhasil ditambahkan');
@@ -206,7 +210,7 @@ class MahasiswaController extends Controller
         // Delete to table mahasiswa & users
         if ($id == 'all') {
             User::where('role', 'mahasiswa')->delete();
-            tb_mahasiswa::truncate();
+            tb_mahasiswa::where('nim', '!=', '')->delete();
         } else {
             User::where('nim_nip', $id)->delete();
             tb_mahasiswa::where('nim', $id)->delete();

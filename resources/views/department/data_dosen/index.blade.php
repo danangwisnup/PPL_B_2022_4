@@ -112,7 +112,7 @@
     });
     $('#table_1 tbody').on('click', 'tr', function() {
         var data = $('#table_1').DataTable().row(this).data();
-        var nip = data[1];
+        var nip = data[2];
         document.getElementById(nip).click();
     });
 

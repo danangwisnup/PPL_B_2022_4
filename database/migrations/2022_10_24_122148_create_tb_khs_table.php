@@ -22,6 +22,7 @@ return new class extends Migration
             $table->float('ip_kumulatif');
             $table->string('upload_khs');
             $table->unique(['nim', 'semester_aktif']);
+            $table->foreign('nim')->references('nim')->on('tb_entry_progresses')->onDelete('cascade');
         });
     }
 
