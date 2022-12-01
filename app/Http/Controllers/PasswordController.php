@@ -95,17 +95,17 @@ class PasswordController extends Controller
             'old_password' => [
                 'required', function ($attribute, $value, $fail) {
                     if (!Hash::check($value, Auth::user()->password)) {
-                        $fail('Error! Password lama tidak sama');
+                        $fail('Password lama tidak sama');
                     }
                 },
             ],
             'new_password' => 'required|string',
             'ver_password' => 'required|string|same:new_password',
         ], [
-            'old_password.required' => 'Error! Password lama tidak boleh kosong',
-            'new_password.required' => 'Error! Password baru tidak boleh kosong',
-            'ver_password.required' => 'Error! Verifikasi password tidak boleh kosong',
-            'ver_password.same' => 'Error! Verifikasi password tidak sama dengan password baru',
+            'old_password.required' => 'Password lama tidak boleh kosong',
+            'new_password.required' => 'Password baru tidak boleh kosong',
+            'ver_password.required' => 'Verifikasi password tidak boleh kosong',
+            'ver_password.same' => 'Verifikasi password tidak sama dengan password baru',
         ]);
 
 

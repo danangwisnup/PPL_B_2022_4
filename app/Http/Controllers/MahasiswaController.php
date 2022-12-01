@@ -58,11 +58,11 @@ class MahasiswaController extends Controller
             'nama' => 'required|string',
             'status' => 'required',
         ], [
-            'nim.required' => 'Error! NIM tidak boleh kosong',
-            'nim.unique' => 'Error! NIM sudah terdaftar',
-            'nim.digits' => 'Error! NIM harus 14 digit',
-            'nama.required' => 'Error! Nama tidak boleh kosong',
-            'status.required' => 'Error! Status tidak boleh kosong',
+            'nim.required' => 'NIM tidak boleh kosong',
+            'nim.unique' => 'NIM sudah terdaftar',
+            'nim.digits' => 'NIM harus 14 digit',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'status.required' => 'Status tidak boleh kosong',
         ]);
 
         // Angkatan Mahasiswa
@@ -147,10 +147,10 @@ class MahasiswaController extends Controller
             'status' => 'required',
             'email' => 'nullable|email|unique:users,email,' . $id . ',nim_nip',
         ], [
-            'nama.required' => 'Error! Nama tidak boleh kosong',
-            'angkatan.required' => 'Error! Angkatan tidak boleh kosong',
-            'status.required' => 'Error! Status tidak boleh kosong',
-            'email.unique' => 'Error! Email sudah terdaftar',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'angkatan.required' => 'Angkatan tidak boleh kosong',
+            'status.required' => 'Status tidak boleh kosong',
+            'email.unique' => 'Email sudah terdaftar',
         ]);
 
         // Update to table mahasiswa & users
@@ -223,8 +223,8 @@ class MahasiswaController extends Controller
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
         ], [
-            'file.required' => 'Error! File tidak boleh kosong',
-            'file.mimes' => 'Error! File harus berformat xlsx, xls, atau csv',
+            'file.required' => 'File tidak boleh kosong',
+            'file.mimes' => 'File harus berformat xlsx, xls, atau csv',
         ]);
 
         Excel::import(new MahasiswaImport, $request->file('file'));
