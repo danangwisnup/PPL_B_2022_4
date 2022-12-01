@@ -49,7 +49,7 @@
                                             <!-- Input IP Semester START -->
                                             <div class="col-6">
                                                 <label class="form-label text-dark">IP Semester</label>
-                                                <input type="number" step="0.01" class="form-control" id="ip_semester" name="ip_semester" placeholder="IP Semester" required>
+                                                <input type="number" step="0.01" class="form-control @error('ip_semester') is-invalid @enderror" id="ip_semester" name="ip_semester" placeholder="IP Semester" required>
                                                 <div class="small italic text-danger center mt-1">Contoh: 3,99</div>
                                             </div>
 
@@ -58,7 +58,7 @@
                                             <!-- Input IP Kumulatif START -->
                                             <div class="col-6">
                                                 <label class="form-label text-dark">IP Kumulatif</label>
-                                                <input type="number" step="0.01" class="form-control" id="ip_kumulatif" name="ip_kumulatif" placeholder="IP Kumulatif" required>
+                                                <input type="number" step="0.01" class="form-control @error('ip_kumulatif') is-invalid @enderror" id="ip_kumulatif" name="ip_kumulatif" placeholder="IP Kumulatif" required>
                                                 <div class="small italic text-danger center mt-1">Contoh: 3,99</div>
                                             </div>
                                             <!-- Input IP Kumulatif END -->

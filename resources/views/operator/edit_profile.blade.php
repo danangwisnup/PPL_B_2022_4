@@ -41,7 +41,7 @@
                                 <div class="row mt-1 mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nama :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ $operator->nama }}" required>
+                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ old('nama', $operator->nama) }}" required>
                                     </div>
                                 </div>
 
@@ -49,7 +49,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Email SSO :</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $operator->email }}" required>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email', $operator->email) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12 text-end">

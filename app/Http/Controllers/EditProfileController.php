@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\tb_dosen;
+use App\Models\tb_entry_progress;
 use App\Models\tb_mahasiswa;
 use App\Models\tb_irs;
 use App\Models\tb_kab;
@@ -112,6 +113,24 @@ class EditProfileController extends Controller
             'provinsi' => 'required|exists:tb_provs,kode_prov',
             'kabupatenkota' => 'required|exists:tb_kabs,kode_kab',
             'dosen_wali' => 'required|exists:tb_dosens,nip',
+        ], [
+            'fileProfile.required' => 'File Profile harus diisi.',
+            'nama.required' => 'Nama harus diisi.',
+            'nim.required' => 'NIM harus diisi.',
+            'angkatan.required' => 'Angkatan harus diisi.',
+            'status.required' => 'Status harus diisi.',
+            'jalur_masuk.required' => 'Jalur Masuk harus diisi.',
+            'handphone.required' => 'Handphone harus diisi.',
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'alamat.required' => 'Alamat harus diisi.',
+            'provinsi.required' => 'Provinsi harus diisi.',
+            'provinsi.exists' => 'Provinsi tidak terdaftar.',
+            'kabupatenkota.required' => 'Kabupaten/Kota harus diisi.',
+            'kabupatenkota.exists' => 'Kabupaten/Kota tidak terdaftar.',
+            'dosen_wali.required' => 'Dosen Wali harus diisi.',
+            'dosen_wali.exists' => 'Dosen Wali tidak terdaftar.',
         ]);
 
         $temp = tb_temp_file::where('path', $request->fileProfile)->first();
@@ -130,6 +149,14 @@ class EditProfileController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
         ]);
+
+        // if found nim on tb_entry_progresses
+        if (tb_entry_progress::where('nim', $id)->first()) {
+            // Update tb_entry_progresses
+            tb_entry_progress::where('nim', $id)->update([
+                'nip' => $request->dosen_wali,
+            ]);
+        }
 
         if ($temp && $request->fileProfile != null) {
             if (tb_mahasiswa::where('nim', $id)->first()->foto != null) {

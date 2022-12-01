@@ -26,8 +26,8 @@
                     </div>
                     @endif
                     <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
-                            <strong>Warning!</strong> Password tidak boleh sama dengan nama dan nim.
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <strong>Warning!</strong> Password tidak boleh sama dengan nama dan nim.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     <!-- Event alert END -->
 
@@ -56,7 +56,12 @@
                                 <div class="row mt-1 mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nama :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ $mahasiswa->nama }}" required>
+                                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="Nama" value="{{ old('nama', $mahasiswa->nama) }}" required>
+                                        @error('nama')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -64,7 +69,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">NIM :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM" value="{{ $mahasiswa->nim }}" readonly>
+                                        <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim" placeholder="NIM" value="{{ $mahasiswa->nim }}" readonly required>
                                     </div>
                                 </div>
 
@@ -72,7 +77,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Angkatan :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="angkatan" name="angkatan" placeholder="Angkatan" value="{{ $mahasiswa->angkatan }}" readonly>
+                                        <input type="text" class="form-control @error('angkatan') is-invalid @enderror" id="angkatan" name="angkatan" placeholder="Angkatan" value="{{ $mahasiswa->angkatan }}" readonly required>
                                     </div>
                                 </div>
 
@@ -80,7 +85,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Status :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{ $mahasiswa->status }}" readonly>
+                                        <input type="text" class="form-control @error('status') is-invalid @enderror" id="status" name="status" placeholder="Status" value="{{ $mahasiswa->status }}" readonly required>
                                     </div>
                                 </div>
 
@@ -88,7 +93,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Jalur Masuk :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="jalur_masuk" name="jalur_masuk" placeholder="Jalur Masuk" value="{{ $mahasiswa->jalur_masuk }}" readonly>
+                                        <input type="text" class="form-control @error('jalur_masuk') is-invalid @enderror" id="jalur_masuk" name="jalur_masuk" placeholder="Jalur Masuk" value="{{ $mahasiswa->jalur_masuk }}" readonly required>
                                     </div>
                                 </div>
 
@@ -96,7 +101,12 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nomor HP :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="handphone" name="handphone" placeholder="Nomor HP" value="{{ $mahasiswa->handphone }}" required>
+                                        <input type="text" class="form-control @error('handphone') is-invalid @enderror" id="handphone" name="handphone" placeholder="Nomor HP" value="{{ old('handphone', $mahasiswa->handphone) }}" required>
+                                        @error('handphone')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -104,7 +114,12 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Email SSO :</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $mahasiswa->email }}" required>
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email" value="{{ old('email', $mahasiswa->email) }}" required>
+                                        @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -112,7 +127,12 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Alamat :</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" required>{{ $mahasiswa->alamat }}</textarea>
+                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" placeholder="Alamat" required>{{ old('alamat', $mahasiswa->alamat) }}</textarea>
+                                        @error('alamat')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -120,12 +140,17 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Provinsi :</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select" id="provinsi" name="provinsi" required>
+                                        <select class="form-select @error('provinsi') is-invalid @enderror" id="provinsi" name="provinsi" required>
                                             <option value="">Pilih Provinsi</option>
                                             @foreach ($provinsi as $prov)
                                             <option value="{{ $prov->kode_prov }}" {{ $mahasiswa->kode_prov == $prov->kode_prov ? 'selected="true"' : '' }}>{{ $prov->nama_prov }}</option>
                                             @endforeach
                                         </select>
+                                        @error('provinsi')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -133,12 +158,17 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Kabupaten/Kota :</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select" id="kabupatenkota" name="kabupatenkota" required>
+                                        <select class="form-select @error('kabupatenkota') is-invalid @enderror" id="kabupatenkota" name="kabupatenkota" required>
                                             <option value="">Pilih Kabupaten/Kota</option>
                                             @foreach ($kabupaten as $kab)
                                             <option value="{{ $kab->kode_kab }}" {{ $mahasiswa->kode_kab == $kab->kode_kab ? 'selected="true"' : '' }}>{{ $kab->nama_kab }}</option>
                                             @endforeach
                                         </select>
+                                        @error('kabupatenkota')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -146,12 +176,17 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Dosen Wali :</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select" id="dosen_wali" name="dosen_wali" required>
+                                        <select class="form-select @error('dosen_wali') is-invalid @enderror" id="dosen_wali" name="dosen_wali" required>
                                             <option value="">Pilih Dosen Wali</option>
                                             @foreach ($dosen_wali as $wali)
                                             <option value="{{ $wali->nip }}" {{ $mahasiswa->kode_wali == $wali->nip ? 'selected="true"' : '' }}>{{ $wali->nama }}</option>
                                             @endforeach
                                         </select>
+                                        @error('dosen_wali')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 

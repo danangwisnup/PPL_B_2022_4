@@ -47,8 +47,16 @@ class DosenController extends Controller
         $data = $request->validate([
             'nip' => 'required|string|unique:users,nim_nip',
             'nama' => 'required|string',
-            'email' => 'required|email||unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'status' => 'required',
+        ], [
+            'nip.required' => 'NIP tidak boleh kosong',
+            'nip.unique' => 'NIP sudah terdaftar',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
+            'status.required' => 'Status tidak boleh kosong',
         ]);
 
         $data = $request->except(['_token']);
@@ -109,6 +117,12 @@ class DosenController extends Controller
             'nama' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $id . ',nim_nip',
             'status' => 'required',
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
+            'status.required' => 'Status tidak boleh kosong',
         ]);
 
         // Update to table dosen & users
@@ -168,6 +182,7 @@ class DosenController extends Controller
 
         // Alert success
         Alert::success('Success!', 'Data Dosen Berhasil Dihapus');
+
         return redirect()->route('manage_users');
     }
 
@@ -176,12 +191,16 @@ class DosenController extends Controller
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
+        ], [
+            'file.required' => 'File tidak boleh kosong',
+            'file.mimes' => 'File harus berformat xlsx, xls, atau csv',
         ]);
 
         Excel::import(new DosenImport, $request->file('file'));
 
         // Alert success
         Alert::success('Success!', 'Data dosen berhasil ditambahkan');
+
         return redirect()->route('manage_users');
     }
 

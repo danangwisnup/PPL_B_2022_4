@@ -59,7 +59,7 @@
                                                     <!-- Input Pilih Status START -->
                                                     <div class="col-6">
                                                         <label class="form-label text-dark">Status</label>
-                                                        <select class="form-select" id="status_pkl" name="status_pkl">
+                                                        <select class="form-select @error('status_pkl') is-invalid @enderror" id="status_pkl" name="status_pkl">
                                                             <option value="">-- Pilih Status --</option>
                                                             <option value="Sedang Ambil">Sedang Ambil</option>
                                                             <option value="Lulus">Lulus</option>
@@ -71,7 +71,7 @@
                                                     <!-- Pilih Nilai START-->
                                                     <div class="col-6">
                                                         <label class="form-label text-dark">Nilai</label>
-                                                        <select class="form-select" id="nilai_pkl" name="nilai_pkl">
+                                                        <select class="form-select @error('nilai_pkl') is-invalid @enderror" id="nilai_pkl" name="nilai_pkl">
                                                             <option value="">-- Pilih Nilai --</option>
                                                             <option value="A">A</option>
                                                             <option value="B">B</option>
