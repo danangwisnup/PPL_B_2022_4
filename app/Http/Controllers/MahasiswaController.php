@@ -57,6 +57,12 @@ class MahasiswaController extends Controller
             'nim' => 'required|numeric|unique:users,nim_nip|digits:14',
             'nama' => 'required|string',
             'status' => 'required',
+        ], [
+            'nim.required' => 'NIM tidak boleh kosong',
+            'nim.unique' => 'NIM sudah terdaftar',
+            'nim.digits' => 'NIM harus 14 digit',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'status.required' => 'Status tidak boleh kosong',
         ]);
 
         // Angkatan Mahasiswa
@@ -77,6 +83,8 @@ class MahasiswaController extends Controller
             $jalur_masuk = 'SBUB';
         }
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         // Insert to table mahasiswa & users
         tb_mahasiswa::insert([
             'nim' => $request->nim,
@@ -94,6 +102,8 @@ class MahasiswaController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Alert success
         Alert::success('Success!', 'Data mahasiswa berhasil ditambahkan');
@@ -139,6 +149,12 @@ class MahasiswaController extends Controller
             'nama' => 'required|string',
             'angkatan' => 'required|numeric',
             'status' => 'required',
+            'email' => 'nullable|email|unique:users,email,' . $id . ',nim_nip',
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong',
+            'angkatan.required' => 'Angkatan tidak boleh kosong',
+            'status.required' => 'Status tidak boleh kosong',
+            'email.unique' => 'Email sudah terdaftar',
         ]);
 
         // Update to table mahasiswa & users
@@ -167,6 +183,23 @@ class MahasiswaController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        // find where nim table mahasiswa
+        if ($id == 'all') {
+            return view('operator.manage_users.modal.delete_all_mahasiswa');
+        } else {
+            $mahasiswa = tb_mahasiswa::where('nim', $id)->first();
+            return view('operator.manage_users.modal.delete_mahasiswa', compact('mahasiswa'));
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -177,7 +210,7 @@ class MahasiswaController extends Controller
         // Delete to table mahasiswa & users
         if ($id == 'all') {
             User::where('role', 'mahasiswa')->delete();
-            tb_mahasiswa::truncate();
+            tb_mahasiswa::where('nim', '!=', '')->delete();
         } else {
             User::where('nim_nip', $id)->delete();
             tb_mahasiswa::where('nim', $id)->delete();
@@ -193,6 +226,9 @@ class MahasiswaController extends Controller
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
+        ], [
+            'file.required' => 'File tidak boleh kosong',
+            'file.mimes' => 'File harus berformat xlsx, xls, atau csv',
         ]);
 
         Excel::import(new MahasiswaImport, $request->file('file'));
@@ -224,7 +260,7 @@ class MahasiswaController extends Controller
     public function data_pkl()
     {
         $mahasiswaAll = tb_mahasiswa::orderBy('angkatan', 'asc')->get();
-        $mahasiswaPKL = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_pkls', 'tb_mahasiswas.nim', '=', 'tb_pkls.nim')
+        $selectPKL = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_pkls', 'tb_mahasiswas.nim', '=', 'tb_pkls.nim')
             ->join('tb_entry_progresses', 'tb_pkls.nim', '=', 'tb_entry_progresses.nim')
             ->where('tb_pkls.semester_aktif', '=', DB::raw('tb_entry_progresses.semester_aktif'))
             ->where('tb_entry_progresses.is_pkl', '=', 1)
@@ -232,6 +268,11 @@ class MahasiswaController extends Controller
             ->select('tb_mahasiswas.*', 'tb_pkls.*', 'tb_entry_progresses.*')
             ->get()
             ->unique('nim');
+
+        $mahasiswaPKL = [];
+        foreach ($selectPKL as $key => $value) {
+            $mahasiswaPKL[] = $value;
+        }
 
         return view('department.data_pkl.index', [
             'title' => 'Data Mahasiswa PKL',
@@ -241,7 +282,7 @@ class MahasiswaController extends Controller
     public function data_skripsi()
     {
         $mahasiswaAll = tb_mahasiswa::orderBy('angkatan', 'asc')->get();
-        $mahasiswaSkripsi = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_skripsis', 'tb_mahasiswas.nim', '=', 'tb_skripsis.nim')
+        $selectSkripsi = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_skripsis', 'tb_mahasiswas.nim', '=', 'tb_skripsis.nim')
             ->join('tb_entry_progresses', 'tb_skripsis.nim', '=', 'tb_entry_progresses.nim')
             ->where('tb_skripsis.semester_aktif', '=', DB::raw('tb_entry_progresses.semester_aktif'))
             ->where('tb_entry_progresses.is_skripsi', '=', 1)
@@ -249,6 +290,10 @@ class MahasiswaController extends Controller
             ->select('tb_mahasiswas.*', 'tb_skripsis.*', 'tb_entry_progresses.*')
             ->get()
             ->unique('nim');
+        $mahasiswaSkripsi = [];
+        foreach ($selectSkripsi as $key => $value) {
+            $mahasiswaSkripsi[] = $value;
+        }
 
         return view('department.data_skripsi.index', [
             'title' => 'Data Mahasiswa Skripsi',

@@ -48,7 +48,7 @@
                                             <!-- Input Jumlah SKS START -->
                                             <div class="col-12">
                                                 <label class="form-label text-dark">Jumlah SKS</label>
-                                                <input type="number" class="form-control" id="jumlah_sks" name="jumlah_sks" placeholder="Jumlah SKS" required>
+                                                <input type="number" class="form-control @error('jumlah_sks') is-invalid @enderror" id="jumlah_sks" name="jumlah_sks" placeholder="Jumlah SKS" required>
                                             </div>
                                             <!-- Input Jumlah SKS END-->
 

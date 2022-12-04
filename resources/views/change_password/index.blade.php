@@ -41,21 +41,36 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Password Lama:</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Password Lama" required>
+                                        <input type="password" class="form-control @error('old_password') is-invalid @enderror" id="old_password" name="old_password" placeholder="Password Lama" required>
+                                        @error('old_password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Password Baru:</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Password Baru" required>
+                                        <input type="password" class="form-control @error('new_password') is-invalid @enderror" id="new_password" name="new_password" placeholder="Password Baru" required>
+                                        @error('new_password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Verifikasi Password Baru:</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="ver_password" name="ver_password" placeholder="Verifikasi Password Baru" required>
+                                        <input type="password" class="form-control @error('ver_password') is-invalid @enderror" id="ver_password" name="ver_password" placeholder="Verifikasi Password Baru" required>
+                                        @error('ver_password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 

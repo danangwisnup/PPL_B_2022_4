@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('upload_pkl')->nullable();
             $table->unique(['nim', 'semester_aktif']);
+            $table->foreign('nim')->references('nim')->on('tb_entry_progresses')->onDelete('cascade');
         });
     }
 

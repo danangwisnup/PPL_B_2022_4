@@ -142,7 +142,13 @@
                                         </tr>
                                         <tr>
                                             <td class="col-2 mb-3"> <strong> File PKL: </strong> </td>
-                                            <td> <iframe src="{{ asset($pkl->upload_pkl) }}" width="600" height="600"></iframe></td>
+                                            <td>
+                                                @if ($pkl->upload_pkl != null)
+                                                <iframe src="{{ asset($pkl->upload_pkl) }}" width="600" height="500"></iframe>
+                                                @else
+                                                -
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endif
                                     </table>
@@ -170,7 +176,13 @@
                                         </tr>
                                         <tr>
                                             <td class="col-2 mb-3"> <strong> File Skripsi: </strong> </td>
-                                            <td> <iframe src="{{ asset($skripsi->upload_skripsi) }}" width="600" height="600"></iframe></td>
+                                            <td>
+                                                @if ($skripsi->upload_skripsi != null)
+                                                <iframe src="{{ asset($skripsi->upload_skripsi) }}" width="600" height="500"></iframe>
+                                                @else
+                                                -
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endif
                                     </table>

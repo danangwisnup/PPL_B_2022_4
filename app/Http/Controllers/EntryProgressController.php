@@ -33,6 +33,9 @@ class EntryProgressController extends Controller
     {
         $request->validate([
             'semester_aktif' => 'required|unique:tb_entry_progresses,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
+        ], [
+            'semester_aktif.required' => 'Semester Aktif tidak boleh kosong',
+            'semester_aktif.unique' => 'Semester' . $request->semester_aktif . 'sudah dientry',
         ]);
 
         $semester_aktif = $request->semester_aktif;

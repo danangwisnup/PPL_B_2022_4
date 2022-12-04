@@ -47,15 +47,13 @@
                                 <!-- Tab Mahasiswa -->
                                 <div class="tab-pane fade show active" id="tab-1">
                                     <div class="row g-3">
+                                        @if ($mahasiswa->count() > 0)
                                         <div class="d-flex flex-column align-items-end">
-                                            <form action="{{ route('mahasiswa.destroy', 'all') }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" title="delete" class="btn btn-danger-soft btn-sm">
-                                                    <i class="bi bi-trash-fill"></i> Delete All
-                                                </button>
-                                            </form>
+                                            <a class="btn btn-danger-soft btn-sm" id="buttonConfirmDelete_Mhs" data-bs-toggle="modal" data-bs-target="#confirm_delete_mhs" data-attr="{{ route('delete_mahasiswa', 'all') }}">
+                                                <i class="bi bi-trash-fill"></i> Delete All
+                                            </a>
                                         </div>
+                                        @endif
                                         <div class="col-12">
                                             <div class="table-responsive">
                                                 <table class="table" id="table_1">
@@ -76,16 +74,12 @@
                                                             <td>{{$data->angkatan}}</td>
                                                             <td>{{$data->status}}</td>
                                                             <td>
-                                                                <form action="{{ route('mahasiswa.destroy', $data->nim) }}" method="POST">
-                                                                    <a class="btn btn-success-soft rounded-circle icon-md" id="buttonModalMahasiswa" data-bs-toggle="modal" data-bs-target="#mahasiswa_view" data-attr="{{ route('mahasiswa.edit', $data->nim) }}">
-                                                                        <i class="bi bi-pencil-fill"></i>
-                                                                    </a>
-                                                                    @csrf
-                                                                    @method('delete')
-                                                                    <button type="submit" title="delete" class="btn btn-danger-soft rounded-circle icon-md">
-                                                                        <i class="bi bi-trash-fill"></i>
-                                                                    </button>
-                                                                </form>
+                                                                <a class="btn btn-success-soft rounded-circle icon-md" id="buttonModalMahasiswa" data-bs-toggle="modal" data-bs-target="#mahasiswa_view" data-attr="{{ route('mahasiswa.edit', $data->nim) }}">
+                                                                    <i class="bi bi-pencil-fill"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger-soft rounded-circle icon-md" id="buttonConfirmDelete_Mhs" data-bs-toggle="modal" data-bs-target="#confirm_delete_mhs" data-attr="{{ route('delete_mahasiswa', $data->nim) }}">
+                                                                    <i class="bi bi-trash-fill"></i>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -100,15 +94,13 @@
                                 <!-- Tab Dosen -->
                                 <div class="tab-pane fade" id="tab-2">
                                     <div class="row g-3">
+                                        @if ($dosen->count() > 0)
                                         <div class="d-flex flex-column align-items-end">
-                                            <form action="{{ route('dosen.destroy', 'all') }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" title="delete" class="btn btn-danger-soft btn-sm">
-                                                    <i class="bi bi-trash-fill"></i> Delete All
-                                                </button>
-                                            </form>
+                                            <a class="btn btn-danger-soft btn-sm" id="buttonConfirmDelete_dsn" data-bs-toggle="modal" data-bs-target="#confirm_delete_dsn" data-attr="{{ route('delete_dosen', 'all') }}">
+                                                <i class="bi bi-trash-fill"></i> Delete All
+                                            </a>
                                         </div>
+                                        @endif
                                         <div class="col-12">
                                             <div class="table-responsive">
                                                 <table class="table" id="table_2">
@@ -127,16 +119,12 @@
                                                             <td>{{$data->nama}}</td>
                                                             <td>{{$data->status}}</td>
                                                             <td>
-                                                                <form action="{{ route('dosen.destroy', $data->nip) }}" method="POST">
-                                                                    <a class="btn btn-success-soft rounded-circle icon-md" id="buttonModalDosen" data-bs-toggle="modal" data-bs-target="#dosen_view" data-attr="{{ route('dosen.edit', $data->nip) }}">
-                                                                        <i class="bi bi-pencil-fill"></i>
-                                                                    </a>
-                                                                    @csrf
-                                                                    @method('delete')
-                                                                    <button type="submit" title="delete" class="btn btn-danger-soft rounded-circle icon-md">
-                                                                        <i class="bi bi-trash-fill"></i>
-                                                                    </button>
-                                                                </form>
+                                                                <a class="btn btn-success-soft rounded-circle icon-md" id="buttonModalDosen" data-bs-toggle="modal" data-bs-target="#dosen_view" data-attr="{{ route('dosen.edit', $data->nip) }}">
+                                                                    <i class="bi bi-pencil-fill"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger-soft rounded-circle icon-md" id="buttonConfirmDelete_dsn" data-bs-toggle="modal" data-bs-target="#confirm_delete_dsn" data-attr="{{ route('delete_dosen', $data->nip) }}">
+                                                                    <i class="bi bi-trash-fill"></i>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                         @endforeach
@@ -189,6 +177,36 @@
         </div>
     </div>
 </div>
+
+<!-- modal confirm delete -->
+<div class="modal fade" data-bs-backdrop="static" id="confirm_delete_mhs" tabindex="-1" role="dialog" aria-labelledby="modalConfirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalConfirmDeleteLabel">Konfirmasi Hapus Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="showModalConfirmDelete_mhs">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" data-bs-backdrop="static" id="confirm_delete_dsn" tabindex="-1" role="dialog" aria-labelledby="modalConfirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalConfirmDeleteLabel">Konfirmasi Hapus Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="showModalConfirmDelete_dsn">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('script')

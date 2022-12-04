@@ -61,7 +61,7 @@
                                                     <!-- Pilih Status START-->
                                                     <div class="col-12 mb-3">
                                                         <label class="form-label text-dark">Status</label>
-                                                        <select class="form-select" id="status_skripsi" name="status_skripsi">
+                                                        <select class="form-select @error('status_skripsi') is-invalid @enderror" id="status_skripsi" name="status_skripsi">
                                                             <option value="">-- Pilih Status --</option>
                                                             <option value="Sedang Ambil">Sedang Ambil</option>
                                                             <option value="Lulus">Lulus</option>
@@ -72,7 +72,7 @@
                                                     <!-- Input Tanggal START -->
                                                     <div class="col-6 mb-3">
                                                         <label class="form-label text-dark">Tanggal Sidang</label>
-                                                        <input type="date" class="form-control" id="tanggal_sidang" name="tanggal_sidang">
+                                                        <input type="date" class="form-control @error('tanggal_sidang') is-invalid @enderror" id="tanggal_sidang" name="tanggal_sidang">
                                                         <div class="text-danger small fst-italic">*Kosongkan jika status sedang ambil</div>
                                                     </div>
                                                     <!-- Input Tanggal END -->
@@ -80,7 +80,7 @@
                                                     <!-- Pilih Nilai START-->
                                                     <div class="col-6 mb-3">
                                                         <label class="form-label text-dark">Nilai</label>
-                                                        <select class="form-select" id="nilai_skripsi" name="nilai_skripsi">
+                                                        <select class="form-select @error('nilai_skripsi') is-invalid @enderror" id="nilai_skripsi" name="nilai_skripsi">
                                                             <option value="">-- Pilih Nilai --</option>
                                                             <option value="A">A</option>
                                                             <option value="B">B</option>

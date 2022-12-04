@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('handphone')->nullable();
             $table->string('status');
             $table->string('foto')->nullable();
+            $table->foreign('nip')->references('nim_nip')->on('users')->onDelete('cascade');
+            $table->foreign('kode_kab')->references('kode_kab')->on('tb_kabs');
+            $table->foreign('kode_prov')->references('kode_prov')->on('tb_provs');
         });
     }
 

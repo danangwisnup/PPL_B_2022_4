@@ -84,6 +84,16 @@ class KHSController extends Controller
             'ip_semester' => 'required|between:0,4|numeric',
             'ip_kumulatif' => 'required|between:0,4|numeric',
             'file' => 'required',
+        ], [
+            'semester_aktif.required' => 'Semester Aktif tidak boleh kosong',
+            'semester_aktif.unique' => 'Semester Aktif sudah ada',
+            'ip_semester.required' => 'IP Semester tidak boleh kosong',
+            'ip_semester.between' => 'IP Semester harus antara 0 - 4',
+            'ip_semester.numeric' => 'IP Semester harus berupa angka',
+            'ip_kumulatif.required' => 'IP Kumulatif tidak boleh kosong',
+            'ip_kumulatif.between' => 'IP Kumulatif harus antara 0 - 4',
+            'ip_kumulatif.numeric' => 'IP Kumulatif harus berupa angka',
+            'file.required' => 'File tidak boleh kosong',
         ]);
 
         $temp = tb_temp_file::where('path', $request->file)->first();
@@ -116,7 +126,7 @@ class KHSController extends Controller
         if ($temp) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            $db->where('semester_aktif', $request->semester_aktif)->update([
+            $db->where('nim', Auth::user()->nim_nip)->where('semester_aktif', $request->semester_aktif)->update([
                 'upload_khs' => 'files/khs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
@@ -169,6 +179,15 @@ class KHSController extends Controller
             'ip_kumulatif' => 'required|between:0,4|numeric',
             'confirm' => 'sometimes|accepted',
             'fileEdit' => 'required_if:confirm,on',
+        ], [
+            'ip_semester.required' => 'IP Semester tidak boleh kosong',
+            'ip_semester.between' => 'IP Semester harus antara 0 - 4',
+            'ip_semester.numeric' => 'IP Semester harus berupa angka',
+            'ip_kumulatif.required' => 'IP Kumulatif tidak boleh kosong',
+            'ip_kumulatif.between' => 'IP Kumulatif harus antara 0 - 4',
+            'ip_kumulatif.numeric' => 'IP Kumulatif harus berupa angka',
+            'confirm.accepted' => 'Konfirmasi harus di ceklis',
+            'fileEdit.required_if' => 'File tidak boleh kosong',
         ]);
 
         $db = tb_khs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();

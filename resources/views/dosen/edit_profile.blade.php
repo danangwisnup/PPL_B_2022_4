@@ -56,7 +56,12 @@
                                 <div class="row mt-1 mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nama :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ $dosen->nama }}" required>
+                                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" placeholder="Nama" value="{{ old('nama', $dosen->nama) }}" required>
+                                        @error('nama')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -64,7 +69,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">NIP :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="nip" name="nip" placeholder="nip" value="{{ $dosen->nip }}" readonly>
+                                        <input type="text" class="form-control" id="nip" name="nip" placeholder="nip" value="{{ $dosen->nip }}" readonly required>
                                     </div>
                                 </div>
 
@@ -72,7 +77,7 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Status :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{ $dosen->status }}" readonly>
+                                        <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{ $dosen->status }}" readonly required>
                                     </div>
                                 </div>
 
@@ -80,7 +85,12 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Nomor HP :</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="handphone" name="handphone" placeholder="Nomor HP" value="{{ $dosen->handphone }}" required>
+                                        <input type="text" class="form-control @error('handphone') is-invalid @enderror" id="handphone" name="handphone" placeholder="Nomor HP" value="{{ old('handphone', $dosen->handphone) }}" required>
+                                        @error('handphone')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -88,7 +98,12 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Email SSO :</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $dosen->email }}" required>
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email" value="{{ old('email', $dosen->email) }}" required>
+                                        @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -96,7 +111,12 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Alamat :</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat" required>{{ $dosen->alamat }}</textarea>
+                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" placeholder="Alamat" required>{{ old('alamat', $dosen->alamat) }}</textarea>
+                                        @error('alamat')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -104,12 +124,17 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Provinsi :</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select" id="provinsi" name="provinsi" required>
+                                        <select class="form-select @error('provinsi') is-invalid @enderror" id="provinsi" name="provinsi" required>
                                             <option value="">Pilih Provinsi</option>
                                             @foreach ($provinsi as $prov)
                                             <option value="{{ $prov->kode_prov }}" {{ $dosen->kode_prov == $prov->kode_prov ? 'selected="true"' : '' }}>{{ $prov->nama_prov }}</option>
                                             @endforeach
                                         </select>
+                                        @error('provinsi')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -117,12 +142,17 @@
                                 <div class="row mb-1">
                                     <label class="col-sm-2 col-form-label text-dark">Kabupaten/Kota :</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select" id="kabupatenkota" name="kabupatenkota" required>
+                                        <select class="form-select @error('kabupatenkota') is-invalid @enderror" id="kabupatenkota" name="kabupatenkota" required>
                                             <option value="">Pilih Kabupaten/Kota</option>
                                             @foreach ($kabupaten as $kab)
                                             <option value="{{ $kab->kode_kab }}" {{ $dosen->kode_kab == $kab->kode_kab ? 'selected="true"' : '' }}>{{ $kab->nama_kab }}</option>
                                             @endforeach
                                         </select>
+                                        @error('kabupatenkota')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 

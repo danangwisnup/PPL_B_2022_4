@@ -34,6 +34,42 @@ $(document).on("click", "#buttonModalDosen", function (event) {
     });
 });
 
+// display a modal confirm delete mahasiswa
+$(document).on("click", "#buttonConfirmDelete_Mhs", function (event) {
+    event.preventDefault();
+    let href = $(this).attr("data-attr");
+    $.ajax({
+        url: href,
+        // return the result
+        success: function (result) {
+            $("#confirm_delete_mhs").modal("show");
+            $("#showModalConfirmDelete_mhs").html(result).show();
+        },
+        error: function (jqXHR, testStatus, error) {
+            console.log(error);
+            alert("Page " + href + " cannot open. Error:" + error);
+        },
+    });
+});
+
+// display a modal confirm delete dosen
+$(document).on("click", "#buttonConfirmDelete_dsn", function (event) {
+    event.preventDefault();
+    let href = $(this).attr("data-attr");
+    $.ajax({
+        url: href,
+        // return the result
+        success: function (result) {
+            $("#confirm_delete_dsn").modal("show");
+            $("#showModalConfirmDelete_dsn").html(result).show();
+        },
+        error: function (jqXHR, testStatus, error) {
+            console.log(error);
+            alert("Page " + href + " cannot open. Error:" + error);
+        },
+    });
+});
+
 let modal_content = document.getElementsByClassName("modal-content");
 
 // click class btn-close data-bs-toggle="tab" href="#tab-1" click

@@ -83,6 +83,13 @@ class IRSController extends Controller
             'semester_aktif' => 'required|unique:tb_irs,semester_aktif,NULL,id,nim,' . Auth::user()->nim_nip,
             'jumlah_sks' => 'required|numeric|between:1,24',
             'file' => 'required',
+        ], [
+            'semester_aktif.required' => 'Semester Aktif tidak boleh kosong',
+            'semester_aktif.unique' => 'Semester Aktif sudah ada',
+            'jumlah_sks.required' => 'Jumlah SKS tidak boleh kosong',
+            'jumlah_sks.numeric' => 'Jumlah SKS harus berupa angka',
+            'jumlah_sks.between' => 'Jumlah SKS harus antara 1 - 24',
+            'file.required' => 'File tidak boleh kosong',
         ]);
 
         $temp = tb_temp_file::where('path', $request->file)->first();
@@ -104,7 +111,7 @@ class IRSController extends Controller
         if ($temp) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            $db->where('semester_aktif', $request->semester_aktif)->update([
+            $db->where('nim', Auth::user()->nim_nip)->where('semester_aktif', $request->semester_aktif)->update([
                 'upload_irs' => 'files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();
@@ -156,6 +163,12 @@ class IRSController extends Controller
             'jumlah_sks' => 'required|numeric|between:1,24',
             'confirm' => 'sometimes|accepted',
             'fileEdit' => 'required_if:confirm,on',
+        ], [
+            'jumlah_sks.required' => 'Jumlah SKS tidak boleh kosong',
+            'jumlah_sks.numeric' => 'Jumlah SKS harus berupa angka',
+            'jumlah_sks.between' => 'Jumlah SKS harus antara 1 - 24',
+            'confirm.accepted' => 'Konfirmasi harus di ceklis',
+            'fileEdit.required_if' => 'File tidak boleh kosong',
         ]);
 
         $db = tb_irs::where('semester_aktif', $semester_aktif)->where('nim', $request->nim)->first();

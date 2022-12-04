@@ -87,6 +87,12 @@ class EditProfileDepartmentController extends Controller
             [
                 'required', 'email', 'max:255', Rule::unique('users')->ignore($id, 'nim_nip'),
             ],
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong.',
+            'nama.string' => 'Nama harus berupa huruf.',
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
         ]);
 
         // Update to DB

@@ -47,11 +47,21 @@ class DosenController extends Controller
         $data = $request->validate([
             'nip' => 'required|string|unique:users,nim_nip',
             'nama' => 'required|string',
-            'email' => 'required|email||unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'status' => 'required',
+        ], [
+            'nip.required' => 'NIP tidak boleh kosong',
+            'nip.unique' => 'NIP sudah terdaftar',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
+            'status.required' => 'Status tidak boleh kosong',
         ]);
 
         $data = $request->except(['_token']);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         // Insert to table dosen & users
         tb_dosen::insert($data);
@@ -64,6 +74,8 @@ class DosenController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Alert success
         Alert::success('Success!', 'Data Dosen Berhasil Ditambahkan');
@@ -109,6 +121,12 @@ class DosenController extends Controller
             'nama' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $id . ',nim_nip',
             'status' => 'required',
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
+            'status.required' => 'Status tidak boleh kosong',
         ]);
 
         // Update to table dosen & users
@@ -133,6 +151,23 @@ class DosenController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        // find where nim table dosen
+        if ($id == 'all') {
+            return view('operator.manage_users.modal.delete_all_dosen');
+        } else {
+            $dosen = tb_dosen::where('nip', $id)->first();
+            return view('operator.manage_users.modal.delete_dosen', compact('dosen'));
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param string $id
@@ -143,7 +178,7 @@ class DosenController extends Controller
         // Delete to table Dosen & users
         if ($id == 'all') {
             User::where('role', 'dosen')->delete();
-            tb_dosen::truncate();
+            tb_dosen::where('nip', '!=', '')->delete();
         } else {
             User::where('nim_nip', $id)->delete();
             tb_dosen::where('nip', $id)->delete();
@@ -151,6 +186,7 @@ class DosenController extends Controller
 
         // Alert success
         Alert::success('Success!', 'Data Dosen Berhasil Dihapus');
+
         return redirect()->route('manage_users');
     }
 
@@ -159,12 +195,16 @@ class DosenController extends Controller
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
+        ], [
+            'file.required' => 'File tidak boleh kosong',
+            'file.mimes' => 'File harus berformat xlsx, xls, atau csv',
         ]);
 
         Excel::import(new DosenImport, $request->file('file'));
 
         // Alert success
         Alert::success('Success!', 'Data dosen berhasil ditambahkan');
+
         return redirect()->route('manage_users');
     }
 

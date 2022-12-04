@@ -24,6 +24,8 @@ return new class extends Migration
             $table->boolean('is_verifikasi')->default(false);
             $table->timestamps();
             $table->unique(['nim', 'semester_aktif']);
+            $table->foreign('nim')->references('nim')->on('tb_mahasiswas')->onDelete('cascade');
+            $table->foreign('nip')->references('nip')->on('tb_dosens')->onDelete('cascade');
         });
     }
 

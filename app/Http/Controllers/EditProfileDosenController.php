@@ -102,6 +102,20 @@ class EditProfileDosenController extends Controller
             'alamat' => 'required',
             'provinsi' => 'required|exists:tb_provs,kode_prov',
             'kabupatenkota' => 'required|exists:tb_kabs,kode_kab',
+        ], [
+            'fileProfile.required' => 'Foto profile harus diisi.',
+            'nama.required' => 'Nama harus diisi.',
+            'nip.required' => 'NIP harus diisi.',
+            'status.required' => 'Status harus diisi.',
+            'handphone.required' => 'No. Handphone harus diisi.',
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'alamat.required' => 'Alamat harus diisi.',
+            'provinsi.required' => 'Provinsi harus diisi.',
+            'provinsi.exists' => 'Provinsi tidak terdaftar.',
+            'kabupatenkota.required' => 'Kabupaten/Kota harus diisi.',
+            'kabupatenkota.exists' => 'Kabupaten/Kota tidak terdaftar.',
         ]);
 
         $temp = tb_temp_file::where('path', $request->fileProfile)->first();
