@@ -111,7 +111,7 @@ class IRSController extends Controller
         if ($temp) {
             $uniq = time() . uniqid();
             rename(public_path('files/temp/' . $temp->folder . '/' . $temp->path), public_path('files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'));
-            $db->where('semester_aktif', $request->semester_aktif)->update([
+            $db->where('nim', Auth::user()->nim_nip)->where('semester_aktif', $request->semester_aktif)->update([
                 'upload_irs' => 'files/irs/' . $db->nim . '_' . $db->semester_aktif . '_' . $uniq . '.pdf'
             ]);
             $temp->delete();

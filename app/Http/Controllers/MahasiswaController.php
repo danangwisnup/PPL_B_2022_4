@@ -260,7 +260,7 @@ class MahasiswaController extends Controller
     public function data_pkl()
     {
         $mahasiswaAll = tb_mahasiswa::orderBy('angkatan', 'asc')->get();
-        $mahasiswaPKL = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_pkls', 'tb_mahasiswas.nim', '=', 'tb_pkls.nim')
+        $selectPKL = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_pkls', 'tb_mahasiswas.nim', '=', 'tb_pkls.nim')
             ->join('tb_entry_progresses', 'tb_pkls.nim', '=', 'tb_entry_progresses.nim')
             ->where('tb_pkls.semester_aktif', '=', DB::raw('tb_entry_progresses.semester_aktif'))
             ->where('tb_entry_progresses.is_pkl', '=', 1)
@@ -268,6 +268,11 @@ class MahasiswaController extends Controller
             ->select('tb_mahasiswas.*', 'tb_pkls.*', 'tb_entry_progresses.*')
             ->get()
             ->unique('nim');
+
+        $mahasiswaPKL = [];
+        foreach ($selectPKL as $key => $value) {
+            $mahasiswaPKL[] = $value;
+        }
 
         return view('department.data_pkl.index', [
             'title' => 'Data Mahasiswa PKL',
@@ -277,7 +282,7 @@ class MahasiswaController extends Controller
     public function data_skripsi()
     {
         $mahasiswaAll = tb_mahasiswa::orderBy('angkatan', 'asc')->get();
-        $mahasiswaSkripsi = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_skripsis', 'tb_mahasiswas.nim', '=', 'tb_skripsis.nim')
+        $selectSkripsi = tb_mahasiswa::orderBy('tb_entry_progresses.semester_aktif', 'desc')->join('tb_skripsis', 'tb_mahasiswas.nim', '=', 'tb_skripsis.nim')
             ->join('tb_entry_progresses', 'tb_skripsis.nim', '=', 'tb_entry_progresses.nim')
             ->where('tb_skripsis.semester_aktif', '=', DB::raw('tb_entry_progresses.semester_aktif'))
             ->where('tb_entry_progresses.is_skripsi', '=', 1)
@@ -285,6 +290,10 @@ class MahasiswaController extends Controller
             ->select('tb_mahasiswas.*', 'tb_skripsis.*', 'tb_entry_progresses.*')
             ->get()
             ->unique('nim');
+        $mahasiswaSkripsi = [];
+        foreach ($selectSkripsi as $key => $value) {
+            $mahasiswaSkripsi[] = $value;
+        }
 
         return view('department.data_skripsi.index', [
             'title' => 'Data Mahasiswa Skripsi',
