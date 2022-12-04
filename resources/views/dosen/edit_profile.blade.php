@@ -25,6 +25,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
+                    <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+                            <strong>Warning!</strong> Password tidak boleh sama dengan nama dan nim.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <!-- Event alert END -->
 
                     <!-- Card START -->
