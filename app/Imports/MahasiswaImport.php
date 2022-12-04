@@ -46,7 +46,7 @@ class MahasiswaImport implements ToModel, WithHeadingRow, WithValidation
         $user = tb_mahasiswa::create([
             'nim' => str_replace(' ', '', $row['nim']),
             'nama' => $row['nama'],
-            'status' => str_replace(' ', '', $row['status']),
+            'status' => $row['status'],
 
             // jika tidak null dan null
             'angkatan' => str_replace(' ', '', $row['angkatan'] ?? $angkatan),
