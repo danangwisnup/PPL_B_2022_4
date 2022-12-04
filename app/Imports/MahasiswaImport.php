@@ -38,6 +38,7 @@ class MahasiswaImport implements ToModel, WithHeadingRow, WithValidation
         // insert data ke tabel User and tb_mahasiswa
         $user = User::create([
             'nim_nip' => str_replace(' ', '', $row['nim']),
+            'email' => str_replace(' ', '', $row['email'] ?? $row['nim'] . '@students.undip.ac.id'),
             'nama' => $row['nama'],
             'role' => 'mahasiswa',
             'password' => bcrypt(str_replace(' ', '', $row['nim'])),

@@ -20,6 +20,7 @@ class DosenImport implements ToModel, WithHeadingRow, WithValidation
         // insert data ke tabel User and tb_dosen
         $user = User::create([
             'nim_nip' => str_replace(' ', '', $row['nip']),
+            'email' => str_replace(' ', '', $row['email']),
             'nama' => $row['nama'],
             'role' => 'dosen',
             'password' => bcrypt(str_replace(' ', '', $row['nip'])),
